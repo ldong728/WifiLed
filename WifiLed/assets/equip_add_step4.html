@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<link href="css/global.css" rel="stylesheet" />
+<script src="js/jquery2.min.js"></script>
+<script src="js/jquery.public.js"></script>
+    <script src="js/main.js"></script>
+<title>选择网络</title>
+</head>
+
+<body>
+    <div class="app-item shadow">
+        <div class="app-tool clearfix">
+            <a onClick="app_tool.goback();" class="pos-l img"><img src="image/icon/5.png" alt=""></a>
+            <span class="pos-m">选择网络</span>
+        </div>
+        <div class="item-list">
+            <!--<div class="li">-->
+                <!--<a class="wifi-item">WIFI #1</a>-->
+            <!--</div>-->
+            <!--<div class="li">-->
+                <!--<a class="wifi-item">WIFI #2</a>-->
+            <!--</div>-->
+            <!--<div class="li">-->
+                <!--<a class="wifi-item">WIFI #3</a>-->
+            <!--</div>-->
+        </div>
+    </div>
+</body>
+<script>
+    var ssid;
+    var pasd;
+    var timeOutId;
+    app_tool.loading();
+    timeOutId=setTimeout(function(){
+        searchFailed();
+    },5000);
+    window.wifi.usrLink();
+    function getList(data){
+//        alert('getList');
+        clearTimeout(timeOutId);
+        app_tool.loaded();
+        var list=eval('('+data+')');
+        $('.item-list').empty();
+        $.each(list,function(k,v){
+            var content='<div class="li"><a class="wifi-item">'+k+'</a></div>'
+            $('.item-list').append(content);
+
+        })
+    }
+    $(document).on('click','.wifi-item',function(){
+        ssid=$(this).text();
+        alert(ssid)
+        $('body').append('<div class="app-msg slideInUp"><div class="txt" id="ssid">' + ssid + '</div><div class="wifi"><input type="text" id="pasd" name="wifipass" placeholder="密码" class="noset" /></div><div class="confirm"><span class="no">取消</span><span class="yes">连接</span></div></div>');
+
+    })
+    $(document).on('click','.yes',function(){
+        pasd=$('#pasd').val();
+//        changeGroupType(ssid,pasd,false);
+        window.wifi.ap2sta(getJsonString({ssid:ssid,pasd:pasd}));
+
+    });
+    $(document).on('click','.no',function(){
+        app_msg.animation();
+    });
+    $(document).on('click','.yes',function(){
+        headerTo('equip_add_step4.html');
+//        window.wifi.wifiOpt();
+    });
+    $(document).on('click','.no',function(){
+
+//        window.light.chooseGroup($(this).attr('id'));
+        headerTo('equip_info.html');
+    });
+
+
+    function ap2staResult(back){
+        app_tool.loaded();
+        clearTimeout(timeOutId);
+        var jsonData=eval('('+back+')');
+        alert(jsonData.apStu);
+        alert(jsonData.pasdStu);
+        if(1==jsonData.apStu&&jsonData.pasdStu){
+           changeGroupType(ssid,pasd,false);
+            headerTo('equip_info.html');
+        }
+    }
+    function searchFailed(){
+        app_tool.loaded();
+        $('body').append('<div class="app-msg slideInUp"><div class="txt" id="ssid">设备无法搜索到无线网络</div><div class="confirm"><span class="no">取消</span><span class="yes">重试</span></div></div>');
+    }
+</script>
+</html>

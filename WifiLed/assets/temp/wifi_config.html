@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no"/>
+    <title>webView-native</title>
+    <script src="js/jquery.js"></script>
+    <script src="../js/main.js"></script>
+    <style type="text/css">
+        img {
+            max-width: 100%;
+        }
+        div {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<script>
+    $(document).ready(function(){
+//        alert('ready');
+        window.wifi.scanWifi();
+    })
+</script>
+<body>
+<div class="wifi_list">
+<!--<div class="wifi_block">-->
+    <!---->
+    <!---->
+<!--</div>-->
+
+</div>
+<a href="index2.html">返回</a>
+
+</body>
+<script>
+    var linked=false;
+    var ssid=""
+
+    function onGetWifiList(data){
+
+        $('.wifiList').empty();
+        var inf=eval('('+data+')');
+        $.each(inf,function(k,v){
+            var content='<div class=wifi_block id='+k+'>'+v+'</div>';
+            $('.wifi_list').append(content)
+        });
+    }
+
+    function onLinked(data){
+//        alert("ssid:"+ssid+" data:"+data);
+        if(!linked&&(data==ssid)){
+            linked=true;
+            alert("linked ok "+data);
+            headerTo("create_join_group.html");
+        }
+
+    }
+    function lightStandby(data){
+//        headerTo("index2.html");
+//        alert(data);
+    }
+    $(document).on("click",'.wifi_block',function(){
+        var id=$(this).attr("id");
+        var json={ssid:$(this).text(),id:id}
+        var json=JSON.stringify(json);
+        ssid=$(this).text();
+        window.wifi.linkWifi(json);
+    })
+</script>

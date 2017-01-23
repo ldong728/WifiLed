@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no"/>
+    <title>webView-native</title>
+    <script src="js/jquery.js"></script>
+</head>
+
+<body>
+<div class="temp">
+    <button id ="usrLink">重试</button>
+
+
+</div>
+
+
+</body>
+<script>
+    $(document).ready(function(){
+       window.wifi.usrLink();
+    });
+</script>
+
+<script>
+    $('#usrLink').click(function(){
+        window.wifi.usrLink();
+    })
+    function getList(d){
+        alert('ok');
+        var data=eval("("+d+")");
+        $.each(data,function(k,v){
+           $('.temp').append('<div class="sel" id="'+k+'">'+k+':  '+v+'</br></div>')
+            $('.temp').append(k+':'+v+'</br>');
+        });
+    }
+
+    $(document).on('sel','click',function(){
+        var ssid=$(this).attr('id');
+        alert(ssid);
+    })
+
+</script>

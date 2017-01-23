@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no"/>
+    <title>webView-native</title>
+    <script src="js/jquery.js"></script>
+    <script src="../js/main.js"></script>
+    <style type="text/css">
+        img {
+            max-width: 100%;
+        }
+        div {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+    <div class="new_group">
+        <input type="text" id="group_name" placeholder="鱼缸名">
+        <input id="create_button" type="button" value="新建鱼缸" disabled="disabled" onclick="createGroup()">
+    </div>
+    <div class="group_list">
+
+    </div>
+
+
+
+
+<body>
+
+
+</body>
+<script>
+    var deviceMac='';
+    var isStandby=false;
+    init();
+    var t=window.setInterval(initLight,1500);
+
+
+    function init(){
+        window.wifi.linkLights();
+        $('.group_list').empty();
+        var groupList=window.light.getGroupList("online");
+        if('[]'!=groupList){
+
+        }
+    }
+    function initLight(){
+       if(!isStandby) window.wifi.linkLights();
+    }
+    function createGroup(){
+        var groupName=$('#group_name').val();
+        var data={name:groupName,inf:"",type:"local"}
+        var dataStr=getJsonString(data);
+        var groupId=window.light.addGroup(dataStr);
+        alert(groupId);
+        if(groupId>-1){
+            var data={mac:deviceMac}
+            var dataString=getJsonString(data);
+            var deviceId=window.light.addDevice(dataString);
+            alert("add device OK");
+            headerTo('index.html');
+
+
+
+        }
+    }
+
+    function lightStandby(data){
+        alert("light standby"+data);
+        if(!isStandby){
+            isStandby=true;
+            window.clearInterval(t);
+        }
+        if(""==deviceMac||data!=deviceMac){
+            deviceMac=data;
+            $('#create_button').removeAttr("disabled")
+        }
+    }
+
+</script>

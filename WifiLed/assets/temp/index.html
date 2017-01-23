@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no"/>
+    <title>webView-native</title>
+    <script src="js/jquery.js"></script>
+    <script src="../js/main.js"></script>
+    <style type="text/css">
+        img {
+            max-width: 100%;
+        }
+        div {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+
+<body>
+<input type="button" value="添加" id="findDevice" onclick="searchDevice()">
+
+<div class="groupList"></div>
+
+
+</body>
+<script>
+
+    init();
+
+    function init(){
+        $('.groupList').empty();
+        var userdata=getUserInf();
+        if(""==userdata){
+            alert("haveNoUserInf");
+            headerTo("sign_in.html");
+        }else{
+            var groupdata=getGroupList("all");
+            if("[]"==groupdata){
+                headerTo("no_device.html")
+            }else{
+                var data=eval('('+groupdata+')');
+                $.each(data,function(k,v){
+                    var content='<div class="group" id="'+ v.G_ID+'">'+ v.G_NAME+'</div>';
+                    $('.groupList').append(content);
+                })
+
+            }
+        }
+    }
+    function searchDevice(){
+        headerTo("wifi_config.html")
+    }
+    $(document).on('click','.group',function(){
+        var g_id=$(this).attr('id');
+        alert($(this).attr('id'));
+        window.light.chooseGroup(g_id);
+        headerTo("index2.html");
+    })
+</script>

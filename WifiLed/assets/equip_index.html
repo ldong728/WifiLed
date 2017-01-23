@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<link href="css/global.css" rel="stylesheet" />
+<script src="js/jquery2.min.js"></script>
+<script src="js/jquery.public.js"></script>
+    <script src="js/main.js"></script>
+<title>全部设备</title>
+</head>
+
+<body>
+    <div class="app-equip shadow">
+        <div class="app-tool clearfix">
+            <a href="#" class="pos-l img"><img src="image/icon/6.png" alt=""></a>
+            <span class="pos-m">全部设备</span>
+            <a href="equip_add_step1.html" class="pos-r img"><img src="image/icon/7.png" alt=""></a>
+        </div>
+        <div class="equip-list">
+            <!--<div class="li">-->
+                <!--<a href="equip_info.html" data-id="">鱼缸#1</a>-->
+            <!--</div>-->
+            <!--<div class="li">-->
+                <!--<a href="equip_info.html" data-id="">鱼缸#2</a>-->
+            <!--</div>-->
+            <!--<div class="li">-->
+                <!--<a href="equip_info.html" data-id="">鱼缸#3</a>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="app-nav">
+        <a href="equip_index.html" class="n1">我的设备</a>
+        <a class="n2">控制中心</a>
+        <a href="set_index.html" class="n4">个人中心</a>
+    </div>
+    <script>
+
+        $('.equip-list').empty();
+        var list=getGroupList('all');
+        if('[]'!=list){
+            list=eval('('+list+')');
+            $.each(list,function(k,v){
+                var content='<div class="li"><a class="group-inf" id="'+v.G_ID+'" data-id="'+ v.G_ID+'">'+ v.G_NAME+'</a></div>'
+                $('.equip-list').append(content);
+            });
+        }else{
+            $('.equip-list').append("当前无设备");
+        }
+        $(document).on('click','.group-inf',function(){
+            //window.light.chooseGroup($(this).attr('id'));
+            window.webkit.messageHandlers.light.postMessage("test")
+            headerTo('equip_info.html');
+        })
+
+    </script>
+</body>
+</html>

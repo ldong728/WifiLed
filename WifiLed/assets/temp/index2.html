@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no"/>
+    <title>webView-native</title>
+    <script src="js/jquery.js"></script>
+    <script src="../js/main.js"></script>
+    <style type="text/css">
+        img {
+        max-width: 100%;
+        }
+        div {
+        margin-top: 20px;
+        }
+    </style>
+</head>
+
+
+<body>
+<div class="wrap">
+    <div><button id="test">对时测试</button></div>
+    <div><input type="button" id="linkwifi" value="链接wifi"/><input type="button" id="scanWifi" value="扫描Wifi"/></div>
+    <div><input type="button" id="udpStartServer" value="开启udp服务"/><input type="button" id="sendUdp" value="获取Wifi列表"/></div>
+    <div></div>
+    <button id="controller">连接TCP以控制灯具</button>
+    <div></div>
+    <div><button class="controller" id="greenOn">搜索</button><button class="controller" id="greenOff">AT测试</button></div>
+    <div><input type="number" placeholder="颜色" id="color"/><input type="number" placeholder="时间" id="time"/><input type="number" placeholder="亮度" id="level"> </div>
+    <div><button  id="sendCode">自动测试</button><button class="controller" id="opOff">紫外线关</button></div>
+    <div><a href="draw.html">界面转换</a></div>
+
+</div>
+
+
+</body>
+<script>
+    var type='';
+    var ssid='';
+    init();
+
+    function init(){
+        var data=window.light.initGroup();
+        if(''!=data){
+            data=eval('('+data+')');
+            type=data.type;
+            if('local'==type){
+                ssid=data.ssid;
+            }
+        }
+    }
+
+    $('#test').click(function(){
+        window.wifi.test();
+//        var value={"abx":"123","def":"456"}
+//        var str=JSON.stringify(value);
+//        alert(str);
+//        var v=window.wifi.test(str);
+//        var obj=eval("("+v+")")
+//        alert(obj.abx);
+
+    });
+    $('#sendUdp').click(function(){
+        headerTo('ap_list.html');
+    })
+
+    $('#linkwifi').click(function(){
+        var inf={ssid:"TL-Gooduo",pasd:"gooduo789"}
+        inf=JSON.stringify(inf);
+        window.wifi.ap2sta(inf);
+    })
+    $('#scanWifi').click(function(){
+//        window.wifi.scanWifi();
+        alert("headerTo");
+        headerTo('wifi_config.html');
+    })
+    $('#stopServer').click(function(){
+        window.wifi.stopServer();
+    });
+    $('#controller').click(function(){
+        window.wifi.initSocket();
+    });
+    $('#udpStartServer').click(function(){
+        window.wifi.startUdpServer();
+    });
+    $('#sendCode').click(function(){
+        var color=$('#color').val();
+        var time=$('#time').val();
+        var level=$('#level').val();
+        var data={color:color,time:time,level:level,mode:"confirm"}
+        var str=JSON.stringify(data)
+        window.light.sendAutoCode(str);
+    });
+    $('#greenOn').click(function(){
+       window.wifi.linkLights();
+    });
+    $('#greenOff').click(function(){
+        window.wifi.greenOff();
+    })
+</script>
+<script>
+
+    function lightStandby(data){
+        alert(data);
+    }
+
+
+
+</script>
+
+
+</html>

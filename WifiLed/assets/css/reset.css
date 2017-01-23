@@ -1,0 +1,22 @@
+/* JCMS CSS Reset 2016-06-01 */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,input,select,textarea,button,th,td,p,pre{padding:0;margin:0;}
+table{border-collapse:collapse;border-spacing:0;}
+img{border:none;vertical-align:middle;}
+em{font-weight:normal;font-style:normal;}
+ol,ul{list-style:none;}
+h1,h2,h3,h4,h5,h6{font-weight:normal;font-size:100%;}
+a{text-decoration:none;color:inherit;}
+a:hover,a:active,a:focus{color:inherit;}
+label{display:inline-block;cursor:pointer;}
+input,button,textarea,select,pre{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;color:inherit;}
+input[type="button"],input[type="submit"],input[type="reset"],input[type="radio"],input[type="checkbox"],button{cursor:pointer;outline:none;}
+*,:after,:before{-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;-webkit-user-select:none;}
+/* 滚动条 */
+::-webkit-scrollbar{display:none;width:8px;height:8px;}
+::-webkit-scrollbar-button{display:none;}
+::-webkit-scrollbar-track{background-color:#f5f5f5;}
+::-webkit-scrollbar-thumb{background-color:#a5a5a5;}
+/* 附加 */
+.clearfix:after{display:table;content:'';clear:both;}
+.noset{border:none;background:none;padding:0;margin:0;outline:none;}
+.nowrap{display:block;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}

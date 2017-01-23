@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<link href="css/global.css" rel="stylesheet" />
+<script src="js/jquery2.min.js"></script>
+<script src="js/jquery.public.js"></script>
+<title></title>
+</head>
+
+<body>
+    <div class="app-item shadow">
+        <div class="app-tool clearfix">
+            <span class="pos-m">请选择设备</span>
+        </div>
+        <div class="item-list">
+            <div class="li">
+                <a id="send">发送UDP数据</a>
+            </div>
+            <div class="li">
+                <a></a>
+            </div>
+            <div class="li">
+                <a></a>
+            </div>
+        </div>
+    </div>
+    <div class="app-nav">
+        <a href="equip_index.html" class="n1">我的设备</a>
+        <a href="control_index.html" class="n2">控制中心</a>
+        <a href="set_index.html" class="n4">个人中心</a>
+    </div>
+    <script>
+        $('#send').click(function(){
+            alert('jquery ok')
+            window.webkit.messageHandlers.light.postMessage("hello webKit");
+        });
+    </script>
+</body>
+</html>

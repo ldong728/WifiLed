@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<link href="css/global.css" rel="stylesheet" />
+<script src="js/jquery2.min.js"></script>
+<script src="js/jquery.public.js"></script>
+    <script src="js/main.js"></script>
+<title>XXX鱼缸</title>
+</head>
+
+<body>
+    <div class="app-equip shadow">
+        <div class="app-tool clearfix">
+            <a href="#" class="pos-l img"><img src="image/icon/6.png" alt=""></a>
+            <a href="equip_add_step1.html" class="pos-r img add-device"><img src="image/icon/7.png" alt=""></a>
+        </div>
+        <div class="equip-info">
+            <div class="e-head"><img src="image/bg/df-photo.png" alt=""></div>
+            <div class="e-name">XXX鱼缸</div>
+            <div class="e-lamp"><a href="equip_add_step4.html">共有<span id="total-device"></span>台设备</a></div>
+            <div class="e-lamp"><a href="equip_add_step4.html">已连接<span id="connected-device">0</span>台设备</a></div>
+            <!--<div class="e-lamp"><a id="linkLight">连接灯具</a></div>-->
+            <!--<div class="e-lamp"><a>  </a></div>-->
+            <!--<div class="e-lamp"><a id="time">对时</a></div>-->
+        </div>
+    </div>
+    <div class="app-nav">
+        <a href="equip_index.html" class="n1">我的设备</a>
+        <a href="control_mix.html" class="n2">控制中心</a>
+        <a href="set_index.html" class="n4">个人中心</a>
+    </div>
+<script>
+    var localLinked=false;
+    var inf=1;
+    inf=initGroup();
+//    alert(inf);
+    inf=eval('('+inf+')');
+    var deviceInf=inf.device;
+    var type=inf.type;
+    var ssid=inf.ssid;//需要连接的wifi ssid
+    var groupInf=inf.inf
+    var currentSSid=getCurrentSSID();
+//    alert(currentSSid);
+    var deviceList=[];//组中总设备数
+    var readyDevice=0;//已确认连接的设备数
+
+    initUi(deviceInf,groupInf);
+    if(ssid==currentSSid){
+        onLinked(ssid);
+    }
+    if(!localLinked){
+        if('local'==type){  //离线模式
+//            window.wifi.linkWifi(getJsonString({ssid:ssid}));
+            linkWifi(ssid);
+            app_tool.loading();
+            setTimeout(function(){
+                if(!localLinked){
+                    app_tool.loaded();
+                    $('body').append('<div class="app-msg slideInUp"><div class="txt" id="ssid">自动连接失败，请在wifi设置界面选择“' + ssid + '”</div><div class="confirm"><span class="no">取消</span><span class="yes">连接</span></div></div>');
+                }
+            },10000);
+        }else{
+            $('body').append('<div class="app-msg slideInUp"><div class="txt" id="ssid">请在wifi设置界面选择“' + ssid + '”</div><div class="confirm"><span class="no">取消</span><span class="yes">连接</span></div></div>');
+        }
+    }
+    function onLinked(data){
+        if(!localLinked){
+            if(data==ssid){
+                localLinked=true;
+                app_tool.loaded();
+                setTimeout(function(){
+                    app_msg.animation();
+                    searchLight();
+                },1000);
+            }else{
+                window.wifi.unlinkWifi();
+            }
+        }
+    }
+
+    function lightStandby(data){
+        if(localLinked){
+//            alert('lightStanby:'+data);
+            readyDevice++;
+            $('#connected-device').text(readyDevice);
+            setTimeout(function(){window.light.initTime()},2000);
+//            alert(window.light.tempMethod());
+//            window.light.setManualCode(getJsonString({manualColor:5,level:50}))
+        }else{
+
+        }
+    }
+    function initUi(deviceInf,groupInf){
+        $('title').text(groupInf.G_NAME);
+        $('.e-name').text(groupInf.G_NAME);
+        $.each(deviceInf,function(k,v){
+            deviceList.push(new device(v.D_MAC));
+        });
+        $('#total-device').text(deviceList.length);
+    }
+
+
+    $('#linkLight').click(function(){
+        window.wifi.linkLights();
+    });
+    $('#time').click(function(){
+
+    });
+    $(document).on('click','.yes',function(){
+        window.wifi.wifiOpt();
+    });
+    $(document).on('click','.no',function(){
+        app_msg.animation();
+    });
+    $(document).on('click','.n1',function(){
+
+    });
+    $(document).on('click','.add-device',function(){
+        if('local'==type){
+            headerTo('equip_add_step4.html');
+        }else{
+            headerTo('equip_add_step1.html');
+        }
+    })
+
+    function device(mac){
+        var _=this;
+        _.mac=mac;
+        _.isOnline=false;
+        _.setStatus=function(sta){
+            _.isOnline=sta;
+        }
+    }
+
+//    var deviceList=window.light.get
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<link href="css/global.css" rel="stylesheet" />
+<script src="js/jquery2.min.js"></script>
+<script src="js/jquery.public.js"></script>
+    <script src="js/main.js"></script>
+<title>选择鱼缸</title>
+</head>
+
+<body>
+    <div class="app-item shadow">
+        <div class="app-tool clearfix">
+            <a onClick="app_tool.goback();" class="pos-l img"><img src="image/icon/5.png" alt=""></a>
+            <span class="pos-m">选择鱼缸</span>
+        </div>
+        <div class="item-list">
+            <!--<div class="li">-->
+                <!--<a href="equip_info.html" data-id="">鱼缸#1</a>-->
+            <!--</div>-->
+
+            <!--<div class="li">-->
+                <!--<a data-id="">鱼缸#3</a>-->
+            <!--</div>-->
+        </div>
+    </div>
+<script>
+    var list=getGroupList("online");
+    var ssid,pasd,mac;
+    alert(list);
+    if('[]'==list){
+//        alert('jump')
+        headerTo('equip_add_step3.html')
+    }else{
+        $('.item-list').empty();
+        list=eval('('+list+')');
+        $.each(list,function(k,v){
+            var content='<div class="li"><a class="group" id="'+ v.G_ID+'" data-id="">'+ v.G_NAME+'</a></div>';
+
+            $('.item-list').append(content);
+        });
+        $('.item-list').append('<div class="li"><a href="equip_add_step3.html" data-id="">新建鱼缸</a></div>')
+    }
+
+    $(document).on('click','.group',function(){
+        chooseGroup($(this).attr('id'));
+        var groupInf=eval('('+getGroupInf()+')');
+        ssid=groupInf.G_SSID;
+        pasd=groupInf.G_SSID_PASD;
+        if(!mac){
+            searchLight();
+        }else{
+            lightStandby(mac);
+        }
+    });
+    function lightStandby(data){
+            alert('lightStanby');
+            mac=data;
+            alert(mac);
+            alert(ssid);
+            alert(pasd);
+            setTimeout(function(){ap2sta(ssid,pasd)},2000);
+    }
+    function ap2staResult(back){
+        var jsonData=eval('('+back+')');
+        if(1==jsonData.apStu&&jsonData.pasdStu){
+            addDeviceToGroup({mac:mac});
+            headerTo('equip_info.html');
+        }else{
+
+        }
+    }
+
+
+
+</script>
+</body>
+</html>

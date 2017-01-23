@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no"/>
+    <title>webView-native</title>
+    <script src="js/jquery.js"></script>
+    <script src="../js/main.js"></script>
+    <style type="text/css">
+        img {
+            max-width: 100%;
+        }
+        div {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <input type="text" id="name" placeholder="姓名"/>
+    <input type="text" id="email" placeholder="邮箱"/>
+    <input type="tel" id="phone" placeholder="电话"/>
+    <input type="password" id="pasd" placeholder="密码"/>
+    <input type="button" onclick="signin(this)" value="注册"/>
+
+
+</body>
+
+<script>
+    function signin(e){
+        var name=$('#name').val();
+        var email=$("#email").val();
+        var phone=$('#phone').val();
+        var pasd=$('#pasd').val();
+        var jsonParam={name:name,email:email,phone:phone,pasd:pasd};
+        var StringParam=JSON.stringify(jsonParam);
+        alert(StringParam);
+         var userId=window.light.addUser(StringParam);
+        alert(userId);
+        if(userId>-1){
+            headerTo("index.html")
+        }
+    }
+</script>

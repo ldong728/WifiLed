@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<link href="css/global.css" rel="stylesheet" />
+<script src="js/jquery2.min.js"></script>
+    <!--<script src="js/hidpi-canvas.min.js"></script>-->
+<script src="js/jquery.public.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/manualDraw.js"></script>
+
+<title></title>
+</head>
+
+<body>
+    <div class="app-mode shadow">
+        <div class="app-tool clearfix">
+            <a onClick="app_slide.show();" class="pos-l img"><img src="image/icon/6.png" alt=""></a>
+            <span class="pos-m">鱼缸#1</span>
+            <a href="equip_index.html" class="pos-r img"><img src="image/icon/16.png" alt=""></a>
+        </div>
+        <div class="mode-type">
+            <a href="control_mix.html">自动</a><a href="control_manual.html" class="cur-a">手动</a>
+        </div>
+        <div class="mode-info">
+            <div class="radius">
+                <div class="ctr-2 manual_canvas_wrap">
+                    <canvas id="manual_canvas"></canvas>
+                </div>
+            </div>
+        </div>
+        <!--侧边代码开始-->
+        <div class="app-slide">
+            <div class="main">
+                <div class="tab">鱼缸#1</div>
+                <dl class="list">
+                    <dt></dt>
+                    <!--<dd><a href="control_mix.html">混合模式</a></dd>-->
+                    <!--<dd><a href="control_simple.html">简易模式</a></dd>-->
+                    <dd><a href="control_scene.html">情景模拟</a></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="app-slide-bg"></div>
+        <!--侧边代码结束-->
+    </div>
+<script>
+    alert("save!!!!");
+    deviceCodeSave();
+</script>
+</body>
+</html>

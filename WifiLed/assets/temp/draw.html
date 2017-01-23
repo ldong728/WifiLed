@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang = "cn">
+<head>
+    <meta charset = "utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <script src="js/jquery.js"></script>
+    <script src="../js/mathGraphic.js"></script>
+    <style>
+        .canvas_wrap {
+            width:100%;
+            height: 160px;
+        }
+        .colorSelectWrap {
+            width: 100%;
+            height: 100px;
+        }
+        .colorSelectWrap .colorSelect {
+            float: left;
+            cursor: pointer;
+            box-sizing: border-box;
+            width: 14%;
+            height: 80px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 100%; height: 300px"></div>
+<div class="canvas_wrap">
+    <canvas id="drawing"></canvas>
+</div>
+<div class="colorSelectWrap">
+    <div class="colorSelect" id="0" style="background-color: #00d4ff">
+    </div>
+    <div class="colorSelect" id="1" style="background-color: #F7F7F7">
+    </div>
+    <div class="colorSelect" id="2" style="background-color: #EE2C2C">
+    </div>
+    <div class="colorSelect" id="3" style="background-color: #4B0082">
+    </div>
+    <div class="colorSelect" id="4" style="background-color: #7D26CD">
+    </div>
+    <div class="colorSelect" id="5" style="background-color: #00008B">
+    </div>
+    <div class="colorSelect" id="6" style="background-color: #66CD00">
+    </div>
+</div>
+<div id="temp"></div>
+<input id="switchButton" type="button" value="线条" onclick="switchLineType()"/><span id="lineType" >实线</span>
+<input type="button" value="撤销" onclick="cancel()"/><input type="button" id="save" value="保存" onclick="saveImg()"></br>
+<div><span id = "keyCode"></span></br><span id="mouseY"></span></div>
+</body>
+</html>
