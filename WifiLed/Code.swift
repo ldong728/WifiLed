@@ -8,17 +8,17 @@
 
 import Foundation
 
-struct Code :Hashable {
-    fileprivate let mCode:[UInt8]
-    
+class Code :Hashable {
+    let dataArray:[UInt8]
     init(_ array:[UInt8]){
-        self.mCode=array
+        self.dataArray=array
     }
     var hashValue: Int{
         get {
-            return String(describing:self.mCode).hashValue
+            return String(describing:self.dataArray).hashValue
         }
     }
+    
 
 }
 

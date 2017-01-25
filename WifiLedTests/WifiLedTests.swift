@@ -15,7 +15,7 @@ class WifiLedTests: XCTestCase {
     var uc:LightControllerGroup?
     override func setUp() {
         lc=LightsController()
-        uc=LightControllerGroup()
+//        uc=LightControllerGroup()
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -92,9 +92,17 @@ class WifiLedTests: XCTestCase {
         XCTAssert(true);
     }
     func testType(){
-//        let source : UInt8=15
-//        var data=Data(bytes: <#T##Array<UInt8>#>)
+        var testSet=Set<Code>()
+        let v1=Code([0xaa,0x08,0x0a,0x01,0x02,0x06])
+        let v2=Code([0xaa,0x08,0x0a,0x01,0x02,0x05])
+        var v3: Code?
+        if v1 is Code{
+          v3=v1 as! CodeType
+        }
         
+        print(v1.hashValue)
+        print(v2.hashValue)
+        print(v3!.hashValue)
         XCTAssert(true);
     }
     
