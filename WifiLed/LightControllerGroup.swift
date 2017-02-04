@@ -15,6 +15,8 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     static let BROADCAST_IP="255.255.255.255"
     static let DEFALT_IP="172.22.11.1"
     static let LOCAL_PORT:UInt16=26000
+    fileprivate var mThreadFlag:Bool=true
+    fileprivate var sendSemaphore=DispatchSemaphore(value:0)
     fileprivate let mQueue : DispatchQueue
     fileprivate var mIPMap:[String:String]=[String:String]()
     fileprivate var mSendBuffer:Dictionary<String,Set<Code>>=[String:Set<Code>]()
@@ -83,16 +85,17 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         objc_sync_exit(mSendBuffer)
     }
     fileprivate func putCodeToQueue(code:[UInt8]){
-        let orderedCode=getCodeTypeSet(data: code)
+        let codeTypeSet=getCodeTypeSet(data: code)
+        let newCodeList=getCodeSet(data: code)        
         objc_sync_enter(mSendBuffer)
         for (ip,oldList) in mSendBuffer {
-            var regroupList:Set<CodeType>=Set<CodeType>()
+            var regroupList:Set<Code>=Set<Code>()
             oldList.forEach{(data) ->Void in
-                regroupList.insert(CodeType(data))
+                if !codeTypeSet.contains(data.TypeValue) {
+                    regroupList.insert(data)
+                }
             }
-            let newCodeList=regroupList.symmetricDifference(orderedCode)
-            mSendBuffer[ip]=newCodeList
-            
+            mSendBuffer[ip]=newCodeList.union(regroupList)
         }
         objc_sync_exit(mSendBuffer)
     }
@@ -108,16 +111,19 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
 
     }
     
-    fileprivate func getCodeTypeSet(data:[UInt8]) -> Set<CodeType>{
-        var confirmed :Set<CodeType>=Set<CodeType>()
+    fileprivate func getCodeTypeSet(data:[UInt8]) -> Set<Int>{
+        var confirmed :Set<Int>=Set<Int>()
         for i in 0 ..< data.count/Light.CODE_LENGTH {
-            var subData = Array<UInt8>(data[i*Light.CODE_LENGTH ..< ((i+1)*Light.CODE_LENGTH)-1])
-            subData[2]=0x0a
-            confirmed.insert(CodeType(subData))
+            let subData = Array<UInt8>(data[i*Light.CODE_LENGTH ..< ((i+1)*Light.CODE_LENGTH)-1])
+            confirmed.insert(Code(subData).TypeValue)
         }
         return confirmed
     }
-    
+    fileprivate func sendCodeQueue(){
+        while mThreadFlag {
+            
+        }
+    }
     
     
     internal func send(message:String,ip:String=LightControllerGroup.DEFALT_IP,port:UInt16 = LightControllerGroup.DATA_PORT){
@@ -140,7 +146,13 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
      **/
     func udpSocket(_ sock: GCDAsyncUdpSocket, didReceive data: Data, fromAddress address: Data, withFilterContext filterContext: Any?) {
         NSLog("receaved!!!!" + String(describing: data))
-        var receiveedData=DataPack(data: data,address:address)
+        let receiveedData=DataPack(data: data,address:address)
+        if LightControllerGroup.DATA_PORT == receiveedData.getPort(){
+            let sData = formatReceive(revPacket: receiveedData)
+            if nil != sData {
+                reGroupSendQueue(pack: sData!)
+            }
+        }
         NSLog("ip: " + receiveedData.getIp())
         NSLog("port: " + String(receiveedData.getPort()))
         NSLog("data: \(receiveedData.getData())")

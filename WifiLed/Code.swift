@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Code :Hashable {
+struct Code :Hashable {
     let dataArray:[UInt8]
     init(_ array:[UInt8]){
         self.dataArray=array
@@ -16,6 +16,16 @@ class Code :Hashable {
     var hashValue: Int{
         get {
             return String(describing:self.dataArray).hashValue
+        }
+    }
+    var TypeValue: Int{
+        get {
+            let val=Array(dataArray[3...4])
+            if 0x03==dataArray[3]{
+                let val1=Array(dataArray[3 ... 4])+Array(dataArray[6 ... 7])
+                return Int(String(describing: val1))!
+            }
+            return Int(String(describing:val))!
         }
     }
     

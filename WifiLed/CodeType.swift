@@ -8,15 +8,16 @@
 
 import Foundation
 
-class CodeType : Code{
+struct CodeType : Hashable{
+    let dataArray:[UInt8]
 
-    override init(_ data:[UInt8]){
-        super.init(data)
+    init(_ array:[UInt8]){
+        self.dataArray=array
     }
     init(_ code:Code){
-        super.init(code.dataArray)
+        self.dataArray=code.dataArray
     }
-    override var hashValue: Int{
+    var hashValue: Int{
         get {
             let val=Array(dataArray[3...4])
             if 0x03==dataArray[3]{
@@ -26,6 +27,10 @@ class CodeType : Code{
             return String(describing:val).hashValue
         }
     }
+    public static func ==(l:CodeType,r:CodeType) ->Bool {
+        return l.hashValue==r.hashValue
+    }
+
     
 }
 
