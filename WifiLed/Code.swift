@@ -18,14 +18,14 @@ struct Code :Hashable {
             return String(describing:self.dataArray).hashValue
         }
     }
-    var TypeValue: Int{
+    var TypeValue: String{
         get {
             let val=Array(dataArray[3...4])
             if 0x03==dataArray[3]{
                 let val1=Array(dataArray[3 ... 4])+Array(dataArray[6 ... 7])
-                return Int(String(describing: val1))!
+                return String(describing: val1)
             }
-            return Int(String(describing:val))!
+            return String(describing:val)
         }
     }
     

@@ -30,12 +30,19 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         mQueue=DispatchQueue(label: "data_udp")
         mLightsController = LightsController()
         super.init()
-        mSocket=GCDAsyncUdpSocket(delegate: self, delegateQueue: mQueue)
+        mSocket=GCDAsyncUdpSocket(delegate: self, delegateQueue: DispatchQueue.global())
+        initBuffers()
         initUdp()
 
         
         
     }
+    fileprivate func initBuffers(){
+        
+        mSendBuffer["172.22.11.1"]=Set<Code>()
+        
+    }
+    
     fileprivate func initUdp(){
         do{
             try mSocket.bind(toPort: LightControllerGroup.LOCAL_PORT)
@@ -105,7 +112,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     fileprivate func getCodeSet(data:[UInt8]) -> Set<Code>{
         var confirmed :Set<Code>=Set<Code>()
             for i in 0 ..< data.count/Light.CODE_LENGTH {
-                var subData = Array<UInt8>(data[i*Light.CODE_LENGTH ..< ((i+1)*Light.CODE_LENGTH)-1])
+                var subData = Array<UInt8>(data[i*Light.CODE_LENGTH ... ((i+1)*Light.CODE_LENGTH)-1])
                 subData[2]=0x0a
                 confirmed.insert(Code(subData))
             }
@@ -113,10 +120,10 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
 
     }
     
-    fileprivate func getCodeTypeSet(data:[UInt8]) -> Set<Int>{
-        var confirmed :Set<Int>=Set<Int>()
+    fileprivate func getCodeTypeSet(data:[UInt8]) -> Set<String>{
+        var confirmed :Set<String>=Set<String>()
         for i in 0 ..< data.count/Light.CODE_LENGTH {
-            let subData = Array<UInt8>(data[i*Light.CODE_LENGTH ..< ((i+1)*Light.CODE_LENGTH)-1])
+            let subData = Array<UInt8>(data[i*Light.CODE_LENGTH ... ((i+1)*Light.CODE_LENGTH)-1])
             confirmed.insert(Code(subData).TypeValue)
         }
         return confirmed
@@ -131,7 +138,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
                     val.forEach{(data) in
                         send(byteMessage:data.dataArray,ip:key,port:LightControllerGroup.DATA_PORT)
                         NSLog("send from queue")
-                        sleep(UInt32(0.02))
+                        Thread.sleep(forTimeInterval: 0.5)
                     }
                 }
             }

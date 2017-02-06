@@ -85,14 +85,17 @@ class WifiLedTests: XCTestCase {
         XCTAssert(true);
     }
     func testUDP(){
-        let data=lc.mLightsController.setManual(2, level: 25)
+//        let data=lc.mLightsController.setManual(2, level: 25)
+        let data=lc.mLightsController.setManual(5, level: 50)
         lc.send(message: "hello world",ip:"127.0.0.1",port: LightControllerGroup.LOCAL_PORT);
         
         XCTAssert(true);
     }
     func testSendQueue(){
         lc.startSendQueue()
-        
+//        let data=lc.mLightsController.set(3,time:30,level: 50)!
+        let data=lc.mLightsController.setManual(5, level: 20)
+        lc.putCodeToQueue(code: data)
         
         
         

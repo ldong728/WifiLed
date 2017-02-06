@@ -92,7 +92,18 @@ extension wkScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         print(message.name)
         print((message.body as AnyObject).description)
-        mUdpController.send(message:"www.usr.cn",ip:"255.255.255.255",port:48899)
+        mUdpController.startSendQueue()
+        let data=mUdpController.mLightsController.setManual(2, level: 70)
+        mUdpController.putCodeToQueue(code: data)
+        
+        
+        
+//        for i in 1 ... 1000 {
+//            print("wait")
+//            Thread.sleep(forTimeInterval: 0.2)
+//        }
+
+//        mUdpController.send(message:"www.usr.cn",ip:"255.255.255.255",port:48899)
     }
 }
 private typealias wkNavigationDegate = ViewController
