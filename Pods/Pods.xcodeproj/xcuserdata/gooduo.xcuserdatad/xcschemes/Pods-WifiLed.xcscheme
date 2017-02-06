@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "82FDA54793DAE73F877B0DD78AA68518"
+               BlueprintIdentifier = "0C679A2785C2ED89DAB9C2F27E6A1C6D"
                BuildableName = "Pods_WifiLed.framework"
                BlueprintName = "Pods-WifiLed"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "82FDA54793DAE73F877B0DD78AA68518"
+            BlueprintIdentifier = "0C679A2785C2ED89DAB9C2F27E6A1C6D"
             BuildableName = "Pods_WifiLed.framework"
             BlueprintName = "Pods-WifiLed"
             ReferencedContainer = "container:Pods.xcodeproj">

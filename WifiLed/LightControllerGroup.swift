@@ -15,8 +15,8 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     static let BROADCAST_IP="255.255.255.255"
     static let DEFALT_IP="172.22.11.1"
     static let LOCAL_PORT:UInt16=26000
-    fileprivate var mThreadFlag:Bool=true
-    fileprivate var sendSemaphore=DispatchSemaphore(value:0)
+    fileprivate var mThreadFlag:Bool=false
+    fileprivate var mSendSemaphore=DispatchSemaphore(value:1)
     fileprivate let mQueue : DispatchQueue
     fileprivate var mIPMap:[String:String]=[String:String]()
     fileprivate var mSendBuffer:Dictionary<String,Set<Code>>=[String:Set<Code>]()
@@ -83,8 +83,9 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         objc_sync_enter(mSendBuffer)
         mSendBuffer[ip]=newList!
         objc_sync_exit(mSendBuffer)
+        mSendSemaphore.signal()
     }
-    fileprivate func putCodeToQueue(code:[UInt8]){
+    internal func putCodeToQueue(code:[UInt8]){
         let codeTypeSet=getCodeTypeSet(data: code)
         let newCodeList=getCodeSet(data: code)        
         objc_sync_enter(mSendBuffer)
@@ -98,6 +99,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
             mSendBuffer[ip]=newCodeList.union(regroupList)
         }
         objc_sync_exit(mSendBuffer)
+        mSendSemaphore.signal()
     }
     
     fileprivate func getCodeSet(data:[UInt8]) -> Set<Code>{
@@ -120,8 +122,28 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         return confirmed
     }
     fileprivate func sendCodeQueue(){
+        
         while mThreadFlag {
-            
+            var codeCount=0
+            mSendBuffer.forEach{(key,val) in
+                if val.count>0 {
+                    codeCount += val.count
+                    val.forEach{(data) in
+                        send(byteMessage:data.dataArray,ip:key,port:LightControllerGroup.DATA_PORT)
+                        NSLog("send from queue")
+                        sleep(UInt32(0.02))
+                    }
+                }
+            }
+            if codeCount == 0 {
+                mSendSemaphore.wait()
+            }
+        }
+    }
+    internal func startSendQueue(){
+        mThreadFlag = true
+        mQueue.async {
+            self.sendCodeQueue()
         }
     }
     
@@ -152,7 +174,10 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
             if nil != sData {
                 reGroupSendQueue(pack: sData!)
             }
+        }else{
+            print("from other port")
         }
+        
         NSLog("ip: " + receiveedData.getIp())
         NSLog("port: " + String(receiveedData.getPort()))
         NSLog("data: \(receiveedData.getData())")

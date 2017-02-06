@@ -8,31 +8,70 @@
 
 /* Begin PBXBuildFile section */
 		0B2994CA0C4D30FB95355C10EFA2138A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC76A27B6AC5FF40DBB7B0E2B8BF8014 /* Security.framework */; };
-		277F579922E3430F4A63206D99D00E5B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D67AC30769732F1FF0BD1854B2E225 /* Foundation.framework */; };
+		0FAA77366B26B9A4A844CE3C87129B82 /* Pods-WifiLed-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 596DD89F0763C3EC60E8553E5AEAD785 /* Pods-WifiLed-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1254AF23F61A5FD10D508576B78E3E90 /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ADC4F87849CA76EC0B4679F8CF0DB5 /* Foundation.swift */; };
+		130AF8C95428D45E1ADD28C3D72B88DB /* SQLite.swift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0609173BD3BCD89841EA86D76E7F42 /* SQLite.swift-dummy.m */; };
+		2607AFC42E7E07D68F268BAD061257E4 /* RTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D80A41321A471E7C21C00A18B910DD5 /* RTree.swift */; };
+		2A29B1D2E847BEADC723883298EDEF49 /* FTS5.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4AFDD2123721CDE5D282AEC974C014 /* FTS5.swift */; };
+		2D69AC551AC1439230FC56A3C1A2EC33 /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396A5B2E7177AB3B292D6E03E7EE21FC /* Expression.swift */; };
+		327B504CA7423FFCA2B9C936860DC96E /* Pods-WifiLedTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A999849D20293B882D3BEADCEC88658 /* Pods-WifiLedTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32EB986347C44EE6810FA5D3A00C43EB /* fts3_tokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 81AE090024E064DD2AF1D2D4882D093A /* fts3_tokenizer.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		350A07B7A89CFC33CFA3C2C17E90CE61 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D67AC30769732F1FF0BD1854B2E225 /* Foundation.framework */; };
-		6C7AAE0A82A4CC7075841B87DF909203 /* Pods-WifiLed-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 596DD89F0763C3EC60E8553E5AEAD785 /* Pods-WifiLed-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3ADF4522AD180CC4612681ACBE9BF0AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D67AC30769732F1FF0BD1854B2E225 /* Foundation.framework */; };
+		47097DE2D17E6E6CDC89B8190CC1F04C /* Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D460B82EA8E453A33BF59DDD1DA3F25 /* Schema.swift */; };
+		4A7078E8DC3F6CC11F64CB595FA19D67 /* SQLite.swift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 856F29B84B09A2F68C20D7A3602ECA2C /* SQLite.swift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4B303B2CCBACEFC89F6FB743B0885ECC /* Collation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBFCAE60B2606351DAC1224E70EE23 /* Collation.swift */; };
+		559356AAC87ABF428B3771EB94910C30 /* AggregateFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BB0ACAB0AE87521CDFD9F8BB70495D /* AggregateFunctions.swift */; };
+		65243490EC8A12F01F702E051B897DE5 /* Blob.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC94EB13D80F5A0D98DC22D33307B12B /* Blob.swift */; };
 		78673E0A090CAA106F510D94186B39A1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 898EE84856EB5E52F00A964689E9F67E /* CFNetwork.framework */; };
-		7E4F0161B4D135DA3A0763619A56C2F5 /* CocoaAsyncSocket-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E98378F2CF04086E8088C6A14347C33 /* CocoaAsyncSocket-dummy.m */; };
-		8480493AEC1C7AF1B5C0E0BF2F70FB44 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D696A8CDEBE87CDE80E57AE0E305C5F /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		A882891E5A89CADF96C2CA79606409CA /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA8FFB2F306345702A20E3FE7CE6EF7 /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AC7DC2A21843CD99040DCD79FF3BE91B /* GCDAsyncUdpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 84A110336E93C3E786F9B32956E29A3E /* GCDAsyncUdpSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AEE9644DA0EFCF945438E125BA4F0724 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 098765466D421180F3953EF8EEDDCEF1 /* GCDAsyncUdpSocket.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		C6A49DCE383F8861EAD37EE73FCA3B68 /* Pods-WifiLedTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FC4833128DD61124184E78257ABFFF56 /* Pods-WifiLedTests-dummy.m */; };
-		E4230DB0D114C94B081018C1AC1E9972 /* CocoaAsyncSocket-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D6D9F3F23E9E53DAFA379995A9E13E58 /* CocoaAsyncSocket-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EE40757C2056E18C3C355D0CBA2C3030 /* Pods-WifiLed-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7072CBF1ACBDEEF699CC32F62C68FE73 /* Pods-WifiLed-dummy.m */; };
-		EF3B4CDFAEEE634DC575F4F233A8E78B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D67AC30769732F1FF0BD1854B2E225 /* Foundation.framework */; };
-		FA422EDE3503DA484FBB354D3651C873 /* Pods-WifiLedTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5A999849D20293B882D3BEADCEC88658 /* Pods-WifiLedTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7DF2A7997D8EC5CE48085F88FC2024EA /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA62DACAB4E0B0B6E1F80ADED47C611 /* Operators.swift */; };
+		7E4F0161B4D135DA3A0763619A56C2F5 /* CocoaAsyncSocket-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBB24BB538C1315F39C99EC0C44C92A /* CocoaAsyncSocket-dummy.m */; };
+		8480493AEC1C7AF1B5C0E0BF2F70FB44 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 289525E6C73B699402EAFF94D1D0793D /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		9921A77805062339CA70DE3AA4FDFF9E /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6F85D4F85205EFF36408E39B97D7AC /* Query.swift */; };
+		A3A908EA774F9957480AE1BFF7621961 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9535FBC8D5335383C36C64660DAC20 /* Value.swift */; };
+		A882891E5A89CADF96C2CA79606409CA /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 048FF919365D42D3ECFD5767BAD0B590 /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AC7DC2A21843CD99040DCD79FF3BE91B /* GCDAsyncUdpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 8C42A8922FE9734E9B7B8DB08DCF1533 /* GCDAsyncUdpSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AEE9644DA0EFCF945438E125BA4F0724 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDB5B82C8F8D9EA6AD686B5054801FC /* GCDAsyncUdpSocket.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		B0895DA77766D973BD9F23CB7E75C3CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D67AC30769732F1FF0BD1854B2E225 /* Foundation.framework */; };
+		B6BBA151A3764A81716AC2D03AC64349 /* CoreFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC4B3E321C39066E0BB2782F9CF980F /* CoreFunctions.swift */; };
+		B95D49D867DBFC3C625CFEDE26FF505D /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E340C0A46F531EE837554EB8D85C2F /* Helpers.swift */; };
+		C41BBA8B882342BEE74B34908D8DB2AB /* Pods-WifiLedTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FC4833128DD61124184E78257ABFFF56 /* Pods-WifiLedTests-dummy.m */; };
+		C7861B50A72783BAB2C4ECF4C275A489 /* SQLite-Bridging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD799F988D57406A13209387A043FE2 /* SQLite-Bridging.m */; };
+		D082FF0613A0EE4713F35BABF9D4D6A1 /* Setter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F5B9D63C406F43A9D2AAFBD13A8AE9 /* Setter.swift */; };
+		D94B10A565283E41085C494E4DC9F98B /* SQLite-Bridging.h in Headers */ = {isa = PBXBuildFile; fileRef = 61A9335E919704E6D8CC7CB046ADD389 /* SQLite-Bridging.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DAF2400AC8957A2A015531B53270834F /* CustomFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75297FC50EEF925715840D1FD71022B /* CustomFunctions.swift */; };
+		DB36888E82E2388B72DD2A54782CDF04 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CD9F93235FB569478445E1D7B5954D /* Connection.swift */; };
+		E4230DB0D114C94B081018C1AC1E9972 /* CocoaAsyncSocket-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 477340FE167D625F397DC00799DC0337 /* CocoaAsyncSocket-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E7A7246B148A004990A3094751F23A5B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D67AC30769732F1FF0BD1854B2E225 /* Foundation.framework */; };
+		F0616C77408DC5F71B3399368B10E539 /* Pods-WifiLed-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7072CBF1ACBDEEF699CC32F62C68FE73 /* Pods-WifiLed-dummy.m */; };
+		F5B9C03BFC41B50DB6EC1588FA7B7E8D /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DADBEECA3B88C4C04C42D72D29DF2BE /* Statement.swift */; };
+		FDCA4E5C55F3AE657FC4E8D65635B51A /* SQLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 62E3290AFE3B4D18EFEBEC0840CF1038 /* SQLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FED4FF52B78837EDFF5322FCCCC66753 /* FTS4.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBB61A03852BF7BBC16BF6EC453D2B7 /* FTS4.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		CC3F55C8B51337BF9A4130504A97EBC9 /* PBXContainerItemProxy */ = {
+		2E495191DBC7A0F3662FDB449A94B7E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 416EC48E8E323800B1E1F843B7722559;
+			remoteInfo = SQLite.swift;
+		};
+		4EC2BB3CBE5A0FEB971583B418EADF86 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 416EC48E8E323800B1E1F843B7722559;
+			remoteInfo = SQLite.swift;
+		};
+		80C5CB14659137D4BC5376F83E9EC701 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = AC0D2D2B4EE7C873431AB3502859CA60;
 			remoteInfo = CocoaAsyncSocket;
 		};
-		D30455B24F4F48CC623849848A123AD2 /* PBXContainerItemProxy */ = {
+		A473FE4661C72223B7B7EE6BAE3F3548 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
@@ -42,51 +81,96 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		098765466D421180F3953EF8EEDDCEF1 /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncUdpSocket.m; path = Source/GCD/GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		048FF919365D42D3ECFD5767BAD0B590 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = Source/GCD/GCDAsyncSocket.h; sourceTree = "<group>"; };
 		0F780A20E81E76D8F64C065256FCB285 /* Pods-WifiLed-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-WifiLed-resources.sh"; sourceTree = "<group>"; };
-		1160000B4A75750BDB3DA8386DE0DA3B /* Pods_WifiLedTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_WifiLedTests.framework; path = "Pods-WifiLedTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BCB734940782C4F9CE85AB1631C83ED /* Pods-WifiLedTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-WifiLedTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		1D696A8CDEBE87CDE80E57AE0E305C5F /* GCDAsyncSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = Source/GCD/GCDAsyncSocket.m; sourceTree = "<group>"; };
+		2410675FB08FE680B007CACA379BB280 /* SQLite.swift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SQLite.swift.modulemap; sourceTree = "<group>"; };
 		262E9ADCDDA8425ABA4B18082B398539 /* Pods-WifiLedTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-WifiLedTests-resources.sh"; sourceTree = "<group>"; };
-		26725A1457DD258652A8139E813757AA /* Pods_WifiLed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_WifiLed.framework; path = "Pods-WifiLed.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2EF436B09B560AF848B4D98C55F61FE0 /* CocoaAsyncSocket.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CocoaAsyncSocket.xcconfig; sourceTree = "<group>"; };
+		289525E6C73B699402EAFF94D1D0793D /* GCDAsyncSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = Source/GCD/GCDAsyncSocket.m; sourceTree = "<group>"; };
+		2C60019939833A9DAC91B34845E254F6 /* SQLite.swift.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SQLite.swift.xcconfig; sourceTree = "<group>"; };
+		2D6D26D62917A63BDCE858A4617E07C2 /* Pods_WifiLed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_WifiLed.framework; path = "Pods-WifiLed.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD71925E5720548A242A7F0FD2B73E7 /* Pods-WifiLed-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-WifiLed-frameworks.sh"; sourceTree = "<group>"; };
+		2FFAB91664945AB844D88BBB9F124BB7 /* CocoaAsyncSocket-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CocoaAsyncSocket-prefix.pch"; sourceTree = "<group>"; };
+		396A5B2E7177AB3B292D6E03E7EE21FC /* Expression.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Expression.swift; path = Sources/SQLite/Typed/Expression.swift; sourceTree = "<group>"; };
+		3EDB5B82C8F8D9EA6AD686B5054801FC /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncUdpSocket.m; path = Source/GCD/GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		3F4C405D2A1993AD04B8F843C6E247D0 /* CocoaAsyncSocket.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CocoaAsyncSocket.xcconfig; sourceTree = "<group>"; };
+		40BB0ACAB0AE87521CDFD9F8BB70495D /* AggregateFunctions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AggregateFunctions.swift; path = Sources/SQLite/Typed/AggregateFunctions.swift; sourceTree = "<group>"; };
+		477340FE167D625F397DC00799DC0337 /* CocoaAsyncSocket-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CocoaAsyncSocket-umbrella.h"; sourceTree = "<group>"; };
 		49DE76173BC8BC129E8049E8B1BDA384 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4CA8FFB2F306345702A20E3FE7CE6EF7 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = Source/GCD/GCDAsyncSocket.h; sourceTree = "<group>"; };
+		4CD799F988D57406A13209387A043FE2 /* SQLite-Bridging.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "SQLite-Bridging.m"; path = "Sources/SQLiteObjc/SQLite-Bridging.m"; sourceTree = "<group>"; };
+		4DADBEECA3B88C4C04C42D72D29DF2BE /* Statement.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Statement.swift; path = Sources/SQLite/Core/Statement.swift; sourceTree = "<group>"; };
 		543C5EA81312CA6A364CE08E75D6677E /* Pods-WifiLed-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-WifiLed-acknowledgements.plist"; sourceTree = "<group>"; };
 		596DD89F0763C3EC60E8553E5AEAD785 /* Pods-WifiLed-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-WifiLed-umbrella.h"; sourceTree = "<group>"; };
+		5A0609173BD3BCD89841EA86D76E7F42 /* SQLite.swift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SQLite.swift-dummy.m"; sourceTree = "<group>"; };
 		5A999849D20293B882D3BEADCEC88658 /* Pods-WifiLedTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-WifiLedTests-umbrella.h"; sourceTree = "<group>"; };
+		5D80A41321A471E7C21C00A18B910DD5 /* RTree.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RTree.swift; path = Sources/SQLite/Extensions/RTree.swift; sourceTree = "<group>"; };
+		61A9335E919704E6D8CC7CB046ADD389 /* SQLite-Bridging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "SQLite-Bridging.h"; path = "Sources/SQLiteObjc/include/SQLite-Bridging.h"; sourceTree = "<group>"; };
+		62E3290AFE3B4D18EFEBEC0840CF1038 /* SQLite.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SQLite.h; path = Sources/SQLite/SQLite.h; sourceTree = "<group>"; };
 		643E92D920101A99396093AE3524FD32 /* Pods-WifiLed.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-WifiLed.modulemap"; sourceTree = "<group>"; };
+		68CD9F93235FB569478445E1D7B5954D /* Connection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Connection.swift; path = Sources/SQLite/Core/Connection.swift; sourceTree = "<group>"; };
+		6D460B82EA8E453A33BF59DDD1DA3F25 /* Schema.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Schema.swift; path = Sources/SQLite/Typed/Schema.swift; sourceTree = "<group>"; };
 		7072CBF1ACBDEEF699CC32F62C68FE73 /* Pods-WifiLed-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-WifiLed-dummy.m"; sourceTree = "<group>"; };
+		72436022833B971829DD78660F599663 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75DEA9A1A6BBBA9BE9641610BD374A25 /* Pods-WifiLed-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-WifiLed-acknowledgements.markdown"; sourceTree = "<group>"; };
-		75F9206B99E5B5423D6B61D755C011CC /* CocoaAsyncSocket-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CocoaAsyncSocket-prefix.pch"; sourceTree = "<group>"; };
+		75E92B3C43B261166030169F314953ED /* SQLite.swift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SQLite.swift-prefix.pch"; sourceTree = "<group>"; };
 		78EBC5D6879F1B1532E4BBE02BA4D2D5 /* Pods-WifiLedTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-WifiLedTests-frameworks.sh"; sourceTree = "<group>"; };
+		7B07E93F54293A9E2F60B8C88016DAB2 /* Pods_WifiLedTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_WifiLedTests.framework; path = "Pods-WifiLedTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CC4B3E321C39066E0BB2782F9CF980F /* CoreFunctions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CoreFunctions.swift; path = Sources/SQLite/Typed/CoreFunctions.swift; sourceTree = "<group>"; };
 		7E5A288DB9BF71EFF78FD25132815BB5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84A110336E93C3E786F9B32956E29A3E /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GCDAsyncUdpSocket.h; path = Source/GCD/GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
-		86340A99F20BEC0D9E6F18F9080B8720 /* CocoaAsyncSocket.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = CocoaAsyncSocket.modulemap; sourceTree = "<group>"; };
-		8897EF90B2D55946A61AD5A10C38B75C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		80946E63F535C7422F89254F5414E872 /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CocoaAsyncSocket.framework; path = CocoaAsyncSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		81AE090024E064DD2AF1D2D4882D093A /* fts3_tokenizer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = fts3_tokenizer.h; path = Sources/SQLiteObjc/fts3_tokenizer.h; sourceTree = "<group>"; };
+		856F29B84B09A2F68C20D7A3602ECA2C /* SQLite.swift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SQLite.swift-umbrella.h"; sourceTree = "<group>"; };
 		898EE84856EB5E52F00A964689E9F67E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
-		8E98378F2CF04086E8088C6A14347C33 /* CocoaAsyncSocket-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CocoaAsyncSocket-dummy.m"; sourceTree = "<group>"; };
+		8C42A8922FE9734E9B7B8DB08DCF1533 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GCDAsyncUdpSocket.h; path = Source/GCD/GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		8D9535FBC8D5335383C36C64660DAC20 /* Value.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Value.swift; path = Sources/SQLite/Core/Value.swift; sourceTree = "<group>"; };
+		8E6F85D4F85205EFF36408E39B97D7AC /* Query.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Query.swift; path = Sources/SQLite/Typed/Query.swift; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9DBB24BB538C1315F39C99EC0C44C92A /* CocoaAsyncSocket-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CocoaAsyncSocket-dummy.m"; sourceTree = "<group>"; };
 		A23C65618C890C81BEEBD973EDBAA0DE /* Pods-WifiLedTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WifiLedTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B0ADC4F87849CA76EC0B4679F8CF0DB5 /* Foundation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Foundation.swift; path = Sources/SQLite/Foundation.swift; sourceTree = "<group>"; };
 		B4F5DED58DD594266580EA96FA076689 /* Pods-WifiLed.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WifiLed.debug.xcconfig"; sourceTree = "<group>"; };
 		B5D67AC30769732F1FF0BD1854B2E225 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		BC76A27B6AC5FF40DBB7B0E2B8BF8014 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		D6D9F3F23E9E53DAFA379995A9E13E58 /* CocoaAsyncSocket-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CocoaAsyncSocket-umbrella.h"; sourceTree = "<group>"; };
+		BDBB61A03852BF7BBC16BF6EC453D2B7 /* FTS4.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FTS4.swift; path = Sources/SQLite/Extensions/FTS4.swift; sourceTree = "<group>"; };
+		D1E340C0A46F531EE837554EB8D85C2F /* Helpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Helpers.swift; path = Sources/SQLite/Helpers.swift; sourceTree = "<group>"; };
 		D728DF0C6ED823FEFFF5E82CD3685B82 /* Pods-WifiLedTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-WifiLedTests.modulemap"; sourceTree = "<group>"; };
-		D9D79B45AFCF3BEA248320E03E40ED3E /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CocoaAsyncSocket.framework; path = CocoaAsyncSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC4AFDD2123721CDE5D282AEC974C014 /* FTS5.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FTS5.swift; path = Sources/SQLite/Extensions/FTS5.swift; sourceTree = "<group>"; };
+		DC94EB13D80F5A0D98DC22D33307B12B /* Blob.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Blob.swift; path = Sources/SQLite/Core/Blob.swift; sourceTree = "<group>"; };
+		E4EBFCAE60B2606351DAC1224E70EE23 /* Collation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Collation.swift; path = Sources/SQLite/Typed/Collation.swift; sourceTree = "<group>"; };
+		E75297FC50EEF925715840D1FD71022B /* CustomFunctions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CustomFunctions.swift; path = Sources/SQLite/Typed/CustomFunctions.swift; sourceTree = "<group>"; };
+		E81E9E752E622F59AD70B8325E57F205 /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SQLite.framework; path = SQLite.swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9ACB1FC776AC09E016DD914AC0D60D3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA55519F7EEDDBE4C27F67092B10599E /* CocoaAsyncSocket.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = CocoaAsyncSocket.modulemap; sourceTree = "<group>"; };
 		EA8269237E8F748F1F92C695B9B7C8F8 /* Pods-WifiLedTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WifiLedTests.release.xcconfig"; sourceTree = "<group>"; };
+		EBA62DACAB4E0B0B6E1F80ADED47C611 /* Operators.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Operators.swift; path = Sources/SQLite/Typed/Operators.swift; sourceTree = "<group>"; };
+		F5F5B9D63C406F43A9D2AAFBD13A8AE9 /* Setter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Setter.swift; path = Sources/SQLite/Typed/Setter.swift; sourceTree = "<group>"; };
 		FC4833128DD61124184E78257ABFFF56 /* Pods-WifiLedTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-WifiLedTests-dummy.m"; sourceTree = "<group>"; };
 		FC56C3DABD6E3EE962880EDD5EB619B9 /* Pods-WifiLed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-WifiLed.release.xcconfig"; sourceTree = "<group>"; };
 		FE6354B3E3C395D7FCC066D65EAA5BD9 /* Pods-WifiLedTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-WifiLedTests-acknowledgements.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		2A275145030C0C351991800C45C7B760 /* Frameworks */ = {
+		3B3CB6F4A0AA2EFC715B643BCEEFA169 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				277F579922E3430F4A63206D99D00E5B /* Foundation.framework in Frameworks */,
+				B0895DA77766D973BD9F23CB7E75C3CA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7B9DFDAF86E7931FFE52ECAE184926D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3ADF4522AD180CC4612681ACBE9BF0AB /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		994895756402C77CABAC1F0698312199 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7A7246B148A004990A3094751F23A5B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,14 +184,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D4C03462EF9DAE83F378744C8A54C89F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EF3B4CDFAEEE634DC575F4F233A8E78B /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -117,6 +193,49 @@
 				4A9D6FF81BFBB1B195CCEBC8D335E2CF /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		295BA838971E4ECB9DC3FAD5AA4BBC20 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				EA55519F7EEDDBE4C27F67092B10599E /* CocoaAsyncSocket.modulemap */,
+				3F4C405D2A1993AD04B8F843C6E247D0 /* CocoaAsyncSocket.xcconfig */,
+				9DBB24BB538C1315F39C99EC0C44C92A /* CocoaAsyncSocket-dummy.m */,
+				2FFAB91664945AB844D88BBB9F124BB7 /* CocoaAsyncSocket-prefix.pch */,
+				477340FE167D625F397DC00799DC0337 /* CocoaAsyncSocket-umbrella.h */,
+				E9ACB1FC776AC09E016DD914AC0D60D3 /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/CocoaAsyncSocket";
+			sourceTree = "<group>";
+		};
+		2EB69ABFB1C0655D6C373C87AAE7D6B6 /* standard */ = {
+			isa = PBXGroup;
+			children = (
+				40BB0ACAB0AE87521CDFD9F8BB70495D /* AggregateFunctions.swift */,
+				DC94EB13D80F5A0D98DC22D33307B12B /* Blob.swift */,
+				E4EBFCAE60B2606351DAC1224E70EE23 /* Collation.swift */,
+				68CD9F93235FB569478445E1D7B5954D /* Connection.swift */,
+				7CC4B3E321C39066E0BB2782F9CF980F /* CoreFunctions.swift */,
+				E75297FC50EEF925715840D1FD71022B /* CustomFunctions.swift */,
+				396A5B2E7177AB3B292D6E03E7EE21FC /* Expression.swift */,
+				B0ADC4F87849CA76EC0B4679F8CF0DB5 /* Foundation.swift */,
+				81AE090024E064DD2AF1D2D4882D093A /* fts3_tokenizer.h */,
+				BDBB61A03852BF7BBC16BF6EC453D2B7 /* FTS4.swift */,
+				DC4AFDD2123721CDE5D282AEC974C014 /* FTS5.swift */,
+				D1E340C0A46F531EE837554EB8D85C2F /* Helpers.swift */,
+				EBA62DACAB4E0B0B6E1F80ADED47C611 /* Operators.swift */,
+				8E6F85D4F85205EFF36408E39B97D7AC /* Query.swift */,
+				5D80A41321A471E7C21C00A18B910DD5 /* RTree.swift */,
+				6D460B82EA8E453A33BF59DDD1DA3F25 /* Schema.swift */,
+				F5F5B9D63C406F43A9D2AAFBD13A8AE9 /* Setter.swift */,
+				62E3290AFE3B4D18EFEBEC0840CF1038 /* SQLite.h */,
+				61A9335E919704E6D8CC7CB046ADD389 /* SQLite-Bridging.h */,
+				4CD799F988D57406A13209387A043FE2 /* SQLite-Bridging.m */,
+				4DADBEECA3B88C4C04C42D72D29DF2BE /* Statement.swift */,
+				8D9535FBC8D5335383C36C64660DAC20 /* Value.swift */,
+			);
+			name = standard;
 			sourceTree = "<group>";
 		};
 		30F796CB486B907FF8F9246480F81D95 /* Pods-WifiLed */ = {
@@ -137,14 +256,6 @@
 			path = "Target Support Files/Pods-WifiLed";
 			sourceTree = "<group>";
 		};
-		3750E20CAB4987ACB8AB27B6C25C1D60 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				B16CCCC916CD9D13BBF53EA0C69C4615 /* CocoaAsyncSocket */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		4A9D6FF81BFBB1B195CCEBC8D335E2CF /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,18 +266,34 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		557C7CF8D4466D636F16673BAB31EEF1 /* Support Files */ = {
+		502A6D1DE69BD6A0FA2FA42797B82EC9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				86340A99F20BEC0D9E6F18F9080B8720 /* CocoaAsyncSocket.modulemap */,
-				2EF436B09B560AF848B4D98C55F61FE0 /* CocoaAsyncSocket.xcconfig */,
-				8E98378F2CF04086E8088C6A14347C33 /* CocoaAsyncSocket-dummy.m */,
-				75F9206B99E5B5423D6B61D755C011CC /* CocoaAsyncSocket-prefix.pch */,
-				D6D9F3F23E9E53DAFA379995A9E13E58 /* CocoaAsyncSocket-umbrella.h */,
-				8897EF90B2D55946A61AD5A10C38B75C /* Info.plist */,
+				80946E63F535C7422F89254F5414E872 /* CocoaAsyncSocket.framework */,
+				2D6D26D62917A63BDCE858A4617E07C2 /* Pods_WifiLed.framework */,
+				7B07E93F54293A9E2F60B8C88016DAB2 /* Pods_WifiLedTests.framework */,
+				E81E9E752E622F59AD70B8325E57F205 /* SQLite.framework */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/CocoaAsyncSocket";
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6351775385153261BF51679478F36C4D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7B244E8EEEAF79949E805643D3EDF464 /* CocoaAsyncSocket */,
+				99387D599F09F3CBC597BBEC6F639403 /* SQLite.swift */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7B244E8EEEAF79949E805643D3EDF464 /* CocoaAsyncSocket */ = {
+			isa = PBXGroup;
+			children = (
+				A32064AC2AA33F0486C973F8C07AF883 /* GCD */,
+				295BA838971E4ECB9DC3FAD5AA4BBC20 /* Support Files */,
+			);
+			name = CocoaAsyncSocket;
+			path = CocoaAsyncSocket;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -174,8 +301,8 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				122DA2E5084A4393C29BE363C764795C /* Frameworks */,
-				3750E20CAB4987ACB8AB27B6C25C1D60 /* Pods */,
-				93415B2CF025A83C75759DED2A849B5F /* Products */,
+				6351775385153261BF51679478F36C4D /* Pods */,
+				502A6D1DE69BD6A0FA2FA42797B82EC9 /* Products */,
 				BE0E66AD6AE940B32C660C6395815811 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
@@ -198,35 +325,25 @@
 			path = "Target Support Files/Pods-WifiLedTests";
 			sourceTree = "<group>";
 		};
-		93415B2CF025A83C75759DED2A849B5F /* Products */ = {
+		99387D599F09F3CBC597BBEC6F639403 /* SQLite.swift */ = {
 			isa = PBXGroup;
 			children = (
-				D9D79B45AFCF3BEA248320E03E40ED3E /* CocoaAsyncSocket.framework */,
-				26725A1457DD258652A8139E813757AA /* Pods_WifiLed.framework */,
-				1160000B4A75750BDB3DA8386DE0DA3B /* Pods_WifiLedTests.framework */,
+				2EB69ABFB1C0655D6C373C87AAE7D6B6 /* standard */,
+				E5E1844C3D20133251B65801B8305BB8 /* Support Files */,
 			);
-			name = Products;
+			name = SQLite.swift;
+			path = SQLite.swift;
 			sourceTree = "<group>";
 		};
-		982AE8715AD34D5D99A50B615809B1F1 /* GCD */ = {
+		A32064AC2AA33F0486C973F8C07AF883 /* GCD */ = {
 			isa = PBXGroup;
 			children = (
-				4CA8FFB2F306345702A20E3FE7CE6EF7 /* GCDAsyncSocket.h */,
-				1D696A8CDEBE87CDE80E57AE0E305C5F /* GCDAsyncSocket.m */,
-				84A110336E93C3E786F9B32956E29A3E /* GCDAsyncUdpSocket.h */,
-				098765466D421180F3953EF8EEDDCEF1 /* GCDAsyncUdpSocket.m */,
+				048FF919365D42D3ECFD5767BAD0B590 /* GCDAsyncSocket.h */,
+				289525E6C73B699402EAFF94D1D0793D /* GCDAsyncSocket.m */,
+				8C42A8922FE9734E9B7B8DB08DCF1533 /* GCDAsyncUdpSocket.h */,
+				3EDB5B82C8F8D9EA6AD686B5054801FC /* GCDAsyncUdpSocket.m */,
 			);
 			name = GCD;
-			sourceTree = "<group>";
-		};
-		B16CCCC916CD9D13BBF53EA0C69C4615 /* CocoaAsyncSocket */ = {
-			isa = PBXGroup;
-			children = (
-				982AE8715AD34D5D99A50B615809B1F1 /* GCD */,
-				557C7CF8D4466D636F16673BAB31EEF1 /* Support Files */,
-			);
-			name = CocoaAsyncSocket;
-			path = CocoaAsyncSocket;
 			sourceTree = "<group>";
 		};
 		BE0E66AD6AE940B32C660C6395815811 /* Targets Support Files */ = {
@@ -238,9 +355,34 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
+		E5E1844C3D20133251B65801B8305BB8 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				72436022833B971829DD78660F599663 /* Info.plist */,
+				2410675FB08FE680B007CACA379BB280 /* SQLite.swift.modulemap */,
+				2C60019939833A9DAC91B34845E254F6 /* SQLite.swift.xcconfig */,
+				5A0609173BD3BCD89841EA86D76E7F42 /* SQLite.swift-dummy.m */,
+				75E92B3C43B261166030169F314953ED /* SQLite.swift-prefix.pch */,
+				856F29B84B09A2F68C20D7A3602ECA2C /* SQLite.swift-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SQLite.swift";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		04A38763468C14FC6EC4EAB7C9E8AB09 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32EB986347C44EE6810FA5D3A00C43EB /* fts3_tokenizer.h in Headers */,
+				D94B10A565283E41085C494E4DC9F98B /* SQLite-Bridging.h in Headers */,
+				FDCA4E5C55F3AE657FC4E8D65635B51A /* SQLite.h in Headers */,
+				4A7078E8DC3F6CC11F64CB595FA19D67 /* SQLite.swift-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		066131069354C4CC132CAB645145E8F7 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -251,59 +393,78 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0D39CE9C0760ED413B0DFA5C6C6DF8F2 /* Headers */ = {
+		41FB0B649C352F985CE6E6454B3A6E33 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA422EDE3503DA484FBB354D3651C873 /* Pods-WifiLedTests-umbrella.h in Headers */,
+				0FAA77366B26B9A4A844CE3C87129B82 /* Pods-WifiLed-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		74B45688B9D8B9AF16E2A8F2C54E3E79 /* Headers */ = {
+		CEAF15C726A6BAE26C6EF70DD64B98FD /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C7AAE0A82A4CC7075841B87DF909203 /* Pods-WifiLed-umbrella.h in Headers */,
+				327B504CA7423FFCA2B9C936860DC96E /* Pods-WifiLedTests-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		18F6022CDBECB19C51CBCDA0D8F6DE12 /* Pods-WifiLedTests */ = {
+		0C679A2785C2ED89DAB9C2F27E6A1C6D /* Pods-WifiLed */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 580F9316EDC24789D57B5078007984F3 /* Build configuration list for PBXNativeTarget "Pods-WifiLedTests" */;
+			buildConfigurationList = 4D61224262D0566992BA9A595A0EDE1E /* Build configuration list for PBXNativeTarget "Pods-WifiLed" */;
 			buildPhases = (
-				64A43D872B0F902D0DF5AE0EDC5044F1 /* Sources */,
-				D4C03462EF9DAE83F378744C8A54C89F /* Frameworks */,
-				0D39CE9C0760ED413B0DFA5C6C6DF8F2 /* Headers */,
+				A66A14F5E25BDDBE603A915FE44E6D4B /* Sources */,
+				7B9DFDAF86E7931FFE52ECAE184926D7 /* Frameworks */,
+				41FB0B649C352F985CE6E6454B3A6E33 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				82F0053A47A8868F5FE8463CED5CF3E4 /* PBXTargetDependency */,
-			);
-			name = "Pods-WifiLedTests";
-			productName = "Pods-WifiLedTests";
-			productReference = 1160000B4A75750BDB3DA8386DE0DA3B /* Pods_WifiLedTests.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		82FDA54793DAE73F877B0DD78AA68518 /* Pods-WifiLed */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1EC09D46D95657B9814E4F90DBE5A0A6 /* Build configuration list for PBXNativeTarget "Pods-WifiLed" */;
-			buildPhases = (
-				52C21DB9E1A8F3AAB39B5336D3F1356F /* Sources */,
-				2A275145030C0C351991800C45C7B760 /* Frameworks */,
-				74B45688B9D8B9AF16E2A8F2C54E3E79 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				32E5B27B2CF4E815155FFB3F92158C94 /* PBXTargetDependency */,
+				93450A1DFFE06660EE864ED9B1DC265A /* PBXTargetDependency */,
+				7B5407BE67B604695CE86115294993CF /* PBXTargetDependency */,
 			);
 			name = "Pods-WifiLed";
 			productName = "Pods-WifiLed";
-			productReference = 26725A1457DD258652A8139E813757AA /* Pods_WifiLed.framework */;
+			productReference = 2D6D26D62917A63BDCE858A4617E07C2 /* Pods_WifiLed.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		416EC48E8E323800B1E1F843B7722559 /* SQLite.swift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AEB7485B3A19AF3AB33032FE65D83033 /* Build configuration list for PBXNativeTarget "SQLite.swift" */;
+			buildPhases = (
+				001A486CF25389431A46537F6122858B /* Sources */,
+				994895756402C77CABAC1F0698312199 /* Frameworks */,
+				04A38763468C14FC6EC4EAB7C9E8AB09 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SQLite.swift;
+			productName = SQLite.swift;
+			productReference = E81E9E752E622F59AD70B8325E57F205 /* SQLite.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		45499A9351AB06A192F692C4EA4E1D9D /* Pods-WifiLedTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DE65C503967AF9ABA3529CEBE1B8CC18 /* Build configuration list for PBXNativeTarget "Pods-WifiLedTests" */;
+			buildPhases = (
+				36B441B922564ADA90E7179EB51ED0C8 /* Sources */,
+				3B3CB6F4A0AA2EFC715B643BCEEFA169 /* Frameworks */,
+				CEAF15C726A6BAE26C6EF70DD64B98FD /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				975FAB84522C42D7406008B36A5C5B57 /* PBXTargetDependency */,
+				A84891126AF242A485E20A972E0A3176 /* PBXTargetDependency */,
+			);
+			name = "Pods-WifiLedTests";
+			productName = "Pods-WifiLedTests";
+			productReference = 7B07E93F54293A9E2F60B8C88016DAB2 /* Pods_WifiLedTests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		AC0D2D2B4EE7C873431AB3502859CA60 /* CocoaAsyncSocket */ = {
@@ -320,7 +481,7 @@
 			);
 			name = CocoaAsyncSocket;
 			productName = CocoaAsyncSocket;
-			productReference = D9D79B45AFCF3BEA248320E03E40ED3E /* CocoaAsyncSocket.framework */;
+			productReference = 80946E63F535C7422F89254F5414E872 /* CocoaAsyncSocket.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -340,31 +501,59 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 93415B2CF025A83C75759DED2A849B5F /* Products */;
+			productRefGroup = 502A6D1DE69BD6A0FA2FA42797B82EC9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				AC0D2D2B4EE7C873431AB3502859CA60 /* CocoaAsyncSocket */,
-				82FDA54793DAE73F877B0DD78AA68518 /* Pods-WifiLed */,
-				18F6022CDBECB19C51CBCDA0D8F6DE12 /* Pods-WifiLedTests */,
+				0C679A2785C2ED89DAB9C2F27E6A1C6D /* Pods-WifiLed */,
+				45499A9351AB06A192F692C4EA4E1D9D /* Pods-WifiLedTests */,
+				416EC48E8E323800B1E1F843B7722559 /* SQLite.swift */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		52C21DB9E1A8F3AAB39B5336D3F1356F /* Sources */ = {
+		001A486CF25389431A46537F6122858B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE40757C2056E18C3C355D0CBA2C3030 /* Pods-WifiLed-dummy.m in Sources */,
+				559356AAC87ABF428B3771EB94910C30 /* AggregateFunctions.swift in Sources */,
+				65243490EC8A12F01F702E051B897DE5 /* Blob.swift in Sources */,
+				4B303B2CCBACEFC89F6FB743B0885ECC /* Collation.swift in Sources */,
+				DB36888E82E2388B72DD2A54782CDF04 /* Connection.swift in Sources */,
+				B6BBA151A3764A81716AC2D03AC64349 /* CoreFunctions.swift in Sources */,
+				DAF2400AC8957A2A015531B53270834F /* CustomFunctions.swift in Sources */,
+				2D69AC551AC1439230FC56A3C1A2EC33 /* Expression.swift in Sources */,
+				1254AF23F61A5FD10D508576B78E3E90 /* Foundation.swift in Sources */,
+				FED4FF52B78837EDFF5322FCCCC66753 /* FTS4.swift in Sources */,
+				2A29B1D2E847BEADC723883298EDEF49 /* FTS5.swift in Sources */,
+				B95D49D867DBFC3C625CFEDE26FF505D /* Helpers.swift in Sources */,
+				7DF2A7997D8EC5CE48085F88FC2024EA /* Operators.swift in Sources */,
+				9921A77805062339CA70DE3AA4FDFF9E /* Query.swift in Sources */,
+				2607AFC42E7E07D68F268BAD061257E4 /* RTree.swift in Sources */,
+				47097DE2D17E6E6CDC89B8190CC1F04C /* Schema.swift in Sources */,
+				D082FF0613A0EE4713F35BABF9D4D6A1 /* Setter.swift in Sources */,
+				C7861B50A72783BAB2C4ECF4C275A489 /* SQLite-Bridging.m in Sources */,
+				130AF8C95428D45E1ADD28C3D72B88DB /* SQLite.swift-dummy.m in Sources */,
+				F5B9C03BFC41B50DB6EC1588FA7B7E8D /* Statement.swift in Sources */,
+				A3A908EA774F9957480AE1BFF7621961 /* Value.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		64A43D872B0F902D0DF5AE0EDC5044F1 /* Sources */ = {
+		36B441B922564ADA90E7179EB51ED0C8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6A49DCE383F8861EAD37EE73FCA3B68 /* Pods-WifiLedTests-dummy.m in Sources */,
+				C41BBA8B882342BEE74B34908D8DB2AB /* Pods-WifiLedTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A66A14F5E25BDDBE603A915FE44E6D4B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0616C77408DC5F71B3399368B10E539 /* Pods-WifiLed-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,21 +570,68 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		32E5B27B2CF4E815155FFB3F92158C94 /* PBXTargetDependency */ = {
+		7B5407BE67B604695CE86115294993CF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = CocoaAsyncSocket;
-			target = AC0D2D2B4EE7C873431AB3502859CA60 /* CocoaAsyncSocket */;
-			targetProxy = CC3F55C8B51337BF9A4130504A97EBC9 /* PBXContainerItemProxy */;
+			name = SQLite.swift;
+			target = 416EC48E8E323800B1E1F843B7722559 /* SQLite.swift */;
+			targetProxy = 2E495191DBC7A0F3662FDB449A94B7E6 /* PBXContainerItemProxy */;
 		};
-		82F0053A47A8868F5FE8463CED5CF3E4 /* PBXTargetDependency */ = {
+		93450A1DFFE06660EE864ED9B1DC265A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CocoaAsyncSocket;
 			target = AC0D2D2B4EE7C873431AB3502859CA60 /* CocoaAsyncSocket */;
-			targetProxy = D30455B24F4F48CC623849848A123AD2 /* PBXContainerItemProxy */;
+			targetProxy = 80C5CB14659137D4BC5376F83E9EC701 /* PBXContainerItemProxy */;
+		};
+		975FAB84522C42D7406008B36A5C5B57 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocoaAsyncSocket;
+			target = AC0D2D2B4EE7C873431AB3502859CA60 /* CocoaAsyncSocket */;
+			targetProxy = A473FE4661C72223B7B7EE6BAE3F3548 /* PBXContainerItemProxy */;
+		};
+		A84891126AF242A485E20A972E0A3176 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SQLite.swift;
+			target = 416EC48E8E323800B1E1F843B7722559 /* SQLite.swift */;
+			targetProxy = 4EC2BB3CBE5A0FEB971583B418EADF86 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		07E61069C0FFADE99A6AAD6F259B4547 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC56C3DABD6E3EE962880EDD5EB619B9 /* Pods-WifiLed.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-WifiLed/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-WifiLed/Pods-WifiLed.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_WifiLed;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		13E96A645A77DAD1FD4F541F18F5DDBF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -440,9 +676,45 @@
 			};
 			name = Debug;
 		};
-		18D500AC5D461CDD9CA5EA82693C8F01 /* Release */ = {
+		1D8B0845FEBC5171ECC3F829FA52BF3B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FC56C3DABD6E3EE962880EDD5EB619B9 /* Pods-WifiLed.release.xcconfig */;
+			baseConfigurationReference = A23C65618C890C81BEEBD973EDBAA0DE /* Pods-WifiLedTests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-WifiLedTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-WifiLedTests/Pods-WifiLedTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_WifiLedTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		3C145084FFD55981771C7BCD7970A886 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C60019939833A9DAC91B34845E254F6 /* SQLite.swift.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -455,27 +727,57 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-WifiLed/Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/SQLite.swift/SQLite.swift-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SQLite.swift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-WifiLed/Pods-WifiLed.modulemap";
+				MODULEMAP_FILE = "Target Support Files/SQLite.swift/SQLite.swift.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_WifiLed;
+				PRODUCT_NAME = SQLite;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
-		41F668F317CA4142A2029B1BB51FC000 /* Debug */ = {
+		4908B93FB85BD63C74E7461730C540FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C60019939833A9DAC91B34845E254F6 /* SQLite.swift.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SQLite.swift/SQLite.swift-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SQLite.swift/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SQLite.swift/SQLite.swift.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = SQLite;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		60F75F8FDCB2D2D4F432018A6BE34EA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B4F5DED58DD594266580EA96FA076689 /* Pods-WifiLed.debug.xcconfig */;
 			buildSettings = {
@@ -504,50 +806,16 @@
 				PRODUCT_NAME = Pods_WifiLed;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		6721A9ED2D0922872F2F94EAC9762721 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = EA8269237E8F748F1F92C695B9B7C8F8 /* Pods-WifiLedTests.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-WifiLedTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-WifiLedTests/Pods-WifiLedTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_WifiLedTests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		7389DCC7A730CEB77EF53651929E7A07 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EF436B09B560AF848B4D98C55F61FE0 /* CocoaAsyncSocket.xcconfig */;
+			baseConfigurationReference = 3F4C405D2A1993AD04B8F843C6E247D0 /* CocoaAsyncSocket.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -579,7 +847,7 @@
 		};
 		757750111ED88725A2D39D8D76BC65DB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EF436B09B560AF848B4D98C55F61FE0 /* CocoaAsyncSocket.xcconfig */;
+			baseConfigurationReference = 3F4C405D2A1993AD04B8F843C6E247D0 /* CocoaAsyncSocket.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -603,6 +871,41 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		7622DE94A58A03D20FA7B60D5F0F4C49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA8269237E8F748F1F92C695B9B7C8F8 /* Pods-WifiLedTests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-WifiLedTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-WifiLedTests/Pods-WifiLedTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_WifiLedTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -649,53 +952,9 @@
 			};
 			name = Release;
 		};
-		F46289A37A1F6BB7E548F56D80739B18 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A23C65618C890C81BEEBD973EDBAA0DE /* Pods-WifiLedTests.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-WifiLedTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-WifiLedTests/Pods-WifiLedTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_WifiLedTests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1EC09D46D95657B9814E4F90DBE5A0A6 /* Build configuration list for PBXNativeTarget "Pods-WifiLed" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				41F668F317CA4142A2029B1BB51FC000 /* Debug */,
-				18D500AC5D461CDD9CA5EA82693C8F01 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -705,11 +964,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		580F9316EDC24789D57B5078007984F3 /* Build configuration list for PBXNativeTarget "Pods-WifiLedTests" */ = {
+		4D61224262D0566992BA9A595A0EDE1E /* Build configuration list for PBXNativeTarget "Pods-WifiLed" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F46289A37A1F6BB7E548F56D80739B18 /* Debug */,
-				6721A9ED2D0922872F2F94EAC9762721 /* Release */,
+				60F75F8FDCB2D2D4F432018A6BE34EA0 /* Debug */,
+				07E61069C0FFADE99A6AAD6F259B4547 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AEB7485B3A19AF3AB33032FE65D83033 /* Build configuration list for PBXNativeTarget "SQLite.swift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4908B93FB85BD63C74E7461730C540FE /* Debug */,
+				3C145084FFD55981771C7BCD7970A886 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DE65C503967AF9ABA3529CEBE1B8CC18 /* Build configuration list for PBXNativeTarget "Pods-WifiLedTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D8B0845FEBC5171ECC3F829FA52BF3B /* Debug */,
+				7622DE94A58A03D20FA7B60D5F0F4C49 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

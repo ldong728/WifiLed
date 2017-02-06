@@ -2,13 +2,18 @@ PODS:
   - CocoaAsyncSocket (7.5.1):
     - CocoaAsyncSocket/GCD (= 7.5.1)
   - CocoaAsyncSocket/GCD (7.5.1)
+  - SQLite.swift (0.11.2):
+    - SQLite.swift/standard (= 0.11.2)
+  - SQLite.swift/standard (0.11.2)
 
 DEPENDENCIES:
   - CocoaAsyncSocket
+  - SQLite.swift (~> 0.11.2)
 
 SPEC CHECKSUMS:
   CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
+  SQLite.swift: 670c3e9e0a806bbfd56a3de5d530768dc0e6fe7c
 
-PODFILE CHECKSUM: 206964e99083186e8e82ca580c741c663152277c
+PODFILE CHECKSUM: f28c4070b94791e2d46acc1cdb747c5428d3aa58
 
 COCOAPODS: 1.1.1
