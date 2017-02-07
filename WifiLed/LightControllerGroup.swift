@@ -90,7 +90,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         objc_sync_enter(mSendBuffer)
         mSendBuffer[ip]=newList!
         objc_sync_exit(mSendBuffer)
-        mSendSemaphore.signal()
+//        mSendSemaphore.signal()
     }
     internal func putCodeToQueue(code:[UInt8]){
         let codeTypeSet=getCodeTypeSet(data: code)

@@ -12,6 +12,7 @@ import XCTest
 
 class WifiLedTests: XCTestCase {
     var lc:LightControllerGroup!
+//    var db:Db!
     override func setUp() {
 
         lc=LightControllerGroup()
@@ -105,6 +106,16 @@ class WifiLedTests: XCTestCase {
         }
         XCTAssert(true);
         
+    }
+    func testDb(){
+        let sDb=Db()
+        sDb.deleteTbl()
+        sDb.createTbls()
+        sDb.addUser("不可言说")
+        print(try! sDb.db.scalar(sDb.USER_TBL.count))
+//        sDb.insert()
+//        sDb.select()
+        XCTAssert(sDb.tempStatus)
     }
     
 }
