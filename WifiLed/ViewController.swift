@@ -93,7 +93,7 @@ extension wkScriptMessageHandler {
         print(message.name)
         print((message.body as AnyObject).description)
         mUdpController.startSendQueue()
-        let data=mUdpController.mLightsController.setManual(2, level: 70)
+        let data=mLightsController.setManual(2, level: 70)
         mUdpController.putCodeToQueue(code: data)
         
         
