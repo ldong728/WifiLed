@@ -13,6 +13,7 @@ class ViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScrip
     var wk: WKWebView!
     var mUdpController: LightControllerGroup!
     var mLightController: LightsController!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +37,11 @@ class ViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScrip
         self.wk = WKWebView(frame: self.view.frame,configuration: conf)
         self.wk.navigationDelegate = self
         self.wk.uiDelegate = self
+
+        
         self.mUdpController = LightControllerGroup()
         self.mLightController = LightsController()
+        
         
         
         if #available(iOS 9.0, *) {
@@ -93,7 +97,7 @@ extension wkScriptMessageHandler {
         print(message.name)
         print((message.body as AnyObject).description)
         mUdpController.startSendQueue()
-        let data=mLightsController.setManual(2, level: 70)
+        let data=mLightController.setManual(2, level: 70)
         mUdpController.putCodeToQueue(code: data)
         
         

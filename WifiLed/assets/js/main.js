@@ -16,7 +16,7 @@ function l(data){
     console.log(data);
 }
 function getUserList(){
-    if(!debug)return window.light.getUserList();
+    if(!debug)return window.w
     return  '{U_ID:"1",U_NAME:"张三",U_EMAIL:"god@163.com",U_PHONE:"13566603735",U_DEFAULT:1},{U_ID:"9527",U_NAME:"test",U_EMAIL:"abc@abc.com",U_PHONE:"123456789",U_DEFAULT:"0"}'
 }
 function signIn(data){

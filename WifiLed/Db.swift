@@ -53,6 +53,7 @@ class Db : NSObject {
     var SYN=Expression<Int64>("SYN")
     var mCurrentUserId:Int64 = -1;
     var mCurrentGroupId:Int64 = -1;
+    var mCurrentGroupType=Db.GROUP_TYPE_LOCAL
     
     
     var tempStatus:Bool=true
@@ -76,6 +77,7 @@ class Db : NSObject {
             print(error)
         }
     }
+    
     func initDb(){
             mCurrentUserId=addUser("defaultUser")
     }
@@ -90,7 +92,7 @@ class Db : NSObject {
         }
     }
     func addGroup(groupName:String) -> Int64{
-        let data=GROUP_TBL.insert(U_ID <- Int64(mCurrentUserId),G_NAME <- groupName,G_TYPE <- Db.GROUP_TYPE_LOCAL)
+        let data=GROUP_TBL.insert(U_ID <- mCurrentUserId,G_NAME <- groupName,G_TYPE <- Db.GROUP_TYPE_LOCAL)
         do {
             let id=try db.run(data)
             return id
@@ -99,10 +101,43 @@ class Db : NSObject {
             return -1
         }
     }
+    func setGroupId(gId:Int){
+        self.mCurrentGroupId=Int64(gId)
+        let query=GROUP_TBL.filter(G_ID == self.mCurrentGroupId)
+        do{
+            for data in try db.prepare(query){
+                mCurrentGroupType=data[G_TYPE]
+            }
+        }catch{
+            print(error)
+        }
+    }
+    
+    func addDevice(mac:String) ->Int64{
+        let data=DEVICE_TBL.insert(D_MAC <- mac,D_TYPE <- "light", D_NAME <- "light", G_ID <- mCurrentGroupId)
+        do{
+            let id=try db.run(data)
+            return id
+        }catch{
+            print(error)
+            return -1
+        }
+    }
+    func getDeviceMacList() ->[String]{
+        let query=DEVICE_TBL.filter(G_ID == mCurrentGroupId)
+        var returnData = [String]()
+        for data in try! db.prepare(query){
+            returnData.append(data[D_MAC])
+        }
+        return returnData
+    }
+    
     func changeGroupType(ssid:String,pasd:String){
         let filter = GROUP_TBL.filter(G_ID == mCurrentGroupId)
         do{
             try db.run(filter.update(G_SSID <- ssid, G_SSID_PASD <- pasd))
+            mCurrentGroupType = Db.GROUP_TYPE_ONLINE
+            
         }catch{
             print(error)
         }

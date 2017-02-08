@@ -22,13 +22,14 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     fileprivate var mSendBuffer:Dictionary<String,Set<Code>>=[String:Set<Code>]()
     fileprivate var buffer:[String:DataPack?]=[String:DataPack]()
     fileprivate var mSocket: GCDAsyncUdpSocket!
-//    internal var mLightsController : LightsController
-    
+    fileprivate let mLightController : LightsController
+    fileprivate let mDb:Db
     
     
     override init(){
         mQueue=DispatchQueue(label: "data_udp")
-//        mLightsController = LightsController()
+        mLightController = LightsController()
+        mDb=Db()
         super.init()
         mSocket=GCDAsyncUdpSocket(delegate: self, delegateQueue: DispatchQueue.global())
         initBuffers()
@@ -38,10 +39,25 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         
     }
     fileprivate func initBuffers(){
-        
         mSendBuffer["172.22.11.1"]=Set<Code>()
         
     }
+    internal func initGroup(){
+        mIPMap.removeAll();
+        buffer.removeAll();
+        objc_sync_enter(mSendBuffer)
+        mSendBuffer.removeAll()
+        objc_sync_exit(mSendBuffer)
+        
+        
+//        let sGroupMode=mDb.mCurrentGroupType
+        let defaultIp = mDb.mCurrentGroupType==Db.GROUP_TYPE_ONLINE ? "0.0.0.0" : LightControllerGroup.DEFALT_IP
+            let macList=mDb.getDeviceMacList()
+            for mac in macList {
+                mIPMap[mac]=defaultIp            }
+
+    }
+    
     
     fileprivate func initUdp(){
         do{
@@ -108,6 +124,27 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         objc_sync_exit(mSendBuffer)
         mSendSemaphore.signal()
     }
+    internal func setAuto(color:Int,time:Int,level:Int,send:Bool=true){
+        let data=mLightController.set(color, time: time, level: level)
+        putCodeToQueue(code: data!)
+    }
+    internal func setManual(color:Int,level:Int){
+        let data=mLightController.setManual(color, level: level)
+        putCodeToQueue(code: data)
+    }
+    internal func setCloud(probability:Int,mask:Int,stu:Bool){
+        let data=mLightController.setCloud(stu, probability: probability, mask: mask)
+        putCodeToQueue(code: data)
+    }
+    internal func setFlash(probability:Int,level:Int,stu:Bool){
+        let data=mLightController.setFlash(stu, level: level, probability: probability)
+        putCodeToQueue(code: data)
+    }
+    internal func setMoon(startH:Int,startM:Int,endH:Int,endM:Int,stu:Bool){
+        let data=mLightController.setMoon(stu, startH: startH, startM: startM, endH: endH, endM: endM)
+        putCodeToQueue(code: data)
+    }
+    
     
     fileprivate func getCodeSet(data:[UInt8]) -> Set<Code>{
         var confirmed :Set<Code>=Set<Code>()
@@ -182,6 +219,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
                 reGroupSendQueue(pack: sData!)
             }
         }else{
+            
             print("from other port")
         }
         
