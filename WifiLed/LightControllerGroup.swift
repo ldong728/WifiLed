@@ -22,13 +22,13 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     fileprivate var mSendBuffer:Dictionary<String,Set<Code>>=[String:Set<Code>]()
     fileprivate var buffer:[String:DataPack?]=[String:DataPack]()
     fileprivate var mSocket: GCDAsyncUdpSocket!
-    internal var mLightsController : LightsController
+//    internal var mLightsController : LightsController
     
     
     
     override init(){
         mQueue=DispatchQueue(label: "data_udp")
-        mLightsController = LightsController()
+//        mLightsController = LightsController()
         super.init()
         mSocket=GCDAsyncUdpSocket(delegate: self, delegateQueue: DispatchQueue.global())
         initBuffers()
