@@ -123,6 +123,7 @@ class Db : NSObject {
             return -1
         }
     }
+    
     func getDeviceMacList() ->[String]{
         let query=DEVICE_TBL.filter(G_ID == mCurrentGroupId)
         var returnData = [String]()

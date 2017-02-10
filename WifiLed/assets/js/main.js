@@ -2,8 +2,8 @@
 //    var
 //
 //}
-var debug=true;
 //var debug=true;
+var debug=false;
 
 function getJsonString(json){
     var str=JSON.stringify(json);
@@ -25,7 +25,7 @@ function signIn(data){
 function getUserInf(){
     //alert("get user inf");
     if(!debug){
-        return window.light.getUserInf();
+        return window.webkit.messageHandlers.light.postMessage('{method:"getGroupList",type:data}');
     }else{
         return '{U_ID:"9527",U_NAME:"test",U_EMAIL:"abc@abc.com",U_PHONE:"123456789",U_DEFAULT:1}'
     }
@@ -35,7 +35,9 @@ function getUserInfOnline(){
 
 }
 function getGroupList(data){
-    if(!debug)return window.light.getGroupList(data);
+    if(!debug){
+        window.webkit.messageHandlers.light.postMessage(getJsonString({method:"getGroupList",type:data}));
+    }
     return '[{"G_NAME":"abc","G_INF":"","U_ID":"1","G_TYPE":"local","G_ID":"1"}]';
 }
 function getGroupInf(){

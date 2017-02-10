@@ -12,8 +12,8 @@ class ViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScrip
     
     var wk: WKWebView!
     var mUdpController: LightControllerGroup!
-    var mLightController: LightsController!
-
+//    var mLightController: LightsController!
+    var jb:JsBridge!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,19 +28,21 @@ class ViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScrip
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let conf=WKWebViewConfiguration()
-        let filePath=Bundle.main.path(forResource: "assets/index", ofType: "html")
+                let conf=WKWebViewConfiguration()
+        let filePath=Bundle.main.path(forResource: "assets/equip_index", ofType: "html")
         var fileURL=URL(fileURLWithPath: filePath!);
         //        var filePath = NSBundle.mainBundle().pathForResource("file", ofType: "pdf");
-        conf.userContentController.add(self, name: "wifi")
+//        conf.userContentController.add(self, name: "wifi")
         conf.userContentController.add(self, name: "light")
         self.wk = WKWebView(frame: self.view.frame,configuration: conf)
         self.wk.navigationDelegate = self
         self.wk.uiDelegate = self
+        self.jb=JsBridge.createJsBridge(wk: self.wk)
+
 
         
         self.mUdpController = LightControllerGroup()
-        self.mLightController = LightsController()
+//        self.mLightController = LightsController()
         
         
         
@@ -96,9 +98,11 @@ extension wkScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         print(message.name)
         print((message.body as AnyObject).description)
-        mUdpController.startSendQueue()
-        let data=mLightController.setManual(2, level: 70)
-        mUdpController.putCodeToQueue(code: data)
+        jb.handleJs(msg: message, controller: mUdpController)
+//        mUdpController.startSendQueue()
+//        mUdpController.searchDevice()
+//        let data=mLightController.setManual(2, level: 70)
+//        mUdpController.putCodeToQueue(code: data)
         
         
         

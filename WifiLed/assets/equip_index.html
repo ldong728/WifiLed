@@ -38,6 +38,10 @@
 
         $('.equip-list').empty();
         var list=getGroupList('all');
+        function getGroupListReply(data){
+            alert(data)
+            return "ok 啦"
+        }
         if('[]'!=list){
             list=eval('('+list+')');
             $.each(list,function(k,v){
@@ -49,7 +53,7 @@
         }
         $(document).on('click','.group-inf',function(){
             //window.light.chooseGroup($(this).attr('id'));
-            window.webkit.messageHandlers.light.postMessage("test")
+            //window.webkit.messageHandlers.light.postMessage("test")
             headerTo('equip_info.html');
         })
 
