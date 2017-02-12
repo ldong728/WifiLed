@@ -37,12 +37,15 @@ class WifiLedTests: XCTestCase {
         }
     }
     func testMethod(){
-        let CodeA=Code([0x99,0x89])
-        let CodeB=Code([0x99,0x88])
-        print(CodeA==CodeB)
+//        let CodeA=""
+//        let CodeB=Code([0x99,0x88])
+//        print(CodeA==CodeB)
+        let temp:String = " abc \n cde"
+        var trim = temp.replacingOccurrences(of: "\n", with: "")
         
-        
-        
+//        let trim = temp.
+        print(temp)
+        print(trim)
         XCTAssert(true)
     }
     func temp(){
@@ -103,8 +106,10 @@ class WifiLedTests: XCTestCase {
         let sDb=Db()
         sDb.deleteTbl()
         sDb.createTbls()
-        sDb.addUser("不可言说")
-        print(try! sDb.db.scalar(sDb.USER_TBL.count))
+//        sDb.addUser("不可言说")
+//        sDb.addGroup(groupName: "测试分组")
+        print(sDb.getGroupList(type: "all"))
+//        print(try! sDb.db.scalar(sDb.USER_TBL.count))
 //        sDb.insert()
 //        sDb.select()
         XCTAssert(sDb.tempStatus)

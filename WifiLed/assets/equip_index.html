@@ -35,22 +35,29 @@
         <a href="set_index.html" class="n4">个人中心</a>
     </div>
     <script>
-
+        searchLight()
+        function newDevice(){
+            headerTo('equip_add_step3.html')
+        }
+        function groupSelected(groupId){
+            headerTo('equip_info.html')
+        }
+    
         $('.equip-list').empty();
-        var list=getGroupList('all');
+        getGroupList('all');
         function getGroupListReply(data){
-            alert(data)
-            return "ok 啦"
+            if('[]'!=data){
+                list=eval('('+data+')');
+                $.each(list,function(k,v){
+                       var content='<div class="li"><a class="group-inf" id="'+v.G_ID+'" data-id="'+ v.G_ID+'">'+ v.G_NAME+'</a></div>'
+                       $('.equip-list').append(content);
+                       });
+            }else{
+                $('.equip-list').append("当前无设备");
+            }
+            
         }
-        if('[]'!=list){
-            list=eval('('+list+')');
-            $.each(list,function(k,v){
-                var content='<div class="li"><a class="group-inf" id="'+v.G_ID+'" data-id="'+ v.G_ID+'">'+ v.G_NAME+'</a></div>'
-                $('.equip-list').append(content);
-            });
-        }else{
-            $('.equip-list').append("当前无设备");
-        }
+    
         $(document).on('click','.group-inf',function(){
             //window.light.chooseGroup($(this).attr('id'));
             //window.webkit.messageHandlers.light.postMessage("test")

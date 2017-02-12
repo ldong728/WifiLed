@@ -18,6 +18,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     fileprivate var mThreadFlag:Bool=false
     fileprivate var mSendSemaphore=DispatchSemaphore(value:1)
     fileprivate let mQueue : DispatchQueue
+    fileprivate var mTotalDeviceLinked:[String:String]=[String:String]()
     fileprivate var mIPMap:[String:String]=[String:String]()
     fileprivate var mSendBuffer:Dictionary<String,Set<Code>>=[String:Set<Code>]()
     fileprivate var buffer:[String:DataPack?]=[String:DataPack]()
@@ -34,7 +35,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         mSocket=GCDAsyncUdpSocket(delegate: self, delegateQueue: DispatchQueue.global())
         initBuffers()
         initUdp()
-
+        
         
         
     }
@@ -52,7 +53,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
 //        mSendBuffer["172.22.11.1"]=Set<Code>()
         
     }
-    fileprivate func initGroup(){
+    public func initGroup(){
         mIPMap.removeAll();
         buffer.removeAll();
         let defaultIp = mDb.mCurrentGroupType==Db.GROUP_TYPE_ONLINE ? "0.0.0.0" : LightControllerGroup.DEFALT_IP
@@ -61,6 +62,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
             mIPMap[mac]=defaultIp
         }
         initBuffers();
+        mLightController.initCode(codeCollect: mDb.getCode())
     }
     fileprivate func reflushDeviceIp(mac:String,newip:String){
         if nil != mIPMap[mac]{
@@ -184,24 +186,80 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         }
     }
     fileprivate func preReceiveHandler(receiveDataPack:DataPack) ->Bool{
-        let rcvString=String(bytes: receiveDataPack.getData(), encoding: String.Encoding.ascii)
-        let rcvList=rcvString!.components(separatedBy: ",")
-        let ip:String?=rcvList[0]
-        let mac:String?=rcvList[1]
-        if ip != nil && mac != nil {
-            send(message: "AT+ENTM\r\n", ip: receiveDataPack.getIp(), port: receiveDataPack.getPort())
-            if ip==LightControllerGroup.DEFALT_IP && mIPMap.count==0 {
-               _=mDb.addDevice(mac: mac!)
-                initGroup()
-                return true
+        let rcvData=receiveDataPack.getData()
+        if 0xff==rcvData[0] {
+            if 0x81==rcvData[3] {
+                let ssidList=DataHandler.Array2Json(array: DataHandler.decodeWifiData(data: rcvData))
+                JsBridge.getCurrentJsBridge()?.postToJs(method: "getWifi", param: ssidList)
+            }
+            if 0x82==rcvData[3] {
                 
-            }else{
-                reflushDeviceIp(mac: mac!, newip: ip!)
-                return true
             }
             
+            return true;
         }
+        
+        let rcvString=String(bytes: receiveDataPack.getData(), encoding: String.Encoding.ascii)
+        let rcvList=rcvString!.components(separatedBy: ",")
+        if rcvList.count>1 {
+            let ip:String?=rcvList[0]
+            let mac:String?=rcvList[1]
+            if ip != nil && mac != nil {
+                send(message: "AT+ENTM\r\n", ip: receiveDataPack.getIp(), port: receiveDataPack.getPort())
+                mTotalDeviceLinked[mac!]=ip!
+                if -1 == mDb.mCurrentGroupId { //是否为首页上
+                    
+                    if ip == LightControllerGroup.DEFALT_IP {//AP模式
+                        let group_id=mDb.getDeviceGroupId(mac: mac!)
+                        if -1 != group_id { //设备已在列表中
+                            mDb.setGroupId(gId: group_id)
+                            initGroup()
+                            JsBridge.getCurrentJsBridge()!.postToJs(method: "groupSelected", param: String(group_id))
+                            return true
+                        }else{
+                            JsBridge.getCurrentJsBridge()!.postToJs(method: "newDevice")
+                            return true
+                        }
+                    }else{//Sta模式
+                        return true
+                    }
+                }else{//非首页上
+                    if ip == LightControllerGroup.DEFALT_IP {//本地模式
+                        return true
+                    }else{//在线模式
+                        reflushDeviceIp(mac: mac!, newip: ip!)
+                        return true
+                    }
+                    
+                }
+                //            if ip == LightControllerGroup.DEFALT_IP {
+                //                if -1 == mDb.mCurrentGroupId {
+                //
+                ////                    JsBridge.getCurrentJsBridge()!.postToJs(method: "newDevice")
+                //                }
+                //
+                //            }
+                //
+                //            if -1==mDb.mCurrentGroupId && LightControllerGroup.DEFALT_IP == ip {
+                //
+                //
+                //            }else if ip==LightControllerGroup.DEFALT_IP && mIPMap.count==0 {
+                //               _=mDb.addDevice(mac: mac!)
+                //                initGroup()
+                //                return true
+                //
+                //            }else{
+                //                reflushDeviceIp(mac: mac!, newip: ip!)
+                //                return true
+                //            }
+                //
+            } 
+        }
+        
         return false
+
+        
+        
     }
     internal func startSendQueue(){
         mThreadFlag = true
@@ -230,9 +288,26 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         let data=mLightController.setMoon(stu, startH: startH, startM: startM, endH: endH, endM: endM)
         putCodeToQueue(code: data)
     }
-    internal func searchDevice(){
-        send(message:"www.usr.cn",ip:"255.255.255.255",port:48899)
+    internal func getGroupList(type:String) ->String{
+        return mDb.getGroupList(type: type)
     }
+    internal func searchDevice(){
+        send(message:"www.usr.cn",ip:LightControllerGroup.BROADCAST_IP,port:LightControllerGroup.CTR_PORT)
+    }
+    internal func addGroup(name:String){
+        _=mDb.addGroup(groupName: name)
+        _=mDb.addDevice(mac: mTotalDeviceLinked.popFirst()!.0)
+        initGroup()
+        
+    }
+    internal func searchWifi(){
+        send(byteMessage: [0xff,0x00,0x01,0x01,0x02], ip: LightControllerGroup.DEFALT_IP, port: LightControllerGroup.CTR_PORT)
+    }
+    internal func ap2Sta(ssid:String,pasd:String){
+        send(byteMessage: DataHandler.generateLinkData(ssid: ssid, pasd: pasd), ip: LightControllerGroup.DEFALT_IP, port: LightControllerGroup.CTR_PORT)
+    }
+    
+    
 
     internal func send(message:String,ip:String=LightControllerGroup.DEFALT_IP,port:UInt16 = LightControllerGroup.DATA_PORT){
         print(message);

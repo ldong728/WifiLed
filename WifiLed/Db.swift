@@ -77,6 +77,18 @@ class Db : NSObject {
             print(error)
         }
     }
+    func getDeviceGroupId(mac:String) ->Int{
+        var id:Int = -1
+        let query = DEVICE_TBL.filter(D_MAC == mac);
+        do{
+            for data in try db.prepare(query){
+                id=Int(data[G_ID])
+            }
+        }catch{
+            print(error)
+        }
+        return id
+    }
     
     func initDb(){
             mCurrentUserId=addUser("defaultUser")
@@ -95,11 +107,38 @@ class Db : NSObject {
         let data=GROUP_TBL.insert(U_ID <- mCurrentUserId,G_NAME <- groupName,G_TYPE <- Db.GROUP_TYPE_LOCAL)
         do {
             let id=try db.run(data)
+            setGroupId(gId: Int(id))
             return id
+            
         }catch{
             print(error)
             return -1
         }
+    }
+    func getGroupList(type:String)->String{
+        var query: AnySequence<Row>?
+        var result:[Dictionary]=[Dictionary<String,String>]()
+        do{
+            if "all" == type {
+                query = try db.prepare(GROUP_TBL)
+            }else{
+                query = try db.prepare(GROUP_TBL.filter(G_TYPE == type))
+            }
+        }catch{
+            print(error)
+        }
+        if nil != query {
+            for row in query! {
+                var dic = [String:String]()
+                dic["G_ID"]=String(row[G_ID])
+                dic["G_NAME"]=row[G_NAME]
+                result.append(dic)
+            }
+//            let a =CharacterSet.whitespaces
+            return DataHandler.Array2Json(array: result)!
+        }
+        return ""
+        
     }
     func setGroupId(gId:Int){
         self.mCurrentGroupId=Int64(gId)
@@ -159,6 +198,34 @@ class Db : NSObject {
         }catch{
             print(error)
         }
+    }
+    public func getCode() ->[(String,String)]{
+        var array = [(String,String)]()
+        do{
+            for code in try db.prepare(CODE_TBL.filter(G_ID == mCurrentGroupId)){
+                array.append((code[C_TYPE],code[C_CODE]))
+            }
+        }catch{
+            print(error)
+        }
+
+        return array
+    }
+    public func getCode(type:String) ->String?{
+        var returnCode:String?=nil
+        var query = CODE_TBL.filter(G_ID == mCurrentGroupId)
+        query=query.filter(C_TYPE == type)
+        do{
+            for data in try db.prepare(query){
+                returnCode = data[C_CODE]
+                break
+            }
+            return returnCode
+        }catch{
+            print(error)
+            return nil
+        }
+        
     }
     
     func deleteTbl(){

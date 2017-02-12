@@ -28,30 +28,35 @@ class JsBridge {
     
     func handleJs(msg:WKScriptMessage,controller:LightControllerGroup){
         let jsonData=JSON(data: (msg.body as! String).data(using: String.Encoding.utf8)!)
-
+        var param:String?
         let method=jsonData["method"].stringValue
+        let data=jsonData["data"].stringValue
         switch method {
-            case "getGroupList":
-                print(jsonData["type"].stringValue)
-                
-                let back = postToJs(method: method+"Reply", param: "abc"){
-                    (data,error) in
-                    print(data as! String)
-                }
-                
-            break
-
-            case "wifi":
             
+        case "getGroupList":
+            param=controller.getGroupList(type: data)
+            break
+            
+        case "addGroup":
+            controller.addGroup(name: data)
+            break
+            
+        case "searchDevice":
+            controller.searchDevice()
             break
             
         default:
             
             break
         }
+        if nil != param {
+            postToJs(method: method+"Reply", param: param)
+        }else{
+            postToJs(method: method+"Reply")
+        }
     }
     
-    func postToJs(method:String,param:String?,callBack:((_ data:Any?,_ error:Error?)->Void)?){
+    func postToJs(method:String,param:String?=nil,callBack:((_ data:Any?,_ error:Error?)->Void)?=nil){
 
         let jsParam=nil != param ? "'"+param!+"'" : ""
         wk.evaluateJavaScript(method+"("+jsParam+")",completionHandler: callBack)

@@ -20,9 +20,7 @@
         </div>
         <div class="app-form" style="margin:50% 0;">
             <div class="form-txt icon0"><input type="text" id="equip_id" name="equip_name" class="noset"></div>
-            <div class="form-chk icon3"  onClick="app_tool.checkbox($(this));">
-                <label><input type="hidden" id="local-mark" name="offline" value="0">离线模式</label>
-            </div>
+            
             <div class="tips">给鱼缸取个名吧</div>
         </div>
     </div>
@@ -30,13 +28,16 @@
     var islightStandby=false;
     var local=true;
     function createGroup(e){
-        local= 1==$('#local-mark').attr('value') ? true : false;
+        local= true;
         var gName=$('#equip_id').val();
-        alert(gName)
-        var groupId=window.light.addGroup(getJsonString({name:gName,inf:''}));
-        if(groupId>-1) {
-            window.light.chooseGroup(groupId);
-            window.wifi.linkLights();
+        addGroup(gName);
+        function addGroupReply(){
+            headerTo('equip_info.html')
+        }
+//        var groupId=window.light.addGroup(getJsonString({name:gName,inf:''}));
+//        if(groupId>-1) {
+//            window.light.chooseGroup(groupId);
+//            window.wifi.linkLights();
         }
     }
     function lightStandby(data){

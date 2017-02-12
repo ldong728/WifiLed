@@ -27,22 +27,25 @@
         </div>
     </div>
 <script>
-    var list=getGroupList("online");
+    var getGroupList("GROUP_TYPE_ONLINE");
     var ssid,pasd,mac;
     alert(list);
-    if('[]'==list){
-//        alert('jump')
-        headerTo('equip_add_step3.html')
-    }else{
-        $('.item-list').empty();
-        list=eval('('+list+')');
-        $.each(list,function(k,v){
-            var content='<div class="li"><a class="group" id="'+ v.G_ID+'" data-id="">'+ v.G_NAME+'</a></div>';
-
-            $('.item-list').append(content);
-        });
-        $('.item-list').append('<div class="li"><a href="equip_add_step3.html" data-id="">新建鱼缸</a></div>')
+    getGroupListResult(list){
+        if('[]'==list){
+            //        alert('jump')
+            headerTo('equip_add_step3.html')
+        }else{
+            $('.item-list').empty();
+            list=eval('('+list+')');
+            $.each(list,function(k,v){
+                   var content='<div class="li"><a class="group" id="'+ v.G_ID+'" data-id="">'+ v.G_NAME+'</a></div>';
+                   
+                   $('.item-list').append(content);
+                   });
+                   $('.item-list').append('<div class="li"><a href="equip_add_step3.html" data-id="">新建鱼缸</a></div>')
+        } 
     }
+
 
     $(document).on('click','.group',function(){
         chooseGroup($(this).attr('id'));

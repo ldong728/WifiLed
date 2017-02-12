@@ -25,20 +25,29 @@ function signIn(data){
 function getUserInf(){
     //alert("get user inf");
     if(!debug){
-        return window.webkit.messageHandlers.light.postMessage('{method:"getGroupList",type:data}');
+//        return window.webkit.messageHandlers.light.postMessage('{method:"getGroupList",type:data}');
     }else{
         return '{U_ID:"9527",U_NAME:"test",U_EMAIL:"abc@abc.com",U_PHONE:"123456789",U_DEFAULT:1}'
     }
 
 }
+function searchLight(){
+    if(!debug)window.webkit.messageHandlers.light.postMessage(getJsonString({method:"searchDevice"}))
+    else lightStandby('1234231212');
+}
 function getUserInfOnline(){
 
 }
+function addGroup(gName){
+    if(!debug){
+        window.webkit.messageHandlers.light.postMessage(getJsonString({method:"addGroup",data:gName}));
+    }
+}
 function getGroupList(data){
     if(!debug){
-        window.webkit.messageHandlers.light.postMessage(getJsonString({method:"getGroupList",type:data}));
+        window.webkit.messageHandlers.light.postMessage(getJsonString({method:"getGroupList",data:data}));
     }
-    return '[{"G_NAME":"abc","G_INF":"","U_ID":"1","G_TYPE":"local","G_ID":"1"}]';
+    //return '[{"G_NAME":"abc","G_INF":"","U_ID":"1","G_TYPE":"local","G_ID":"1"}]';
 }
 function getGroupInf(){
     if(!debug){
@@ -86,10 +95,7 @@ function changeGroupType(ssid,pasd,merge){
     }
 
 }
-function searchLight(){
-    if(!debug)window.wifi.linkLights();
-    else lightStandby('1234231212');
-}
+
 
 function getCurrentSSID(){
     if(!debug)return window.wifi.getCurrentSSID();

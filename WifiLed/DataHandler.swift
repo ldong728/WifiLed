@@ -14,13 +14,15 @@ class DataHandler{
     class func Array2Json(array:Array<Any>) ->String?{
         let data = try? JSONSerialization.data(withJSONObject: array,options:JSONSerialization.WritingOptions.prettyPrinted);
         let strData = String(data:data!,encoding:String.Encoding.utf8)
-        return strData
+        let trimedData=strData?.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: "")
+        return trimedData
     }
     
     class func Dictionary2Json(dic:Dictionary<String,Any>) ->String?{
         let data = try? JSONSerialization.data(withJSONObject: dic,options:JSONSerialization.WritingOptions.prettyPrinted);
         let strData = String(data:data!,encoding:String.Encoding.utf8)
-        return strData
+        
+        return strData?.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: "")
     }
     
     class func string2Data(source: String) ->Data {
@@ -32,6 +34,20 @@ class DataHandler{
         let data:[UInt8]=[UInt8](dataStr.data(using: String.Encoding.ascii)!)
         let key:[UInt8]=[0x02,index]+data
         return generateCmd(key: key)
+    }
+    class func decodeWifiData(data:[UInt8])->[String]{
+        var returnData=[String]()
+        var ssidData=Array(data[5...data.count])
+        var last=0
+        for i in 0 ..< ssidData.count-1 {
+            if ssidData[i]==0x0d && ssidData[i+1]==0x0a {
+                let ssidBytes=Array(ssidData[last...i-2-last])
+                returnData.append(String(bytes: ssidBytes, encoding: String.Encoding.utf8)!)
+                last=i+2
+            }
+        }
+        return returnData
+        
     }
     
     private class func generateCmd(key:[UInt8])->[UInt8]{

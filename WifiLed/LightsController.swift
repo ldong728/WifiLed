@@ -23,10 +23,24 @@ class LightsController{
             mLightList.append(Light(Color: i+1))
             mManualCode.append(mLightList[i].getManuelLevel())
         }
-//        mCloudCode=[0xaa,0x08,0x0a,0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x0e];
-//        mFlashCode=[0xaa,0x08,0x0a,0x05,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x0f];
-//        mMoonCode=[0xaa,0x08,0x0a,0x06,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x10]
+        mCloudCode=[0xaa,0x08,0x0a,0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x0e]
+        mFlashCode=[0xaa,0x08,0x0a,0x05,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x0f]
+        mMoonCode=[0xaa,0x08,0x0a,0x06,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x10]
     }
+    
+    private func codeInit(){
+        mManualCode=[UInt8]()
+        mLightList=[Light]();
+        for i in 0 ..< LightsController.COLOR_NUM {
+            mLightList.append(Light(Color: i+1))
+            mManualCode.append(mLightList[i].getManuelLevel())
+        }
+        mCloudCode=[0xaa,0x08,0x0a,0x04,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x0e]
+        mFlashCode=[0xaa,0x08,0x0a,0x05,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x0f]
+        mMoonCode=[0xaa,0x08,0x0a,0x06,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x10]
+
+    }
+
     internal func set(_ color:Int,time:Int,level:Int) ->[UInt8]?{
         let temp=mLightList[color].setPoint(time,level:level);
         return temp;
@@ -179,6 +193,36 @@ class LightsController{
         let myJson=JSON(DataHandler.string2Data(source: data))
         let stu = 0 == myJson["stu"].intValue ? false : true
         var _=setMoon(stu,startH: myJson["startH"].intValue,startM: myJson["startM"].intValue,endH: myJson["endH"].intValue,endM: myJson["endM"].intValue)
+    }
+    internal func initCode(codeCollect:[(String,String)]?){
+        codeInit()
+        if nil != codeCollect {
+            for (type,code) in codeCollect! {
+                switch type{
+                case Db.TYPE_AUTO:
+                    setAutoMap(data: code)
+                    break
+                case Db.TYPE_MANUAL:
+                    setManualMap(data: code)
+                    break;
+                case Db.TYPE_CLOUD:
+                    setCloudMap(data: code)
+                    break
+                case Db.TYPE_FLASH:
+                    setFlashMap(data: code)
+                    break
+                case Db.TYPE_MOON:
+                    setMoonMap(data: code)
+                    break
+                default:
+                    break
+                    
+                }
+            }
+        }
+        
+        
+        
     }
     
     
