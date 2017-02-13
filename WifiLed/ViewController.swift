@@ -42,6 +42,7 @@ class ViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScrip
 
         
         self.mUdpController = LightControllerGroup()
+        self.mUdpController.startSendQueue()
 //        self.mLightController = LightsController()
         
         
@@ -96,8 +97,8 @@ class ViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScrip
 private typealias wkScriptMessageHandler = ViewController
 extension wkScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        print(message.name)
-        print((message.body as AnyObject).description)
+//        print(message.name)
+//        print((message.body as AnyObject).description)
         jb.handleJs(msg: message, controller: mUdpController)
 //        mUdpController.startSendQueue()
 //        mUdpController.searchDevice()

@@ -106,7 +106,8 @@ function initCanvas() {
 
     $('#bCanvas').css('width',bCanvasWidth/2+'px');
     $('#bCanvas').css('height',bCanvasHeight/2+'px');
-    initCode(getCode("TYPE_AUTO"));
+//    initCode(getCode("TYPE_AUTO"));
+    getCode("TYPE_AUTO")
     drawBuffer();
     l("init Canvas ok")
 }
@@ -130,7 +131,6 @@ function draw() {
     for(var i=0;i<colorNumber;i++){
             palette[i].drawSelf(bContext);
     }
-    l("draw")
     requestAnimationFrame(draw);
 }
 function touchStart(e) {
@@ -517,7 +517,9 @@ function drawDotedLine(p1, p2) {
 //function sendCode(color,time,level){
     //alert("manualColor:"+currentColor+",index:"+time+",level:"+level);
 //}
-
+function getCodeReply(data){
+    initCode(data)
+}
 function initCode(data){
     var json=eval("("+data+")");
     $.each(json,function(color,stu){

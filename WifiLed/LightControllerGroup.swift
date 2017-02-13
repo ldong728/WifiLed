@@ -15,7 +15,9 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     static let BROADCAST_IP="255.255.255.255"
     static let DEFALT_IP="172.22.11.1"
     static let LOCAL_PORT:UInt16=26000
+    static let SEND_INTERVAL=0.015
     fileprivate var mThreadFlag:Bool=false
+    fileprivate var mSamaphoreFlag:Bool=true
     fileprivate var mSendSemaphore=DispatchSemaphore(value:1)
     fileprivate let mQueue : DispatchQueue
     fileprivate var mTotalDeviceLinked:[String:String]=[String:String]()
@@ -32,7 +34,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         mLightController = LightsController()
         mDb=Db()
         super.init()
-        mSocket=GCDAsyncUdpSocket(delegate: self, delegateQueue: DispatchQueue.global())
+        mSocket=GCDAsyncUdpSocket(delegate: self, delegateQueue: DispatchQueue(label: "receive_thread"))
         initBuffers()
         initUdp()
         
@@ -88,18 +90,23 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
 
     fileprivate func formatReceivedCode(revPacket :DataPack) -> DataPack? {
         if revPacket.getLength() % Light.CODE_LENGTH != 0 {
-            let sBuff:DataPack?=buffer[revPacket.getIp()]!
+            var sBuff:DataPack?
+            if nil != buffer.index(forKey: revPacket.getIp()){
+                sBuff=buffer[revPacket.getIp()]!
+            }
+//            let sBuff:DataPack?=buffer[revPacket.getIp()]!
             if sBuff != nil {
                 sBuff!.merge(otherPack: revPacket)
                 if(sBuff!.getLength()%Light.CODE_LENGTH == 0){
-                    buffer[sBuff!.getIp()]=nil
+                    buffer.removeValue(forKey: sBuff!.getIp())
+//                    buffer[sBuff!.getIp()]=nil
                     return sBuff
                 }else{
                     buffer[sBuff!.getIp()]=sBuff!
                     return nil
                 }
             } else {
-                buffer[sBuff!.getIp()]=sBuff
+                buffer[revPacket.getIp()]=revPacket
                 return nil;
             }
             
@@ -117,6 +124,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         if list != nil {
             confirmed = getCodeSet(data: packData)
             newList=list!.subtracting(confirmed)
+            NSLog("regroup")
             objc_sync_enter(mSendBuffer)
             if newList != nil {
                 mSendBuffer[ip]=newList!
@@ -145,7 +153,12 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
             mSendBuffer[ip]=newCodeList.union(regroupList)
         }
         objc_sync_exit(mSendBuffer)
-        mSendSemaphore.signal()
+        guard mSamaphoreFlag else {
+            mSamaphoreFlag=true
+            mSendSemaphore.signal()
+            return
+        }
+        
     }
     fileprivate func getCodeSet(data:[UInt8]) -> Set<Code>{
         var confirmed :Set<Code>=Set<Code>()
@@ -167,7 +180,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         return confirmed
     }
     fileprivate func sendCodeQueue(){
-        
+        NSLog("send Queue Started")
         while mThreadFlag {
             var codeCount=0
             mSendBuffer.forEach{(key,val) in
@@ -176,11 +189,12 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
                     val.forEach{(data) in
                         send(byteMessage:data.dataArray,ip:key,port:LightControllerGroup.DATA_PORT)
                         NSLog("send from queue")
-                        Thread.sleep(forTimeInterval: 0.5)
+                        Thread.sleep(forTimeInterval: LightControllerGroup.SEND_INTERVAL)
                     }
                 }
             }
             if codeCount == 0 {
+                mSamaphoreFlag=false
                 mSendSemaphore.wait()
             }
         }
@@ -261,51 +275,6 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         
         
     }
-    internal func startSendQueue(){
-        mThreadFlag = true
-        mQueue.async {
-            self.sendCodeQueue()
-        }
-    }
-    
-    internal func setAuto(color:Int,time:Int,level:Int,send:Bool=true){
-        let data=mLightController.set(color, time: time, level: level)
-        putCodeToQueue(code: data!)
-    }
-    internal func setManual(color:Int,level:Int){
-        let data=mLightController.setManual(color, level: level)
-        putCodeToQueue(code: data)
-    }
-    internal func setCloud(probability:Int,mask:Int,stu:Bool){
-        let data=mLightController.setCloud(stu, probability: probability, mask: mask)
-        putCodeToQueue(code: data)
-    }
-    internal func setFlash(probability:Int,level:Int,stu:Bool){
-        let data=mLightController.setFlash(stu, level: level, probability: probability)
-        putCodeToQueue(code: data)
-    }
-    internal func setMoon(startH:Int,startM:Int,endH:Int,endM:Int,stu:Bool){
-        let data=mLightController.setMoon(stu, startH: startH, startM: startM, endH: endH, endM: endM)
-        putCodeToQueue(code: data)
-    }
-    internal func getGroupList(type:String) ->String{
-        return mDb.getGroupList(type: type)
-    }
-    internal func searchDevice(){
-        send(message:"www.usr.cn",ip:LightControllerGroup.BROADCAST_IP,port:LightControllerGroup.CTR_PORT)
-    }
-    internal func addGroup(name:String){
-        _=mDb.addGroup(groupName: name)
-        _=mDb.addDevice(mac: mTotalDeviceLinked.popFirst()!.0)
-        initGroup()
-        
-    }
-    internal func searchWifi(){
-        send(byteMessage: [0xff,0x00,0x01,0x01,0x02], ip: LightControllerGroup.DEFALT_IP, port: LightControllerGroup.CTR_PORT)
-    }
-    internal func ap2Sta(ssid:String,pasd:String){
-        send(byteMessage: DataHandler.generateLinkData(ssid: ssid, pasd: pasd), ip: LightControllerGroup.DEFALT_IP, port: LightControllerGroup.CTR_PORT)
-    }
     
     
 
@@ -315,13 +284,13 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         NSLog("sended Data encode to Data: " + String(data:data!,encoding:String.Encoding.ascii)!)
         
         mSocket.send(data!,toHost:ip,port:port,withTimeout:2, tag:0)
-        print("send ok")
+//        print("send ok")
     }
     internal func send(byteMessage: [UInt8],ip:String=LightControllerGroup.DEFALT_IP,port:UInt16 = LightControllerGroup.DATA_PORT){
         NSLog("sendDtat:" + String(describing: byteMessage));
         let data=Data(bytes: byteMessage,count: byteMessage.count)
         mSocket.send(data, toHost: ip, port: port, withTimeout: 2, tag: 0)
-        NSLog("send ok");
+//        NSLog("send ok");
     }
     
     /**
@@ -373,6 +342,69 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         NSLog("didNotSendDataWithTag" + error.debugDescription)
         
     }
+    
+    internal func startSendQueue(){
+        mThreadFlag = true
+        mQueue.async {
+            self.sendCodeQueue()
+        }
+    }
+    
+    internal func setAuto(color:Int,time:Int,level:Int,send:Bool=true){
+        var data:[UInt8]?
+        if level>100||level<0 {
+            data=mLightController.unset(color, time: time)
+        }else{
+            data=mLightController.set(color, time: time,level:level)
+        }
+        
+        putCodeToQueue(code: data!)
+    }
+    internal func setManual(color:Int,level:Int){
+        let GroupType=mDb.mCurrentGroupType
+        if Db.GROUP_TYPE_LOCAL == GroupType {
+            send(byteMessage: mLightController.setManual(color, level: level))
+        }else{
+            let data=mLightController.setManual(color, level: level)
+            putCodeToQueue(code: data)
+            
+        }
+    }
+    internal func setCloud(probability:Int,mask:Int,stu:Bool){
+        let data=mLightController.setCloud(stu, probability: probability, mask: mask)
+        putCodeToQueue(code: data)
+    }
+    internal func setFlash(probability:Int,level:Int,stu:Bool){
+        let data=mLightController.setFlash(stu, level: level, probability: probability)
+        putCodeToQueue(code: data)
+    }
+    internal func setMoon(startH:Int,startM:Int,endH:Int,endM:Int,stu:Bool){
+        let data=mLightController.setMoon(stu, startH: startH, startM: startM, endH: endH, endM: endM)
+        putCodeToQueue(code: data)
+    }
+    internal func getGroupList(type:String) ->String{
+        return mDb.getGroupList(type: type)
+    }
+    internal func searchDevice(){
+        send(message:"www.usr.cn",ip:LightControllerGroup.BROADCAST_IP,port:LightControllerGroup.CTR_PORT)
+    }
+    internal func addGroup(name:String){
+        _=mDb.addGroup(groupName: name)
+        _=mDb.addDevice(mac: mTotalDeviceLinked.popFirst()!.0)
+        initGroup()
+        
+    }
+    internal func searchWifi(){
+        send(byteMessage: [0xff,0x00,0x01,0x01,0x02], ip: LightControllerGroup.DEFALT_IP, port: LightControllerGroup.CTR_PORT)
+    }
+    internal func ap2Sta(ssid:String,pasd:String){
+        send(byteMessage: DataHandler.generateLinkData(ssid: ssid, pasd: pasd), ip: LightControllerGroup.DEFALT_IP, port: LightControllerGroup.CTR_PORT)
+    }
+    internal func getCode(type:String)->String{
+        let code=mLightController.getJsonAutoMap()
+        return code
+    }
+
 
 
 

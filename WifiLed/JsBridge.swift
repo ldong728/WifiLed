@@ -45,6 +45,21 @@ class JsBridge {
             
             controller.searchDevice()
             break
+        case "getCode":
+            
+            param=controller.getCode(type: data)
+            break
+        case "setManualCode":
+            let color=jsonData["color"].intValue
+            let level=jsonData["level"].intValue
+            controller.setManual(color: color, level: level)
+            break
+        case "setAutoCode":
+            let color=jsonData["color"].intValue
+            let time=jsonData["time"].intValue
+            let level=jsonData["level"].intValue
+            controller.setAuto(color: color, time: time, level: level)
+            break
             
         default:
             NSLog("jsBridge can't find method")

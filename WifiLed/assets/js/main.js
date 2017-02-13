@@ -49,6 +49,27 @@ function getGroupList(data){
     }
     //return '[{"G_NAME":"abc","G_INF":"","U_ID":"1","G_TYPE":"local","G_ID":"1"}]';
 }
+function getCode(codeType){
+    if(!debug)window.webkit.messageHandlers.light.postMessage(getJsonString({method:"getCode",data:codeType}))
+}
+function sendManualCode(currentColor,level){
+    if(!debug){
+        window.webkit.messageHandlers.light.postMessage(getJsonString({method:"setManualCode",data:"none",color:currentColor,level:level}))
+//        window.light.setManualCode(JSON.stringify({color:currentColor,level:level}));
+//        saveCode('TYPE_MANUAL');
+    }
+}
+function sendAutoCode(color,time,level,mode){
+    var modeData=mode?"confirm":"not";
+    if(!debug){
+        window.webkit.messageHandlers.light.postMessage(getJsonString({method:"setAutoCode",data:"none",color:color,time:time,level:level}))
+        //window.light.sendAutoCode(JSON.stringify({color:color,time:time,level:level,mode:modeData}))
+        //saveCode('TYPE_AUTO');
+    }else{
+        //l(mode);
+    }
+    
+}
 function getGroupInf(){
     if(!debug){
         return window.light.getGroupInf();
@@ -56,20 +77,7 @@ function getGroupInf(){
     return '{G_SSID:"abcd",G_SSID_PASD:"abcd"}'
 }
 
-function sendAutoCode(color,time,level,mode){
-    var modeData=mode?"confirm":"not";
-    if(!debug){
-        window.light.sendAutoCode(JSON.stringify({color:color,time:time,level:level,mode:modeData}))
-        saveCode('TYPE_AUTO');
-    }else{
-        //l(mode);
-    }
 
-}
-function sendManualCode(currentColor,level){
-    if(!debug) window.light.setManualCode(JSON.stringify({color:currentColor,level:level}));
-    saveCode('TYPE_MANUAL');
-}
 function sendCloudCode(stu,prob,mask){
     if(!debug) window.light.setCloudCode(getJsonString({stu:stu,prob:prob,mask:mask}));
     saveCode("TYPE_CLOUD");
@@ -102,13 +110,7 @@ function getCurrentSSID(){
     else return "abc";
 }
 
-function getCode(codeType){
-    if(!debug)return window.light.getControlCode(codeType);
-    else{
-        if('TYPE_AUTO'==codeType)return '{"0":{"12":"60","20":"100"},"1":{"5":"100","30":"0"}}';
-        if('TYPE_MANUAL')return '{"0":0,"1":0,"2":0,"3":0,"4":0,"5":0,"6":26}'
-    }
-}
+
 function addDeviceToGroup(jsonData){
     if(!debug)window.light.addDevice(getJsonString(jsonData))
 }

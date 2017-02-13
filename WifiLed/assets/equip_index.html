@@ -15,7 +15,7 @@
         <div class="app-tool clearfix">
             <a href="#" class="pos-l img"><img src="image/icon/6.png" alt=""></a>
             <span class="pos-m">全部设备</span>
-            <a href="equip_add_step1.html" class="pos-r img"><img src="image/icon/7.png" alt=""></a>
+            <a href="" id="searchLight" class="pos-r img"><img src="image/icon/7.png" alt=""></a>
         </div>
         <div class="equip-list">
             <!--<div class="li">-->
@@ -57,11 +57,15 @@
             }
             
         }
+        
     
         $(document).on('click','.group-inf',function(){
             //window.light.chooseGroup($(this).attr('id'));
             //window.webkit.messageHandlers.light.postMessage("test")
             headerTo('equip_info.html');
+        })
+        $(document).on('click','#searchLight',function(){
+                       searchLight()
         })
 
     </script>
