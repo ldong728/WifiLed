@@ -42,11 +42,12 @@ class JsBridge {
             break
             
         case "searchDevice":
+            
             controller.searchDevice()
             break
             
         default:
-            
+            NSLog("jsBridge can't find method")
             break
         }
         if nil != param {

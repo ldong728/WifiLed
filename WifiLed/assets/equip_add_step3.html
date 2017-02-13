@@ -29,17 +29,19 @@
     var local=true;
     function createGroup(e){
         local= true;
-        var gName=$('#equip_id').val();
+        var gName=$('#equip_id').val()||"默认";
         addGroup(gName);
-        function addGroupReply(){
-            headerTo('equip_info.html')
-        }
+        
 //        var groupId=window.light.addGroup(getJsonString({name:gName,inf:''}));
 //        if(groupId>-1) {
 //            window.light.chooseGroup(groupId);
 //            window.wifi.linkLights();
-        }
+        
     }
+    function addGroupReply(){
+        headerTo('equip_info.html')
+    }
+
     function lightStandby(data){
         if(!islightStandby){
             var mac=data;

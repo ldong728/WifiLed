@@ -46,6 +46,7 @@ var currentX=0;
 var colorControlable=false;
 //var ratio;
 $(document).ready(function () {
+    l("mix draw")
     initCanvas();
     window.requestAnimationFrame(draw);
 });
@@ -107,7 +108,7 @@ function initCanvas() {
     $('#bCanvas').css('height',bCanvasHeight/2+'px');
     initCode(getCode("TYPE_AUTO"));
     drawBuffer();
-
+    l("init Canvas ok")
 }
 function drawBuffer() {
     aBufferCanvas.width = aBufferCanvas.width;
@@ -129,6 +130,7 @@ function draw() {
     for(var i=0;i<colorNumber;i++){
             palette[i].drawSelf(bContext);
     }
+    l("draw")
     requestAnimationFrame(draw);
 }
 function touchStart(e) {
