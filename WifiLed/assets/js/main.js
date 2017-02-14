@@ -72,10 +72,37 @@ function sendAutoCode(color,time,level,mode){
 }
 function getGroupInf(){
     if(!debug){
-        return window.light.getGroupInf();
+        window.webkit.messageHandlers.light.postMessage(getJsonString({method:"getGroupInf",data:""}))
     }
     return '{G_SSID:"abcd",G_SSID_PASD:"abcd"}'
 }
+function scanWifi(){
+    if(!debug)window.webkit.messageHandlers.light.postMessage(getJsonString({method:"scanWifi",data:""}));
+    
+}
+
+function postNoParamFunction(functionName){
+    if(!debug)window.webkit.messageHandlers.light.postMessage(getJsonString({method:functionName,data:""}));
+}
+function ap2sta(ssid,pasd){
+    if(!debug)window.webkit.messageHandlers.light.postMessage(getJsonString({method:"ap2sta",data:"",ssid:ssid,pasd:pasd}))
+}
+function joinGroup(groupId){
+    if(!debug)window.webkit.messageHandlers.light.postMessage(getJsonString({method:"joinGroup",data:groupId}))
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function sendCloudCode(stu,prob,mask){
@@ -122,9 +149,7 @@ function initGroup(){
     }
     else return '{"device":{"0":{"D_MAC":"C4BE8474EE31","D_SSID":"USR-C322","G_ID":"1","D_TYPE":"light","D_NAME":"light"}},"inf":{"G_ID":"1","G_NAME":"高性能","U_ID":"1","G_INF":"inf","G_TYPE":"online","G_SSID":"TL-WVR450G","G_SSID_PASD":"gooduo.net"},"type":"online","ssid":"TL-WVR450G"}'
 }
-function ap2sta(ssid,pasd){
-    if(!debug)window.wifi.ap2sta(getJsonString({ssid:ssid,pasd:pasd}))
-}
+
 
 function saveCode(codeType){
     if(!debug)window.light.saveCodeToDb(codeType);
@@ -136,12 +161,7 @@ function deviceCodeSave(){
 function chooseGroup(groupId){
     if(!debug)window.light.chooseGroup(groupId);
 }
-function scanWifi(){
-    if(!debug)window.wifi.scanWifi();
-    else setTimeout(function(){
-        onGetWifiList('["ssid1","ssid2"]');
-    },5000)
-}
+
 function linkWifi(ssid){
     if(!debug)window.wifi.linkWifi(getJsonString({ssid:ssid}));
 }

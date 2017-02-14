@@ -16,6 +16,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     static let DEFALT_IP="172.22.11.1"
     static let LOCAL_PORT:UInt16=26000
     static let SEND_INTERVAL=0.015
+    static let SCAN_WIFI:[UInt8]=[0xff,0x00,0x01,0x01,0x02]
     fileprivate var mThreadFlag:Bool=false
     fileprivate var mSamaphoreFlag:Bool=true
     fileprivate var mSendSemaphore=DispatchSemaphore(value:1)
@@ -27,6 +28,9 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     fileprivate var mSocket: GCDAsyncUdpSocket!
     fileprivate let mLightController : LightsController
     fileprivate let mDb:Db
+    var mToGroupId:Int = -1
+    var mToSSID:String?
+    var mToSSIDpasd:String?
     
     
     override init(){
@@ -66,17 +70,27 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         initBuffers();
         mLightController.initCode(codeCollect: mDb.getCode())
     }
-    fileprivate func reflushDeviceIp(mac:String,newip:String){
+    /**
+     *根据mac值和对应IP刷新mac-ip列表
+     *如有更新，返回true
+    **/
+    fileprivate func reflushDeviceIp(mac:String,newip:String)->Bool{
         if nil != mIPMap[mac]{
-            mIPMap[mac]=newip
-            objc_sync_enter(mSendBuffer)
-            mSendBuffer.removeValue(forKey: mIPMap[mac]!)
-            mSendBuffer[newip]=Set<Code>()
-            objc_sync_exit(mSendBuffer)
+            if mIPMap[mac] != newip{
+                mIPMap[mac]=newip
+                objc_sync_enter(mSendBuffer)
+                mSendBuffer.removeValue(forKey: mIPMap[mac]!)
+                mSendBuffer[newip]=Set<Code>()
+                objc_sync_exit(mSendBuffer)
+                return true
+            }
+            return false
         }
+        return false
     }
-    
-    
+    /**
+     *初始化socket对象
+    **/
     fileprivate func initUdp(){
         do{
             try mSocket.bind(toPort: LightControllerGroup.LOCAL_PORT)
@@ -87,7 +101,6 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
             NSLog(e.description)
         }
     }
-
     fileprivate func formatReceivedCode(revPacket :DataPack) -> DataPack? {
         if revPacket.getLength() % Light.CODE_LENGTH != 0 {
             var sBuff:DataPack?
@@ -138,7 +151,6 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         
 //        mSendSemaphore.signal()
     }
-    
     fileprivate func putCodeToQueue(code:[UInt8]){
         let codeTypeSet=getCodeTypeSet(data: code)
         let newCodeList=getCodeSet(data: code)        
@@ -170,7 +182,6 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         return confirmed
 
     }
-    
     fileprivate func getCodeTypeSet(data:[UInt8]) -> Set<String>{
         var confirmed :Set<String>=Set<String>()
         for i in 0 ..< data.count/Light.CODE_LENGTH {
@@ -199,26 +210,42 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
             }
         }
     }
+    /**
+     *对udp非控制数据端口接收到的数据进行预处理，可处理的返回true不可处理的返回false
+    **/
     fileprivate func preReceiveHandler(receiveDataPack:DataPack) ->Bool{
         let rcvData=receiveDataPack.getData()
-        if 0xff==rcvData[0] {
+        if 0xff==rcvData[0] {  //usrLink 指令返回
             if 0x81==rcvData[3] {
                 let ssidList=DataHandler.Array2Json(array: DataHandler.decodeWifiData(data: rcvData))
                 JsBridge.getCurrentJsBridge()?.postToJs(method: "getWifi", param: ssidList)
             }
             if 0x82==rcvData[3] {
-                
+                if 0x01==rcvData[4]&&0x01==rcvData[5]{
+                    if mToGroupId == -1{
+                        mDb.changeGroupType(ssid: mToSSID!, pasd: mToSSIDpasd!)
+                    }else{
+                        mDb.changeDeviceGroup(fromGroupId: Int64(mDb.mCurrentGroupId), toGroupId: Int64(mToGroupId))
+                        mDb.setGroupId(gId: mToGroupId)
+                        
+                    }
+                    initGroup()
+                    JsBridge.getCurrentJsBridge()!.postToJs(method: "ap2StaOk", param: String(mDb.mCurrentGroupId))
+                }else{
+                    JsBridge.getCurrentJsBridge()!.postToJs(method: "ap2StaFail")
+                }
             }
             
             return true;
         }
-        
+        // 搜索指令返回
         let rcvString=String(bytes: receiveDataPack.getData(), encoding: String.Encoding.ascii)
         let rcvList=rcvString!.components(separatedBy: ",")
         if rcvList.count>1 {
             let ip:String?=rcvList[0]
             let mac:String?=rcvList[1]
             if ip != nil && mac != nil {
+                print(ip!+":"+mac!)
                 send(message: "AT+ENTM\r\n", ip: receiveDataPack.getIp(), port: receiveDataPack.getPort())
                 mTotalDeviceLinked[mac!]=ip!
                 if -1 == mDb.mCurrentGroupId { //是否为首页上
@@ -241,32 +268,12 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
                     if ip == LightControllerGroup.DEFALT_IP {//本地模式
                         return true
                     }else{//在线模式
-                        reflushDeviceIp(mac: mac!, newip: ip!)
+                        if reflushDeviceIp(mac: mac!, newip: ip!){
+                            JsBridge.getCurrentJsBridge()?.postToJs(method: "flushLinkedDevice", param: mac)
+                        }
                         return true
                     }
-                    
                 }
-                //            if ip == LightControllerGroup.DEFALT_IP {
-                //                if -1 == mDb.mCurrentGroupId {
-                //
-                ////                    JsBridge.getCurrentJsBridge()!.postToJs(method: "newDevice")
-                //                }
-                //
-                //            }
-                //
-                //            if -1==mDb.mCurrentGroupId && LightControllerGroup.DEFALT_IP == ip {
-                //
-                //
-                //            }else if ip==LightControllerGroup.DEFALT_IP && mIPMap.count==0 {
-                //               _=mDb.addDevice(mac: mac!)
-                //                initGroup()
-                //                return true
-                //
-                //            }else{
-                //                reflushDeviceIp(mac: mac!, newip: ip!)
-                //                return true
-                //            }
-                //
             } 
         }
         
@@ -275,10 +282,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         
         
     }
-    
-    
-
-    internal func send(message:String,ip:String=LightControllerGroup.DEFALT_IP,port:UInt16 = LightControllerGroup.DATA_PORT){
+    func send(message:String,ip:String=LightControllerGroup.DEFALT_IP,port:UInt16 = LightControllerGroup.DATA_PORT){
         print(message);
         let data = message.data(using: String.Encoding.ascii)
         NSLog("sended Data encode to Data: " + String(data:data!,encoding:String.Encoding.ascii)!)
@@ -286,7 +290,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         mSocket.send(data!,toHost:ip,port:port,withTimeout:2, tag:0)
 //        print("send ok")
     }
-    internal func send(byteMessage: [UInt8],ip:String=LightControllerGroup.DEFALT_IP,port:UInt16 = LightControllerGroup.DATA_PORT){
+    func send(byteMessage: [UInt8],ip:String=LightControllerGroup.DEFALT_IP,port:UInt16 = LightControllerGroup.DATA_PORT){
         NSLog("sendDtat:" + String(describing: byteMessage));
         let data=Data(bytes: byteMessage,count: byteMessage.count)
         mSocket.send(data, toHost: ip, port: port, withTimeout: 2, tag: 0)
@@ -326,7 +330,6 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
 //        NSLog("receaved data: " + addr)
 
     }
-    
     func udpSocket(_ sock:GCDAsyncUdpSocket,didConnectToAddress address:Data){
         
         print("didConnectToAddress:" + String(data:address,encoding:String.Encoding.utf8)!)
@@ -342,20 +345,18 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         NSLog("didNotSendDataWithTag" + error.debugDescription)
         
     }
-    
     internal func startSendQueue(){
         mThreadFlag = true
         mQueue.async {
             self.sendCodeQueue()
         }
     }
-    
     internal func setAuto(color:Int,time:Int,level:Int,send:Bool=true){
         var data:[UInt8]?
         if level>100||level<0 {
             data=mLightController.unset(color, time: time)
         }else{
-            data=mLightController.set(color, time: time,level:level)
+            data=mLightController.setAuto(color, time: time,level:level)
         }
         
         putCodeToQueue(code: data!)
@@ -394,8 +395,8 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         initGroup()
         
     }
-    internal func searchWifi(){
-        send(byteMessage: [0xff,0x00,0x01,0x01,0x02], ip: LightControllerGroup.DEFALT_IP, port: LightControllerGroup.CTR_PORT)
+    internal func scanWifi(){
+        send(byteMessage: LightControllerGroup.SCAN_WIFI, ip: LightControllerGroup.DEFALT_IP, port: LightControllerGroup.CTR_PORT)
     }
     internal func ap2Sta(ssid:String,pasd:String){
         send(byteMessage: DataHandler.generateLinkData(ssid: ssid, pasd: pasd), ip: LightControllerGroup.DEFALT_IP, port: LightControllerGroup.CTR_PORT)
@@ -403,6 +404,27 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     internal func getCode(type:String)->String{
         let code=mLightController.getJsonAutoMap()
         return code
+    }
+    internal func setTime(ip:String=LightControllerGroup.BROADCAST_IP){
+        let code=mLightController.setTime()
+        if LightControllerGroup.BROADCAST_IP==ip {
+            putCodeToQueue(code: code)
+        }else{
+            send(byteMessage: code, ip: ip)
+        }
+        
+    }
+    internal func getGroupDetail(groupId:Int = -1) ->String{
+        let id:Int64 = -1==groupId ? mDb.mCurrentGroupId : Int64(groupId)
+        let GroupInf=mDb.getGroupInf(groupid: id);
+        let totalDeviceList=mDb.getDeviceMacList()
+        return DataHandler.Dictionary2Json(dic: ["inf":GroupInf,"totalList":totalDeviceList,"linked":mIPMap])!
+//        return DataHandler.Dictionary2Json(dic: mDb.getGroupInf())!
+//        return  mDb.getGroupInf()
+    }
+    internal func getGroupInf(groupId:Int) ->Dictionary<String,String>{
+        return mDb.getGroupInf(groupid:Int64(groupId))
+        
     }
 
 

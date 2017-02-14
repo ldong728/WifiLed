@@ -27,13 +27,15 @@
         </div>
     </div>
 <script>
-    var getGroupList("GROUP_TYPE_ONLINE");
+    
     var ssid,pasd,mac;
-    alert(list);
-    getGroupListResult(list){
+    getGroupList("online");
+//    alert(list);
+    function getGroupListReply(list){
+        
         if('[]'==list){
             //        alert('jump')
-            headerTo('equip_add_step3.html')
+            headerTo('equip_add_step4.html')
         }else{
             $('.item-list').empty();
             list=eval('('+list+')');
@@ -42,22 +44,31 @@
                    
                    $('.item-list').append(content);
                    });
-                   $('.item-list').append('<div class="li"><a href="equip_add_step3.html" data-id="">新建鱼缸</a></div>')
+//                   $('.item-list').append('<div class="li"><a href="equip_add_step3.html" data-id="">新建鱼缸</a></div>')
         } 
     }
 
 
     $(document).on('click','.group',function(){
-        chooseGroup($(this).attr('id'));
-        var groupInf=eval('('+getGroupInf()+')');
-        ssid=groupInf.G_SSID;
-        pasd=groupInf.G_SSID_PASD;
-        if(!mac){
-            searchLight();
-        }else{
-            lightStandby(mac);
-        }
+        joinGroup($(this).attr('id'));
+        app_tool.loading()
+        
+
     });
+    
+    function ap2StaOk(){
+        app_tool.loaded()
+        headerTo('equip_info.html')
+        
+    }
+    function ap2StaFail(){
+        app_tool.loaded()
+        alert("连接失败，请重试")
+    }
+    
+    function joinGroupReply(){
+        
+    }
     function lightStandby(data){
             alert('lightStanby');
             mac=data;

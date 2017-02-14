@@ -37,15 +37,8 @@ class WifiLedTests: XCTestCase {
         }
     }
     func testMethod(){
-//        let CodeA=""
-//        let CodeB=Code([0x99,0x88])
-//        print(CodeA==CodeB)
-        let temp:String = " abc \n cde"
-        var trim = temp.replacingOccurrences(of: "\n", with: "")
-        
-//        let trim = temp.
-        print(temp)
-        print(trim)
+        let cc=LightsController()
+        cc.setTime()
         XCTAssert(true)
     }
     func temp(){

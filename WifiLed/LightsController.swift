@@ -41,7 +41,7 @@ class LightsController{
 
     }
 
-    internal func set(_ color:Int,time:Int,level:Int) ->[UInt8]?{
+    internal func setAuto(_ color:Int,time:Int,level:Int) ->[UInt8]?{
         let temp=mLightList[color].setPoint(time,level:level);
         return temp;
     }
@@ -49,6 +49,7 @@ class LightsController{
         let temp=mLightList[color].removeKey(time)
         return temp
     }
+    
     internal func setManual(_ color:Int,level:Int)->[UInt8] {
         let code = mLightList[color].setManuelLevel(level)
         mManualCode[color]=UInt8(level & 0xff)
@@ -106,6 +107,32 @@ class LightsController{
         mMoonCode[11]=UInt8(0x06+0x0a+Int(sStu)+sStartH+sStartM+sEndH+sEndM)
         return mMoonCode;
     }
+    internal func setTime() ->[UInt8]{
+        let now = Date()
+        let formater = DateFormatter()
+        formater.dateFormat="yyyy,MM,dd,HH,mm,ss"
+        let timeString=formater.string(from: now)
+        let timeList=timeString.components(separatedBy: ",")
+        let Y=UInt8(Int(timeList[0])!-1970)
+        let M=UInt8(timeList[1])!
+        let d=UInt8(timeList[2])!
+        let h=UInt8(timeList[3])!
+        let m=UInt8(timeList[4])!
+        let s=UInt8(timeList[5])!
+        let code:[UInt8]=[0xaa,0x08,0x0a,0x09,Y,M,d,h,m,s,0,(0x0a&+0x09&+Y&+M&+d&+h&+m&+s)]
+        print(code)
+        return code
+    }
+    internal func setAutoRun() ->[UInt8]{
+        return [0xaa,0x08,0x0a,0x08,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x13]
+    }
+    internal func setSaveCode() ->[UInt8]{
+        return [0xaa,0x08,0x0a,0x07,0xa5,0x00,0x00,0x00,0x00,0x00,0x00,0xb6]
+    }
+    internal func setRamRequestCode() ->[UInt8]{
+        return [0xaa,0x08,0x0a,0x0a,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x14]
+    }
+    
     internal func getJsonAutoMap() -> String{
         var base = [String:[String:Int]]()
         for i in 0 ..< LightsController.COLOR_NUM {
@@ -123,12 +150,14 @@ class LightsController{
         return strData!
         
     }
+    
+    
     internal func setAutoMap(data:String){
         let myJson=JSON(DataHandler.string2Data(source: data));
         for (color,sub):(String,JSON) in myJson {
             for (time,level):(String,JSON) in sub {
                 print(level.intValue);
-                var _=set(Int(color)!,time:Int(time)!,level:level.intValue)
+                var _=setAuto(Int(color)!,time:Int(time)!,level:level.intValue)
             }
         }
 

@@ -37,6 +37,10 @@ class JsBridge {
             param=controller.getGroupList(type: data)
             break
             
+        case "getGroupInf":
+            param=controller.getGroupDetail()
+            break
+            
         case "addGroup":
             controller.addGroup(name: data)
             break
@@ -60,7 +64,27 @@ class JsBridge {
             let level=jsonData["level"].intValue
             controller.setAuto(color: color, time: time, level: level)
             break
+        case "scanWifi":
+            controller.scanWifi()
             
+            break
+        case "ap2str":
+            let ssid=jsonData["ssid"].stringValue
+            let pasd=jsonData["pasd"].stringValue
+            print(ssid)
+            print(pasd)
+            controller.mToSSID=ssid
+            controller.mToSSIDpasd=pasd
+            controller.ap2Sta(ssid: ssid, pasd: pasd)
+            break;
+        case "joinGroup":
+            controller.mToGroupId=Int(data)!
+            let GroupInf=controller.getGroupInf(groupId: controller.mToGroupId)
+            
+            let ssid=GroupInf["G_SSID"]
+            let pasd=GroupInf["G_SSID_PASD"]
+            controller.ap2Sta(ssid: ssid!, pasd: pasd!)
+            break;
         default:
             NSLog("jsBridge can't find method")
             break

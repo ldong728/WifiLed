@@ -151,6 +151,25 @@ class Db : NSObject {
             print(error)
         }
     }
+    func getGroupInf(groupid:Int64) ->Dictionary<String,String>{
+        var inf:Dictionary<String,String>=[String:String]()
+        let query=GROUP_TBL.filter(G_ID == groupid)
+        do{
+            for data in try db.prepare(query){
+                inf["G_ID"]=String(data[G_ID])
+                inf["G_NAME"]=data[G_NAME]
+                inf["G_TYPE"]=data[G_TYPE]
+                if mCurrentGroupType == Db.GROUP_TYPE_ONLINE {
+                    inf["G_SSID"]=data[G_SSID]
+                    inf["G_SSID_PASD"]=data[G_SSID_PASD]
+                }
+
+            }
+        }catch{
+            print(error)
+        }
+        return inf
+    }
     
     func addDevice(mac:String) ->Int64{
         let data=DEVICE_TBL.insert(D_MAC <- mac,D_TYPE <- "light", D_NAME <- "light", G_ID <- mCurrentGroupId)
@@ -175,12 +194,21 @@ class Db : NSObject {
     func changeGroupType(ssid:String,pasd:String){
         let filter = GROUP_TBL.filter(G_ID == mCurrentGroupId)
         do{
-            try db.run(filter.update(G_SSID <- ssid, G_SSID_PASD <- pasd))
+            try db.run(filter.update(G_SSID <- ssid, G_SSID_PASD <- pasd, G_TYPE <- Db.GROUP_TYPE_ONLINE))
             mCurrentGroupType = Db.GROUP_TYPE_ONLINE
             
         }catch{
             print(error)
         }
+    }
+    func changeDeviceGroup(fromGroupId:Int64,toGroupId:Int64){
+        let filter = DEVICE_TBL.filter(G_ID == fromGroupId)
+        do{
+            try db.run(filter.update(G_ID <- toGroupId))
+        }catch{
+            print(error)
+        }
+        
     }
     func addDevice(mac:String,ssid:String,name:String="my device"){
         let data = DEVICE_TBL.insert(or:OnConflict.replace,D_MAC <- mac,D_SSID <- ssid, G_ID <- mCurrentGroupId, D_NAME <- name)

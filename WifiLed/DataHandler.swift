@@ -29,6 +29,7 @@ class DataHandler{
         let data=source.data(using: .utf8, allowLossyConversion:false);
         return data!;
     }
+    
     class func generateLinkData(ssid:String,pasd:String,index:UInt8=0x00) ->[UInt8]{
         let dataStr=ssid+"\r\n"+pasd
         let data:[UInt8]=[UInt8](dataStr.data(using: String.Encoding.ascii)!)
@@ -37,11 +38,11 @@ class DataHandler{
     }
     class func decodeWifiData(data:[UInt8])->[String]{
         var returnData=[String]()
-        var ssidData=Array(data[5...data.count])
+        var ssidData=Array(data[5...data.count-1])
         var last=0
         for i in 0 ..< ssidData.count-1 {
             if ssidData[i]==0x0d && ssidData[i+1]==0x0a {
-                let ssidBytes=Array(ssidData[last...i-2-last])
+                let ssidBytes=Array(ssidData[last...last+i-3-last])
                 returnData.append(String(bytes: ssidBytes, encoding: String.Encoding.utf8)!)
                 last=i+2
             }

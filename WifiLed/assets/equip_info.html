@@ -14,11 +14,11 @@
     <div class="app-equip shadow">
         <div class="app-tool clearfix">
             <a href="#" class="pos-l img"><img src="image/icon/6.png" alt=""></a>
-            <a href="equip_add_step1.html" class="pos-r img add-device"><img src="image/icon/7.png" alt=""></a>
+            <a id="add_to_online" class="pos-r img add-device"><img src="image/icon/7.png" alt=""></a>
         </div>
         <div class="equip-info">
             <div class="e-head"><img src="image/bg/df-photo.png" alt=""></div>
-            <div class="e-name">XXX鱼缸</div>
+            <div class="e-name"></div>
             <div class="e-lamp"><a href="equip_add_step4.html">共有<span id="total-device"></span>台设备</a></div>
             <div class="e-lamp"><a href="equip_add_step4.html">已连接<span id="connected-device">0</span>台设备</a></div>
             <!--<div class="e-lamp"><a id="linkLight">连接灯具</a></div>-->
@@ -32,64 +32,40 @@
         <a href="set_index.html" class="n4">个人中心</a>
     </div>
 <script>
-    var localLinked=false;
-    var inf=1;
-//    inf=initGroup();
-//    alert(inf);
-    inf=eval('('+inf+')');
-    var deviceInf=inf.device;
-    var type=inf.type;
-    var ssid=inf.ssid;//需要连接的wifi ssid
-    var groupInf=inf.inf
-    var currentSSid=getCurrentSSID();
-//    alert(currentSSid);
+    var group={}
     var deviceList=[];//组中总设备数
-    var readyDevice=0;//已确认连接的设备数
-
-    initUi(deviceInf,groupInf);
-    if(ssid==currentSSid){
-        onLinked(ssid);
+    var readyDevice={length:0};//已确认连接的设备数
+    getGroupInf()
+    
+    function getGroupInfReply(data){
+        
+        group = eval('('+data+')')
+        $('.e-name').text(group.inf.G_NAME)
+        deviceList=group.totalList
+        $.each(group.linked,function(k,v){
+            readyDevice[k]=k
+            readyDevice.length++
+        })
+        
+        $('#connected-device').text(readyDevice.length);
+        $('#total-device').text(deviceList.length)
+        linkReTry()
     }
-    if(!localLinked){
-        if('local'==type){  //离线模式
-//            window.wifi.linkWifi(getJsonString({ssid:ssid}));
-            linkWifi(ssid);
-            app_tool.loading();
-            setTimeout(function(){
-                if(!localLinked){
-                    app_tool.loaded();
-                    $('body').append('<div class="app-msg slideInUp"><div class="txt" id="ssid">自动连接失败，请在wifi设置界面选择“' + ssid + '”</div><div class="confirm"><span class="no">取消</span><span class="yes">连接</span></div></div>');
-                }
-            },10000);
+    function linkReTry(){
+//        if(readyDevice.length==deviceList.length){
+//            return
+//        }else{
+//            searchLight()
+//            setTimeout(linkReTry,5000)
+//        }
+    }
+
+    function flushLinkedDevice(mac){
+        if(readyDevice[mac]==mac){
+            
         }else{
-            $('body').append('<div class="app-msg slideInUp"><div class="txt" id="ssid">请在wifi设置界面选择“' + ssid + '”</div><div class="confirm"><span class="no">取消</span><span class="yes">连接</span></div></div>');
-        }
-    }
-    function onLinked(data){
-        if(!localLinked){
-            if(data==ssid){
-                localLinked=true;
-                app_tool.loaded();
-                setTimeout(function(){
-                    app_msg.animation();
-                    searchLight();
-                },1000);
-            }else{
-                window.wifi.unlinkWifi();
-            }
-        }
-    }
-
-    function lightStandby(data){
-        if(localLinked){
-//            alert('lightStanby:'+data);
-            readyDevice++;
-            $('#connected-device').text(readyDevice);
-            setTimeout(function(){window.light.initTime()},2000);
-//            alert(window.light.tempMethod());
-//            window.light.setManualCode(getJsonString({manualColor:5,level:50}))
-        }else{
-
+            readyDevice[mac]=mac
+            readyDevice.length++
         }
     }
     function initUi(deviceInf,groupInf){
@@ -101,9 +77,15 @@
         $('#total-device').text(deviceList.length);
     }
 
-
+    $('#add_to_online').click(function(){
+                          if(group.inf.G_TYPE=='online'){
+                              alert("请在设置中选择对应设备的SSID")
+                          }else{
+                              headerTo('equip_add_step2.html')
+                          }
+                          });
     $('#linkLight').click(function(){
-        window.wifi.linkLights();
+        searchLight();
     });
     $('#time').click(function(){
 
@@ -117,13 +99,6 @@
     $(document).on('click','.n1',function(){
 
     });
-    $(document).on('click','.add-device',function(){
-        if('local'==type){
-            headerTo('equip_add_step4.html');
-        }else{
-            headerTo('equip_add_step1.html');
-        }
-    })
 
     function device(mac){
         var _=this;
