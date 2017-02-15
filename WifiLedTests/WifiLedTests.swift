@@ -36,11 +36,6 @@ class WifiLedTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-    func testMethod(){
-        let cc=LightsController()
-        cc.setTime()
-        XCTAssert(true)
-    }
     func temp(){
         print("ok")
     }
@@ -90,8 +85,11 @@ class WifiLedTests: XCTestCase {
         XCTAssert(true);
     }
     func testDataGenerator(){
-        let data = DataHandler.generateLinkData(ssid:"TEST1",pasd:"123456")
-        print(data)
+        var temp:Dictionary<String,[String]?>=[String:[String]?]()
+        let data=temp["ab"]
+        if data==nil {
+            print("nothing")
+        }
         XCTAssert(true);
         
     }
@@ -106,6 +104,10 @@ class WifiLedTests: XCTestCase {
 //        sDb.insert()
 //        sDb.select()
         XCTAssert(sDb.tempStatus)
+    }
+    func testTemp(){
+        
+        XCTAssert(true)
     }
     
 }

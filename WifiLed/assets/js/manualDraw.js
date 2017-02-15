@@ -56,8 +56,12 @@ function initCanvas() {
     }
     $('#manual_canvas').css('width',canvasWidth/2+'px');
     $('#manual_canvas').css('height',canvasHeight/2+'px');
-    initCode(getCode('TYPE_MANUAL'));
+//    initCode(getCode('TYPE_MANUAL'));
+    getCode('TYPE_MANUAL');
     drawBuffer();
+}
+function getCodeReply(data){
+    initCode(data)
 }
 function drawBuffer() {
     bufferCanvas.width = bufferCanvas.width;

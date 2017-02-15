@@ -90,7 +90,12 @@ function ap2sta(ssid,pasd){
 function joinGroup(groupId){
     if(!debug)window.webkit.messageHandlers.light.postMessage(getJsonString({method:"joinGroup",data:groupId}))
 }
-
+function chooseGroup(groupId){
+    if(!debug)window.webkit.messageHandlers.light.postMessage(getJsonString({method:"chooseGroup",data:groupId}))
+}
+function saveCode(codeType){
+    if(!debug)window.webkit.messageHandlers.light.postMessage(getJsonString({method:"saveCode",data:codeType}))
+}
 
 
 
@@ -151,16 +156,12 @@ function initGroup(){
 }
 
 
-function saveCode(codeType){
-    if(!debug)window.light.saveCodeToDb(codeType);
-}
+
 function deviceCodeSave(){
     //alert("save");
     if(!debug)window.light.saveCode();
 }
-function chooseGroup(groupId){
-    if(!debug)window.light.chooseGroup(groupId);
-}
+
 
 function linkWifi(ssid){
     if(!debug)window.wifi.linkWifi(getJsonString({ssid:ssid}));

@@ -71,7 +71,7 @@
     $(document).on('click','.wifi-item',function(){
         ssid=$(this).text();
         alert(ssid)
-        $('body').append('<div class="app-msg slideInUp"><div class="txt" id="ssid">' + ssid + '</div><div class="wifi"><input type="text" id="pasd" name="wifipass" placeholder="密码" class="noset" /></div><div class="confirm"><span class="no" id="cancel_link">取消</span><span class="yes" id="link">连接</span></div></div>');
+        $('body').append('<div class="app-msg slideInUp"><div class="txt" id="ssid">' + ssid + '</div><div class="wifi"><input type="text" id="pasd" name="wifipass" placeholder="密码" class="noset" style="-webkit-user-select: auto"/></div><div class="confirm"><span class="no" id="cancel_link">取消</span><span class="yes" id="link">连接</span></div></div>');
 
     })
     $(document).on('click','#link',function(){

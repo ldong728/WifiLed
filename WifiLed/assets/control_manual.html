@@ -21,7 +21,7 @@
             <a href="equip_index.html" class="pos-r img"><img src="image/icon/16.png" alt=""></a>
         </div>
         <div class="mode-type">
-            <a href="control_mix.html">自动</a><a href="control_manual.html" class="cur-a">手动</a>
+            <a id="to_auto">自动</a><a class="cur-a">手动</a>
         </div>
         <div class="mode-info">
             <div class="radius">
@@ -46,10 +46,18 @@
         <!--侧边代码结束-->
     </div>
 <script>
+    $('#to_manual').click(function(){
+                          saveCode('TYPE_MANUAL');
+                          headerTo('control_mix.html')
+                          })
+                          function saveCodeReply(){
+                              
+                          }
+
     function setManualCodeReply(){
         
     }
-    alert("save!!!!");
+//    alert("save!!!!");
     deviceCodeSave();
 </script>
 </body>

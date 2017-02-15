@@ -24,7 +24,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     fileprivate var mTotalDeviceLinked:[String:String]=[String:String]()
     fileprivate var mIPMap:[String:String]=[String:String]()
     fileprivate var mSendBuffer:Dictionary<String,Set<Code>>=[String:Set<Code>]()
-    fileprivate var buffer:[String:DataPack?]=[String:DataPack]()
+    fileprivate var buffer:[String:DataPack?]=[String:DataPack?]()
     fileprivate var mSocket: GCDAsyncUdpSocket!
     fileprivate let mLightController : LightsController
     fileprivate let mDb:Db
@@ -65,7 +65,12 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         let defaultIp = mDb.mCurrentGroupType==Db.GROUP_TYPE_ONLINE ? "0.0.0.0" : LightControllerGroup.DEFALT_IP
         let macList=mDb.getDeviceMacList()
         for mac in macList {
-            mIPMap[mac]=defaultIp
+            if mTotalDeviceLinked.index(forKey: mac) != nil{
+                mIPMap[mac]=mTotalDeviceLinked[mac]
+            }else{
+                mIPMap[mac]=defaultIp
+            }
+            
         }
         initBuffers();
         mLightController.initCode(codeCollect: mDb.getCode())
@@ -102,7 +107,11 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         }
     }
     fileprivate func formatReceivedCode(revPacket :DataPack) -> DataPack? {
+        let data=revPacket.getData()
+        let isFrameHead:Bool = data[0]==0xaa&&data[1]==0x08&&data[2]==0x0a
+        
         if revPacket.getLength() % Light.CODE_LENGTH != 0 {
+            
             var sBuff:DataPack?
             if nil != buffer.index(forKey: revPacket.getIp()){
                 sBuff=buffer[revPacket.getIp()]!
@@ -301,8 +310,9 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     接收数据后的方法
      **/
     func udpSocket(_ sock: GCDAsyncUdpSocket, didReceive data: Data, fromAddress address: Data, withFilterContext filterContext: Any?) {
-        NSLog("receaved!!!!" + String(describing: data))
+        
         let receivedData=DataPack(data: data,address:address)
+        NSLog("receive from "+receivedData.getIp()+" "+DataHandler.getStringOfUint8Array(data: receivedData.getData()))
         if LightControllerGroup.DATA_PORT == receivedData.getPort(){
             let sData = formatReceivedCode(revPacket: receivedData)
             if nil != sData {
@@ -402,8 +412,25 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         send(byteMessage: DataHandler.generateLinkData(ssid: ssid, pasd: pasd), ip: LightControllerGroup.DEFALT_IP, port: LightControllerGroup.CTR_PORT)
     }
     internal func getCode(type:String)->String{
-        let code=mLightController.getJsonAutoMap()
+        let code=mLightController.getCodeJson(type: type)
         return code
+    }
+    internal func initDeviceTime(){
+        for (_,ip) in mIPMap {
+            if ip != "0,0,0,0" {
+                send(byteMessage: mLightController.setTime(), ip: ip, port: LightControllerGroup.DATA_PORT)
+            }
+        }
+    }
+    internal func saveCode(type:String,saveToRam:Bool = true){
+        if saveToRam {
+            let code=mLightController.setSaveCode()
+            putCodeToQueue(code: code)
+            if type == Db.TYPE_AUTO {
+                putCodeToQueue(code: mLightController.setAutoRun())
+            }
+        }
+        mDb.setCode(type: type, code: mLightController.getCodeJson(type: type))
     }
     internal func setTime(ip:String=LightControllerGroup.BROADCAST_IP){
         let code=mLightController.setTime()
@@ -424,6 +451,11 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     }
     internal func getGroupInf(groupId:Int) ->Dictionary<String,String>{
         return mDb.getGroupInf(groupid:Int64(groupId))
+        
+    }
+    internal func chooseGroup(groupId:Int){
+        mDb.setGroupId(gId: groupId)
+        initGroup();
         
     }
 

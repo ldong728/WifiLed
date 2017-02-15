@@ -133,7 +133,7 @@ class LightsController{
         return [0xaa,0x08,0x0a,0x0a,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x14]
     }
     
-    internal func getJsonAutoMap() -> String{
+    private func getJsonAutoMap() -> String{
         var base = [String:[String:Int]]()
         for i in 0 ..< LightsController.COLOR_NUM {
             var maps=mLightList[i].getControlMap();
@@ -152,7 +152,7 @@ class LightsController{
     }
     
     
-    internal func setAutoMap(data:String){
+    private func setAutoMap(data:String){
         let myJson=JSON(DataHandler.string2Data(source: data));
         for (color,sub):(String,JSON) in myJson {
             for (time,level):(String,JSON) in sub {
@@ -162,7 +162,7 @@ class LightsController{
         }
 
     }
-    internal func initAutoMap(){
+    private func initAutoMap(){
         for i in 0 ..< LightsController.COLOR_NUM {
             for j in 0 ..< Light.TOTAL {
                 mLightList[i].setControlMap(j, key: false, level: 0)
@@ -170,7 +170,7 @@ class LightsController{
             }
         }
     }
-    internal func getJsonManual() ->String{
+    private func getJsonManual() ->String{
         var base = [String:Int]();
         for i in 0 ..< LightsController.COLOR_NUM {
             base[String(i)] = Int(mLightList[i].getManuelLevel());
@@ -178,38 +178,38 @@ class LightsController{
         return DataHandler.Dictionary2Json(dic: base)!
         
     }
-    internal func setManualMap(data:String){
+    private func setManualMap(data:String){
         let myJson=JSON(DataHandler.string2Data(source: data))
         for (key,value):(String,JSON) in myJson {
             var _=self.setManual(Int(key)!, level: value.intValue)
         }
     }
-    internal func getJsonCloud() -> String{
+    private func getJsonCloud() -> String{
         var base=[String:Int]();
         base["stu"]=Int(mCloudCode[4])
         base["prob"]=Int(mCloudCode[5])
         base["mask"]=Int(mCloudCode[6])
         return DataHandler.Dictionary2Json(dic: base)!
     }
-    internal func setCloudMap(data:String){
+    private func setCloudMap(data:String){
         let myJson=JSON(DataHandler.string2Data(source: data));
         let stu = 0 == myJson["stu"].intValue ? false : true
         var _=setCloud(stu,probability: myJson["prob"].intValue,mask: myJson["mask"].intValue)
     }
-    internal func getJsonFlash() -> String{
+    private func getJsonFlash() -> String{
         var base=[String:Int]();
         base["stu"]=Int(mFlashCode[4])
         base["prob"]=Int(mFlashCode[5])
         base["level"]=Int(mFlashCode[6])
         return DataHandler.Dictionary2Json(dic: base)!
     }
-    internal func setFlashMap(data:String){
+    private func setFlashMap(data:String){
         let myJson=JSON(DataHandler.string2Data(source: data))
         let stu = 0 == myJson["stu"].intValue ? false : true
         var _=setFlash(stu,level: myJson["level"].intValue,probability: myJson["prob"].intValue)
 
     }
-    internal func getJsonMoon() ->String{
+    private func getJsonMoon() ->String{
         var base=[String:Int]();
         base["stu"]=Int(mMoonCode[4])
         base["startH"]=Int(mMoonCode[6])
@@ -218,7 +218,7 @@ class LightsController{
         base["endM"]=Int(mMoonCode[9])
         return DataHandler.Dictionary2Json(dic: base)!
     }
-    internal func setMoonMap(data:String){
+    private func setMoonMap(data:String){
         let myJson=JSON(DataHandler.string2Data(source: data))
         let stu = 0 == myJson["stu"].intValue ? false : true
         var _=setMoon(stu,startH: myJson["startH"].intValue,startM: myJson["startM"].intValue,endH: myJson["endH"].intValue,endM: myJson["endM"].intValue)
@@ -253,7 +253,35 @@ class LightsController{
         
         
     }
-    
+    internal func getCodeJson(type:String) ->String{
+        
+        var data:String="{}"
+        switch type{
+        case Db.TYPE_AUTO:
+            data = getJsonAutoMap()
+            break
+        case Db.TYPE_MANUAL:
+            data = getJsonManual()
+            break;
+        case Db.TYPE_CLOUD:
+            data = getJsonCloud()
+            break
+        case Db.TYPE_FLASH:
+            data = getJsonFlash()
+            break
+        case Db.TYPE_MOON:
+            data = getJsonMoon()
+            break
+        default:
+            break
+            
+        }
+        return data
+        
+    }
+
+
+
     
     
     

@@ -29,7 +29,8 @@
     <div class="app-nav">
         <a href="equip_index.html" class="n1">我的设备</a>
         <a href="control_mix.html" class="n2">控制中心</a>
-        <a href="set_index.html" class="n4">个人中心</a>
+        <a class="n4">个人中心</a>
+<!--        <a href="set_index.html" class="n4">个人中心</a>-->
     </div>
 <script>
     var group={}
@@ -43,9 +44,12 @@
         $('.e-name').text(group.inf.G_NAME)
         deviceList=group.totalList
         $.each(group.linked,function(k,v){
-            readyDevice[k]=k
-            readyDevice.length++
+            if(v!='0.0.0.0'){
+                readyDevice[k]=k
+                readyDevice.length++
+            }
         })
+        
         
         $('#connected-device').text(readyDevice.length);
         $('#total-device').text(deviceList.length)

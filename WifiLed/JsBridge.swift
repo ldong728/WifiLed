@@ -38,6 +38,7 @@ class JsBridge {
             break
             
         case "getGroupInf":
+            controller.initDeviceTime()
             param=controller.getGroupDetail()
             break
             
@@ -84,6 +85,12 @@ class JsBridge {
             let ssid=GroupInf["G_SSID"]
             let pasd=GroupInf["G_SSID_PASD"]
             controller.ap2Sta(ssid: ssid!, pasd: pasd!)
+            break;
+        case "chooseGroup":
+            controller.chooseGroup(groupId: Int(data)!)
+            break;
+        case "saveCode":
+            controller.saveCode(type: data)
             break;
         default:
             NSLog("jsBridge can't find method")

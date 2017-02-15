@@ -38,7 +38,7 @@ class Db : NSObject {
     let D_TYPE=Expression<String>("D_TYPE")
     let D_NAME=Expression<String>("D_NAME")
     let C_ID=Expression<Int64>("C_ID")
-    let C_TYPE=Expression<String>("c_type")
+    let C_TYPE=Expression<String>("C_TYPE")
     let G_TYPE=Expression<String>("G_TYPE")
     let C_CODE=Expression<String>("C_CODE")
     static let TYPE_AUTO="TYPE_AUTO"

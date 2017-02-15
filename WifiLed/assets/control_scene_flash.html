@@ -41,7 +41,9 @@
 </script>
 <script src="js/manual.js"></script>
 <script>
-    var data=eval('('+getCode("TYPE_FLASH")+')');
+    getCode("TYPE_FLASH")
+    function getCode(status){
+        var data=eval('('+status+')');
     //    var dataList=new Array(data.prop,data.mask);
     var stu=data.stu||0;
     if(1==stu){
@@ -51,6 +53,7 @@
         sendFlashCode(0,0,0);
     }
     initStatus([data.prob||0,data.level||0]);
+        }
     $('.btn').click(function(){
         if($(this).hasClass('btn-off')){
             $(this).removeClass('btn-off');
@@ -61,6 +64,7 @@
             initStatus([0,0]);
         }
     });
+
     function  createCode(index){
         console.log('create code');
         if(levels[index]>0){

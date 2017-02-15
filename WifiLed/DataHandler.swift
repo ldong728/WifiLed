@@ -50,6 +50,16 @@ class DataHandler{
         return returnData
         
     }
+    class func getStringOfUint8Array(data:[UInt8]) ->String{
+        var str:String=""
+        for byte in data {
+            let temp = "0x"+String(byte,radix:16)+","
+            str+=temp
+
+        }
+        return str.trimmingCharacters(in: CharacterSet.init(charactersIn: ","))
+            
+    }
     
     private class func generateCmd(key:[UInt8])->[UInt8]{
         var cmd = [UInt8]()
