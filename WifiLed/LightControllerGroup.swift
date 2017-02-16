@@ -355,7 +355,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
             self.sendCodeQueue()
         }
     }
-    internal func setAuto(color:Int,time:Int,level:Int,send:Bool=true){
+    internal func setAuto(color:Int,time:Int,level:Int,isConfirm:Bool=true){
         var data:[UInt8]?
         if level>100||level<0 {
             data=mLightController.unset(color, time: time)
@@ -363,7 +363,9 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
             data=mLightController.setAuto(color, time: time,level:level)
         }
         
-        putCodeToQueue(code: data!)
+        if isConfirm {
+            putCodeToQueue(code: data!)
+        }
     }
     internal func setManual(color:Int,level:Int){
         let GroupType=mDb.mCurrentGroupType

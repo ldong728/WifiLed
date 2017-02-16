@@ -62,7 +62,7 @@ function sendManualCode(currentColor,level){
 function sendAutoCode(color,time,level,mode){
     var modeData=mode?"confirm":"not";
     if(!debug){
-        window.webkit.messageHandlers.light.postMessage(getJsonString({method:"setAutoCode",data:"none",color:color,time:time,level:level}))
+        window.webkit.messageHandlers.light.postMessage(getJsonString({method:"setAutoCode",data:"none",color:color,time:time,level:level,mode:modeData}))
         //window.light.sendAutoCode(JSON.stringify({color:color,time:time,level:level,mode:modeData}))
         //saveCode('TYPE_AUTO');
     }else{

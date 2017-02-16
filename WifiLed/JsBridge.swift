@@ -63,7 +63,8 @@ class JsBridge {
             let color=jsonData["color"].intValue
             let time=jsonData["time"].intValue
             let level=jsonData["level"].intValue
-            controller.setAuto(color: color, time: time, level: level)
+            let isConfirm:Bool = jsonData["mode"].stringValue == "confirm" ? true : false
+            controller.setAuto(color: color, time: time, level: level, isConfirm: isConfirm)
             break
         case "scanWifi":
             controller.scanWifi()
