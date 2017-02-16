@@ -53,7 +53,7 @@ class WifiLedTests: XCTestCase {
             }
         }
         func test(_ tag:String){
-            for i in 1 ... 10 {
+            for _ in 1 ... 10 {
                 Thread.sleep(forTimeInterval: 0.5)
                 NSLog("tag: " + tag + "\(Thread.current)");
                 
@@ -79,7 +79,7 @@ class WifiLedTests: XCTestCase {
     func testUDP(){
         lc.searchDevice()
         
-        for i in 1 ... 1000{
+        for _ in 1 ... 1000{
             Thread.sleep(forTimeInterval: 0.2)
         }
         XCTAssert(true);
