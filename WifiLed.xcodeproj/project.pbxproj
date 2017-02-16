@@ -616,6 +616,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F81F04586D0CB93B24AAAE67 /* Pods-WifiLed.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = WUNF7P4VMH;
 				INFOPLIST_FILE = WifiLed/Info.plist;
@@ -631,6 +632,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C928B53BE7BB499E30D7CB9 /* Pods-WifiLed.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = WUNF7P4VMH;
 				INFOPLIST_FILE = WifiLed/Info.plist;
