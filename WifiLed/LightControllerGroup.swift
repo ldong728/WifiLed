@@ -107,36 +107,30 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         }
     }
     fileprivate func formatReceivedCode(revPacket :DataPack) -> DataPack? {
-        let data=revPacket.getData()
-        let isFrameHead:Bool = data[0]==0xaa&&data[1]==0x08&&data[2]==0x0a
-        
         if revPacket.getLength() % Light.CODE_LENGTH != 0 {
             
-            var sBuff:DataPack?
-            if nil != buffer.index(forKey: revPacket.getIp()){
-                sBuff=buffer[revPacket.getIp()]!
-            }
-//            let sBuff:DataPack?=buffer[revPacket.getIp()]!
-            if sBuff != nil {
+
+            if let sBuff = buffer[revPacket.getIp()]{
                 sBuff!.merge(otherPack: revPacket)
                 if(sBuff!.getLength()%Light.CODE_LENGTH == 0){
                     buffer.removeValue(forKey: sBuff!.getIp())
-//                    buffer[sBuff!.getIp()]=nil
                     return sBuff
                 }else{
                     buffer[sBuff!.getIp()]=sBuff!
                     return nil
                 }
             } else {
-                buffer[revPacket.getIp()]=revPacket
+                if revPacket.isHead(){
+                    buffer[revPacket.getIp()] = revPacket
+                }
+                
                 return nil;
             }
-            
-            
-            
         }
         return revPacket
     }
+    
+    
     fileprivate func reGroupSendQueue(pack:DataPack){
         let ip = pack.getIp()
         let packData=pack.getData()

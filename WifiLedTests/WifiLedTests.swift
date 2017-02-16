@@ -87,7 +87,7 @@ class WifiLedTests: XCTestCase {
     func testDataGenerator(){
         var temp:Dictionary<String,[String]?>=[String:[String]?]()
         let data=temp["ab"]
-        if data==nil {
+        if data == nil {
             print("nothing")
         }
         XCTAssert(true);

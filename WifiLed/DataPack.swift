@@ -13,6 +13,7 @@ class DataPack {
     fileprivate let ip:String
     fileprivate let port:UInt16
     fileprivate var data:[UInt8]
+    fileprivate let header:[UInt8] = [0xaa, 0x08, 0x0a]
     init(ip:String,port:UInt16,data:[UInt8]){
         self.ip=ip
         self.port=port
@@ -38,11 +39,25 @@ class DataPack {
         return data.count;
     }
     internal func merge(otherData:[UInt8]) ->[UInt8]{
-        self.data+=otherData
+    
+        self.data += otherData
+       
         return getData()
     }
     internal func merge(otherPack: DataPack) {
-        self.data+=otherPack.getData()
+        if otherPack.isHead() {
+            self.data = otherPack.getData()
+        }else{
+            self.data += otherPack.getData()
+        }
+//        return self
+//        self.data+=otherPack.getData()
+    }
+    internal func isHead() ->Bool{
+        if getData().count<3 {
+            return false
+        }
+        return Array(self.data[0...2])==header
     }
     
 }
