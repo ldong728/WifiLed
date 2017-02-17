@@ -15,7 +15,8 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     static let BROADCAST_IP="255.255.255.255"
     static let DEFALT_IP="172.22.11.1"
     static let LOCAL_PORT:UInt16=26000
-    static let SEND_INTERVAL=0.015
+    static let SEND_INTERVAL=0.02
+    static let SEND_BREAK=0.5
     static let SCAN_WIFI:[UInt8]=[0xff,0x00,0x01,0x01,0x02]
     fileprivate var mThreadFlag:Bool=false
     fileprivate var mSamaphoreFlag:Bool=true
@@ -202,10 +203,13 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
                     codeCount += val.count
                     val.forEach{(data) in
                         send(byteMessage:data.dataArray,ip:key,port:LightControllerGroup.DATA_PORT)
-                        NSLog("send from queue")
+                        NSLog("send from queue \(codeCount) remaining")
                         Thread.sleep(forTimeInterval: LightControllerGroup.SEND_INTERVAL)
                     }
+                    NSLog("=================queue sent \(codeCount) remeining====================")
+                    Thread.sleep(forTimeInterval: LightControllerGroup.SEND_BREAK)
                 }
+                
             }
             if codeCount == 0 {
                 mSamaphoreFlag=false
