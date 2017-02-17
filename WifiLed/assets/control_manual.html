@@ -14,6 +14,17 @@
 </head>
 
 <body>
+<!--    mask元素开始-->
+    <div id="popWindow" class="popWindow" style="display: none;">
+    </div>
+    <div id="maskLayer" class="maskLayer" style="display: none;">
+        <div>
+            Saving....
+        </div>
+    </div>
+        
+<!--    mask元素结束-->
+
     <div class="app-mode shadow">
         <div class="app-tool clearfix">
             <a onClick="app_slide.show();" class="pos-l img"><img src="image/icon/6.png" alt=""></a>
@@ -48,7 +59,8 @@
 <script>
     $('#to_auto').click(function(){
                           saveCode('TYPE_MANUAL');
-                          headerTo('control_mix.html')
+                          //headerTo('control_mix.html')
+                          showMask()
                           })
                           function saveCodeReply(){
                               
@@ -56,6 +68,11 @@
 
     function setManualCodeReply(){
         
+    }
+
+    function codeSaved(){
+        closeMask()
+        headerTo('control_mix.html')
     }
 //    alert("save!!!!");
 

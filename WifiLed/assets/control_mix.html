@@ -14,6 +14,16 @@
 </head>
 
 <body>
+    <!--    mask元素开始-->
+    <div id="popWindow" class="popWindow" style="display: none;">
+    </div>
+    <div id="maskLayer" class="maskLayer" style="display: none;">
+        <div>
+            Saving....
+        </div>
+    </div>
+    
+    <!--    mask元素结束-->
     <div sytle="overflow: auto; -webkit-overflow-scrolling:touch">
     <div class="app-mode shadow" style="height: 100%; overflow: auto">
         <div class="app-tool clearfix">
@@ -69,7 +79,8 @@
     }
     $('#to_manual').click(function(){
                           saveCode('TYPE_AUTO');
-                          headerTo('control_manual.html')
+                          //headerTo('control_manual.html')
+                          showMask()
     })
 
     document.body.addEventListener('touchmove', function (ev) {
@@ -80,7 +91,11 @@
                                    ev.stopPropagation()
                                    }
                                    }, false)
-                                           
+     
+     function codeSaved(){
+         closeMask()
+         headerTo('control_manual.html')
+     }
 
     </script>
 </body>
