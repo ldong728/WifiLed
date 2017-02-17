@@ -18,8 +18,9 @@
     <div id="popWindow" class="popWindow" style="display: none;">
     </div>
     <div id="maskLayer" class="maskLayer" style="display: none;">
-        <div>
-            Saving....
+        <div style="margin:20px 0px 0px 0px">
+            <img src="image/loading1.gif" alt=""></br>
+            Saving...
         </div>
     </div>
         
@@ -80,6 +81,25 @@
 //    }
 //    alert("save!!!!");
 
-</script>
+function preventDefault(ev) {
+    ev.preventDefault()
+}
+document.addEventListener('touchmove', preventDefault, false)
+function isScroller(el) {
+    
+    // 判断元素是否为 scroller
+    return el.classList.contains('scroller')
+}
+
+document.body.addEventListener('touchmove', function (ev) {
+                               var target = ev.target
+                               
+                               // 在 scroller 上滑动，阻止事件冒泡，启用浏览器默认行为。
+                               if (isScroller(target)) {
+                               ev.stopPropagation()
+                               }
+                               }, false)
+                               
+    </script>
 </body>
 </html>

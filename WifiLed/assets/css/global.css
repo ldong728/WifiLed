@@ -90,4 +90,4 @@ div{cursor: pointer}
 .app-slide .main .list dd a{display:block;padding:15px 5px;color:#fff;}
 /* Mask */
 .popWindow {background-color:#9D9D9D;width: 100%;height: 100%;left: 0;top: 0;filter: alpha(opacity=50);opacity: 0.5;z-index: 1;position: absolute;}
-.maskLayer {background-color:#000;width: 200px;height: 30px;line-height: 30px;color:#fff;z-index: 2;position: absolute;text-align:center;}
+.maskLayer {background-color:#fff;width: 200px;height: 100px;top: 50%;left: 50%;margin:-50px 0px 0px -100px;line-height: 30px;color:#000;z-index: 2;position: absolute;text-align:center;}
