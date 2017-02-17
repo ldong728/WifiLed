@@ -15,7 +15,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     static let BROADCAST_IP="255.255.255.255"
     static let DEFALT_IP="172.22.11.1"
     static let LOCAL_PORT:UInt16=26000
-    static let SEND_INTERVAL=0.02
+    static let SEND_INTERVAL=0.01
     static let SEND_BREAK=0.5
     static let SCAN_WIFI:[UInt8]=[0xff,0x00,0x01,0x01,0x02]
     fileprivate var mThreadFlag:Bool=false

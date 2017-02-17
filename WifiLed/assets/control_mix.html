@@ -45,8 +45,12 @@
                 <div class="canvas_wrap wrapB">
                     <canvas id="bCanvas"></canvas>
                 </div>
-                </div>
             </div>
+            <div class="radius ">
+                <input type="button" value="保  存" class="noset" onClick="saveAuto()">
+            </div>
+            </div>
+    
         </div>
         <!--侧边代码开始-->
         <div class="app-slide">
@@ -78,9 +82,9 @@
         return el.classList.contains('scroller')
     }
     $('#to_manual').click(function(){
-                          saveCode('TYPE_AUTO');
-                          //headerTo('control_manual.html')
-                          showMask()
+                          //saveCode('TYPE_AUTO');
+                          headerTo('control_manual.html')
+                          //showMask()
     })
 
     document.body.addEventListener('touchmove', function (ev) {
@@ -92,10 +96,10 @@
                                    }
                                    }, false)
      
-     function codeSaved(){
-         closeMask()
-         headerTo('control_manual.html')
-     }
+//     function codeSaved(){
+//         closeMask()
+//         headerTo('control_manual.html')
+//     }
 
     </script>
 </body>

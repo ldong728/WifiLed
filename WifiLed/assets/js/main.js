@@ -181,3 +181,17 @@ function closeMask() {
     document.getElementById('maskLayer').style.display = 'none';
 }
 
+
+function saveManual(){
+    showMask()
+    saveCode('TYPE_MANUAL')
+}
+
+function saveAuto(){
+    showMask()
+    saveCode('TYPE_AUTO')
+}
+
+function codeSaved(){
+    closeMask()
+}

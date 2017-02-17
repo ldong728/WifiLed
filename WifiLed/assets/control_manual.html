@@ -40,6 +40,9 @@
                     <canvas id="manual_canvas"></canvas>
                 </div>
             </div>
+            <div class="radius ">
+                <input type="button" value="保  存" class="noset" onClick="saveManual()">
+            </div>
         </div>
         <!--侧边代码开始-->
         <div class="app-slide">
@@ -58,9 +61,9 @@
     </div>
 <script>
     $('#to_auto').click(function(){
-                          saveCode('TYPE_MANUAL');
-                          //headerTo('control_mix.html')
-                          showMask()
+                          //saveCode('TYPE_MANUAL');
+                          headerTo('control_mix.html')
+                          //showMask()
                           })
                           function saveCodeReply(){
                               
@@ -70,10 +73,11 @@
         
     }
 
-    function codeSaved(){
-        closeMask()
-        headerTo('control_mix.html')
-    }
+
+//    function codeSaved(){
+//        closeMask()
+//        headerTo('control_mix.html')
+//    }
 //    alert("save!!!!");
 
 </script>
