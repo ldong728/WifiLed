@@ -35,7 +35,7 @@
         <a class="n4">个人中心</a>
     </div>
     <script>
-        searchLight()
+        //searchLight()
         function newDevice(){
             headerTo('equip_add_step3.html')
         }
@@ -68,10 +68,13 @@
             //window.webkit.messageHandlers.light.postMessage("test")
             //headerTo('equip_info.html');
         })
-        $(document).on('click','#searchLight',function(){
-                       searchLight()
+        //$(document).on('click','#searchLight',function(){
+            //searchLight()
+        //})
+        $('#searchLight').click(function(){
+            searchLight()
         })
-
+                            
     </script>
 </body>
 </html>

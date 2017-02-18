@@ -13,7 +13,7 @@
 <body>
     <div class="app-equip shadow">
         <div class="app-tool clearfix">
-            <a href="#" class="pos-l img"><img src="image/icon/6.png" alt=""></a>
+            <a href="" class="pos-l img"><img src="image/icon/6.png" alt=""></a>
             <a id="add_to_online" class="pos-r img add-device"><img src="image/icon/7.png" alt=""></a>
         </div>
         <div class="equip-info">
@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="app-nav">
-        <a href="equip_index.html" class="n1">我的设备</a>
+        <a id="checkGroupType" href="#" class="n1">我的设备</a>
         <a href="control_mix.html" class="n2">控制中心</a>
         <a class="n4">个人中心</a>
 <!--        <a href="set_index.html" class="n4">个人中心</a>-->
@@ -115,6 +115,22 @@
 
 //    var deviceList=window.light.get
 
+
+
+
+//    判断当前设备分组信息
+    $('#checkGroupType').click(function(){
+        checkGroupType()
+    })
+    function checkGroupTypeReply(data){
+        if (data == "local"){
+            headerTo('equip_info.html')
+        }else if (data == "online"){
+            headerTo('equip_index.html')
+        }else {
+            
+        }
+    }
 
 </script>
 </body>

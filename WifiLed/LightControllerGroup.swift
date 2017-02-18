@@ -15,12 +15,14 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     static let BROADCAST_IP="255.255.255.255"
     static let DEFALT_IP="172.22.11.1"
     static let LOCAL_PORT:UInt16=26000
-    static let SEND_INTERVAL=0.015
+    static let SEND_INTERVAL=0.01
+    static let SEND_BREAK=0.5
     static let SCAN_WIFI:[UInt8]=[0xff,0x00,0x01,0x01,0x02]
     fileprivate var mThreadFlag:Bool=false
     fileprivate var mSamaphoreFlag:Bool=true
     fileprivate var mSendSemaphore=DispatchSemaphore(value:1)
     fileprivate let mQueue : DispatchQueue
+    fileprivate let receiveQueue : DispatchQueue
     fileprivate var mTotalDeviceLinked:[String:String]=[String:String]()
     fileprivate var mIPMap:[String:String]=[String:String]()
     fileprivate var mSendBuffer:Dictionary<String,Set<Code>>=[String:Set<Code>]()
@@ -28,6 +30,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     fileprivate var mSocket: GCDAsyncUdpSocket!
     fileprivate let mLightController : LightsController
     fileprivate let mDb:Db
+    fileprivate var isSendingSaveData:Bool=false
     var mToGroupId:Int = -1
     var mToSSID:String?
     var mToSSIDpasd:String?
@@ -35,10 +38,11 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     
     override init(){
         mQueue=DispatchQueue(label: "data_udp")
+        receiveQueue=DispatchQueue(label: "receive_thread")
         mLightController = LightsController()
         mDb=Db()
         super.init()
-        mSocket=GCDAsyncUdpSocket(delegate: self, delegateQueue: DispatchQueue(label: "receive_thread"))
+        mSocket=GCDAsyncUdpSocket(delegate: self, delegateQueue: receiveQueue)
         initBuffers()
         initUdp()
         
@@ -47,14 +51,14 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     }
     fileprivate func initBuffers(){
         if(mIPMap.count>0){
-            objc_sync_enter(mSendBuffer);
+//            objc_sync_enter(mSendBuffer);
             mSendBuffer.removeAll();
             for(_,ip) in mIPMap {
                 if ip != "0.0.0.0" {
                     mSendBuffer[ip]=Set<Code>()
                 }
             }
-            objc_sync_exit(mSendBuffer)
+//            objc_sync_exit(mSendBuffer)
         }
 //        mSendBuffer["172.22.11.1"]=Set<Code>()
         
@@ -83,10 +87,10 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         if nil != mIPMap[mac]{
             if mIPMap[mac] != newip{
                 mIPMap[mac]=newip
-                objc_sync_enter(mSendBuffer)
+//                objc_sync_enter(mSendBuffer)
                 mSendBuffer.removeValue(forKey: mIPMap[mac]!)
                 mSendBuffer[newip]=Set<Code>()
-                objc_sync_exit(mSendBuffer)
+//                objc_sync_exit(mSendBuffer)
                 return true
             }
             return false
@@ -141,13 +145,13 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
             confirmed = getCodeSet(data: packData)
             newList=list!.subtracting(confirmed)
             NSLog("regroup")
-            objc_sync_enter(mSendBuffer)
+//            objc_sync_enter(mSendBuffer)
             if newList != nil {
                 mSendBuffer[ip]=newList!
             }else{
 //                mSendBuffer.removeValue(forKey: ip)
             }
-            objc_sync_exit(mSendBuffer)
+//            objc_sync_exit(mSendBuffer)
         }
         
         
@@ -155,24 +159,27 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
 //        mSendSemaphore.signal()
     }
     fileprivate func putCodeToQueue(code:[UInt8]){
-        let codeTypeSet=getCodeTypeSet(data: code)
-        let newCodeList=getCodeSet(data: code)        
-        objc_sync_enter(mSendBuffer)
-        for (ip,oldList) in mSendBuffer {
-            var regroupList:Set<Code>=Set<Code>()
-            oldList.forEach{(data) ->Void in
-                if !codeTypeSet.contains(data.TypeValue) {
-                    regroupList.insert(data)
+        receiveQueue.async {
+            let codeTypeSet=self.getCodeTypeSet(data: code)
+            let newCodeList=self.getCodeSet(data: code)
+//            objc_sync_enter(self.mSendBuffer)
+            for (ip,oldList) in self.mSendBuffer {
+                var regroupList:Set<Code>=Set<Code>()
+                oldList.forEach{(data) ->Void in
+                    if !codeTypeSet.contains(data.TypeValue) {
+                        regroupList.insert(data)
+                    }
                 }
+                self.mSendBuffer[ip]=newCodeList.union(regroupList)
             }
-            mSendBuffer[ip]=newCodeList.union(regroupList)
+//            objc_sync_exit(self.mSendBuffer)
+            guard self.mSamaphoreFlag else {
+                self.mSamaphoreFlag=true
+                self.mSendSemaphore.signal()
+                return
+            }
         }
-        objc_sync_exit(mSendBuffer)
-        guard mSamaphoreFlag else {
-            mSamaphoreFlag=true
-            mSendSemaphore.signal()
-            return
-        }
+
         
     }
     fileprivate func getCodeSet(data:[UInt8]) -> Set<Code>{
@@ -202,12 +209,20 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
                     codeCount += val.count
                     val.forEach{(data) in
                         send(byteMessage:data.dataArray,ip:key,port:LightControllerGroup.DATA_PORT)
-                        NSLog("send from queue")
+                        NSLog("send from queue \(codeCount) remaining")
                         Thread.sleep(forTimeInterval: LightControllerGroup.SEND_INTERVAL)
                     }
+                    Thread.sleep(forTimeInterval: LightControllerGroup.SEND_BREAK)
                 }
             }
             if codeCount == 0 {
+                
+                NSLog("=================queue sent \(codeCount) remeining====================")
+                if isSendingSaveData {
+                    isSendingSaveData = false
+                    NSLog("=================Code Saved====================")
+                    JsBridge.getCurrentJsBridge()?.postToJs(method: "codeSaved")
+                }
                 mSamaphoreFlag=false
                 mSendSemaphore.wait()
             }
@@ -286,12 +301,12 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         
     }
     func send(message:String,ip:String=LightControllerGroup.DEFALT_IP,port:UInt16 = LightControllerGroup.DATA_PORT){
-        print(message);
+//        print(message);
         let data = message.data(using: String.Encoding.ascii)
-        NSLog("sended Data encode to Data: " + String(data:data!,encoding:String.Encoding.ascii)!)
+        NSLog("sending Data encode to Data: " + String(data:data!,encoding:String.Encoding.ascii)!)
         
         mSocket.send(data!,toHost:ip,port:port,withTimeout:2, tag:0)
-//        print("send ok")
+        print("connect message sent")
     }
     func send(byteMessage: [UInt8],ip:String=LightControllerGroup.DEFALT_IP,port:UInt16 = LightControllerGroup.DATA_PORT){
         NSLog("sendDtat:" + String(describing: byteMessage));
@@ -314,7 +329,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
             }
         }else{
             guard preReceiveHandler(receiveDataPack: receivedData) else {
-//                print("can't handle")
+                print("can't handle")
                 return
             
             }
@@ -420,6 +435,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     }
     internal func saveCode(type:String,saveToRam:Bool = true){
         if saveToRam {
+            isSendingSaveData = true
             let code=mLightController.setSaveCode()
             putCodeToQueue(code: code)
             if type == Db.TYPE_AUTO {
@@ -456,6 +472,9 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     }
 
 
+    internal func checkGroupType() -> String{
+        return mDb.mCurrentGroupType
+    }
 
 
 
