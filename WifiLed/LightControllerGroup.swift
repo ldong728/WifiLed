@@ -301,12 +301,12 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
         
     }
     func send(message:String,ip:String=LightControllerGroup.DEFALT_IP,port:UInt16 = LightControllerGroup.DATA_PORT){
-        print(message);
+//        print(message);
         let data = message.data(using: String.Encoding.ascii)
-        NSLog("sended Data encode to Data: " + String(data:data!,encoding:String.Encoding.ascii)!)
+        NSLog("sending Data encode to Data: " + String(data:data!,encoding:String.Encoding.ascii)!)
         
         mSocket.send(data!,toHost:ip,port:port,withTimeout:2, tag:0)
-//        print("send ok")
+        print("connect message sent")
     }
     func send(byteMessage: [UInt8],ip:String=LightControllerGroup.DEFALT_IP,port:UInt16 = LightControllerGroup.DATA_PORT){
         NSLog("sendDtat:" + String(describing: byteMessage));
@@ -329,7 +329,7 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
             }
         }else{
             guard preReceiveHandler(receiveDataPack: receivedData) else {
-//                print("can't handle")
+                print("can't handle")
                 return
             
             }
@@ -472,7 +472,9 @@ class LightControllerGroup: NSObject, GCDAsyncUdpSocketDelegate{
     }
 
 
-    
+    internal func checkGroupType() -> String{
+        return mDb.mCurrentGroupType
+    }
 
 
 

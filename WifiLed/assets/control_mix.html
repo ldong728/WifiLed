@@ -30,7 +30,7 @@
         <div class="app-tool clearfix">
             <a onClick="app_slide.show();" class="pos-l img"><img src="image/icon/6.png" alt=""></a>
             <span class="pos-m">鱼缸#1</span>
-            <a href="equip_index.html" class="pos-r img"><img src="image/icon/16.png" alt=""></a>
+            <a href="equip_info.html" class="pos-r img"><img src="image/icon/16.png" alt=""></a>
         </div>
         <div class="mode-type">
             <a class="cur-a">自动</a><a id="to_manual">手动</a>
@@ -70,7 +70,7 @@
     </div>
     </div>
     <script>
-        function setAutoCodeReply(){
+        function saveCodeReply(){
             
         }
     function preventDefault(ev) {
@@ -82,20 +82,15 @@
         // 判断元素是否为 scroller
         return el.classList.contains('scroller')
     }
-    $('#to_manual').click(function(){
-                          //saveCode('TYPE_AUTO');
-                          headerTo('control_manual.html')
-                          //showMask()
-    })
+    $('#to_manual').click(function(){headerTo('control_manual.html')})
 
     document.body.addEventListener('touchmove', function (ev) {
-                                   var target = ev.target
-                                   
-                                   // 在 scroller 上滑动，阻止事件冒泡，启用浏览器默认行为。
-                                   if (isScroller(target)) {
-                                   ev.stopPropagation()
-                                   }
-                                   }, false)
+        var target = ev.target
+    // 在 scroller 上滑动，阻止事件冒泡，启用浏览器默认行为。
+        if (isScroller(target)) {
+            ev.stopPropagation()
+        }
+    }, false)
      
 //     function codeSaved(){
 //         closeMask()
