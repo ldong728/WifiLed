@@ -171,5 +171,33 @@ function goBack(){
 }
 
 
+//弹出遮蔽层（mask）的方法
+function showMask() {
+    document.getElementById('popWindow').style.display = 'block';
+    document.getElementById('maskLayer').style.display = 'block';
+}
+function closeMask() {
+    document.getElementById('popWindow').style.display = 'none';
+    document.getElementById('maskLayer').style.display = 'none';
+}
 
 
+function saveManual(){
+    showMask()
+    saveCode('TYPE_MANUAL')
+}
+
+function saveAuto(){
+    showMask()
+    saveCode('TYPE_AUTO')
+}
+
+function codeSaved(){
+    closeMask()
+    //time out方法未完成
+}
+
+function checkGroupType(){
+//    if(!debug)window.webkit.messageHandlers.postMessage(getJsonString({method:"checkGroupType",data:""}))
+    if(!debug)window.webkit.messageHandlers.light.postMessage(getJsonString({method:"checkGroupType",data:""}))
+}

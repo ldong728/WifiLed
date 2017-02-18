@@ -14,12 +14,23 @@
 </head>
 
 <body>
+    <!--    mask元素开始-->
+    <div id="popWindow" class="popWindow" style="display: none;">
+    </div>
+    <div id="maskLayer" class="maskLayer" style="display: none;">
+        <div style="margin:20px 0px 0px 0px">
+            <img src="image/loading1.gif" alt=""></br>
+            保存中…
+        </div>
+    </div>
+    
+    <!--    mask元素结束-->
     <div sytle="overflow: auto; -webkit-overflow-scrolling:touch">
     <div class="app-mode shadow" style="height: 100%; overflow: auto">
         <div class="app-tool clearfix">
             <a onClick="app_slide.show();" class="pos-l img"><img src="image/icon/6.png" alt=""></a>
             <span class="pos-m">鱼缸#1</span>
-            <a href="equip_index.html" class="pos-r img"><img src="image/icon/16.png" alt=""></a>
+            <a href="equip_info.html" class="pos-r img"><img src="image/icon/16.png" alt=""></a>
         </div>
         <div class="mode-type">
             <a class="cur-a">自动</a><a id="to_manual">手动</a>
@@ -35,8 +46,12 @@
                 <div class="canvas_wrap wrapB">
                     <canvas id="bCanvas"></canvas>
                 </div>
-                </div>
             </div>
+            <div class="radius ">
+                <input type="button" value="保  存" class="noset" onClick="saveAuto()">
+            </div>
+            </div>
+    
         </div>
         <!--侧边代码开始-->
         <div class="app-slide">
@@ -55,7 +70,7 @@
     </div>
     </div>
     <script>
-        function setAutoCodeReply(){
+        function saveCodeReply(){
             
         }
     function preventDefault(ev) {
@@ -67,20 +82,20 @@
         // 判断元素是否为 scroller
         return el.classList.contains('scroller')
     }
-    $('#to_manual').click(function(){
-                          saveCode('TYPE_AUTO');
-                          headerTo('control_manual.html')
-    })
+    $('#to_manual').click(function(){headerTo('control_manual.html')})
 
     document.body.addEventListener('touchmove', function (ev) {
-                                   var target = ev.target
-                                   
-                                   // 在 scroller 上滑动，阻止事件冒泡，启用浏览器默认行为。
-                                   if (isScroller(target)) {
-                                   ev.stopPropagation()
-                                   }
-                                   }, false)
-                                           
+        var target = ev.target
+    // 在 scroller 上滑动，阻止事件冒泡，启用浏览器默认行为。
+        if (isScroller(target)) {
+            ev.stopPropagation()
+        }
+    }, false)
+     
+//     function codeSaved(){
+//         closeMask()
+//         headerTo('control_manual.html')
+//     }
 
     </script>
 </body>

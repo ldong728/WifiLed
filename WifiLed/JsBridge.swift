@@ -46,6 +46,10 @@ class JsBridge {
             controller.addGroup(name: data)
             break
             
+        case "checkGroupType":
+            param=controller.checkGroupType()
+            break
+            
         case "searchDevice":
             
             controller.searchDevice()
